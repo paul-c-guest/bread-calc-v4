@@ -1,3 +1,9 @@
+import Title from './components/Title'
+
 export default function App() {
-  return <h1>Heyo Mayo!</h1>
+  return (
+    <>
+      <Title />
+    </>
+  )
 }
