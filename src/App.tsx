@@ -2,6 +2,8 @@ import { useState } from 'react'
 import Title from './components/Title'
 import { Selections } from './components/Selections'
 import { Selection } from './models/flour'
+import { Starter } from './components/Starter'
+import { Calculations } from './components/Calculations'
 
 // const initialSelectionData: Selection[] = []
 
@@ -13,6 +15,8 @@ export default function App() {
     <>
       <Title />
       <Selections selections={selections} />
+      <Starter />
+      <Calculations />
     </>
   )
 }
