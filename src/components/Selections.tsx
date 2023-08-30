@@ -32,11 +32,7 @@ export function Selections({ flours, selections, setSelections }: Props) {
               return <Selection selection={sel} key={sel.id} />
             })}
 
-            <tr>
-              <td>
-                <NewSelection flours={flours} setSelections={setSelections} />
-              </td>
-            </tr>
+            <NewSelection flours={flours} setSelections={setSelections} />
           </tbody>
         </table>
       </details>

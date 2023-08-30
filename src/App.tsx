@@ -35,8 +35,8 @@ const devFlours: Flour[] = [
     isGlutenFree: false,
   },
   { id: 103, name: 'Rye', defaultHydration: 65, isGlutenFree: false },
-  { id: 104, name: 'Rice', defaultHydration: 60, isGlutenFree: true },
-  { id: 105, name: 'Tapioca', defaultHydration: 60, isGlutenFree: true },
+  { id: 104, name: 'Rice', defaultHydration: 62, isGlutenFree: true },
+  { id: 105, name: 'Tapioca', defaultHydration: 58, isGlutenFree: true },
 ]
 
 const devData: Selection[] = [
