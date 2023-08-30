@@ -1,11 +1,17 @@
-import { Selection as SelectionModel } from '../models/flour'
+import {
+  Flour as FlourModel,
+  Selection as SelectionModel,
+} from '../models/flour'
+import { NewSelection } from './NewSelection'
 import { Selection } from './Selection'
 
 interface Props {
+  flours: FlourModel[]
   selections: SelectionModel[]
+  setSelections: React.Dispatch<React.SetStateAction<SelectionModel[]>>
 }
 
-export function Selections({ selections }: Props) {
+export function Selections({ flours, selections, setSelections }: Props) {
   return (
     <>
       <details open={true}>
@@ -13,7 +19,7 @@ export function Selections({ selections }: Props) {
           <h2>My Selections</h2>
         </summary>
 
-        <table id="flour-block">
+        <table>
           <tbody>
             <tr className="table-headings">
               <td>Flour</td>
@@ -26,8 +32,10 @@ export function Selections({ selections }: Props) {
               return <Selection selection={sel} key={sel.id} />
             })}
 
-            <tr id="flour-block-button-row">
-              {/* <td>new flour dropdown or selection menu</td> */}
+            <tr>
+              <td>
+                <NewSelection flours={flours} setSelections={setSelections} />
+              </td>
             </tr>
           </tbody>
         </table>

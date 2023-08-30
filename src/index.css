@@ -30,12 +30,14 @@ h2 {
   transition: 0.1s;
 }
 
-details, summary {
+details,
+summary {
   cursor: pointer;
   user-select: none;
 }
 
-details, summary > * {
+details,
+summary > * {
   display: inline;
 }
 
@@ -57,7 +59,7 @@ td {
 }
 
 input,
-button {
+button, select {
   padding: 0.5em;
   font-size: 100%;
 }
@@ -75,11 +77,11 @@ hr {
 }
 
 .flour-entry-name {
-  width: 9em;
+  width: 8em;
 }
 
 .flour-entry-number {
-  width: 3.5em;
+  width: 4em;
   text-align: center;
 }
 
@@ -92,7 +94,7 @@ hr {
 
 .flour-delete-button::after {
   /* todo change out for the nice cross or trash can */
-  content: 'X';
+  content: '⨯';
 }
 
 .sub-total {

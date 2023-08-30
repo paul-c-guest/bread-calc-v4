@@ -31,10 +31,16 @@ export function Selection({ selection }: Props) {
   return (
     <tr>
       <td>
-        <p>{flour.name}</p>
+        <input
+          className="flour-entry-name"
+          type="text"
+          // contentEditable={false}
+          defaultValue={flour.name}
+        />
       </td>
       <td>
         <input
+          className="flour-entry-number"
           id="amount"
           onChange={handleChange}
           type="number"
@@ -45,6 +51,7 @@ export function Selection({ selection }: Props) {
       </td>
       <td>
         <input
+          className="flour-entry-number"
           id="hydration"
           onChange={handleChange}
           type="number"
