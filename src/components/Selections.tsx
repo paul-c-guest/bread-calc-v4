@@ -8,7 +8,7 @@ import { Selection } from './Selection'
 interface Props {
   flours: FlourModel[]
   selections: SelectionModel[]
-  addNewSelection: React.Dispatch<React.SetStateAction<SelectionModel>>
+  addNewSelection: (selection: SelectionModel) => void
 }
 
 export function Selections({ flours, selections, addNewSelection }: Props) {
@@ -28,8 +28,8 @@ export function Selections({ flours, selections, addNewSelection }: Props) {
               <td></td>
             </tr>
 
-            {selections.map((sel) => {
-              return <Selection selection={sel} key={sel.id} />
+            {selections.map((selection) => {
+              return <Selection selection={selection} key={Math.random()} />
             })}
 
             <NewSelection flours={flours} addNewSelection={addNewSelection} />

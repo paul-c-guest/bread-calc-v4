@@ -35,7 +35,7 @@ export function Selection({ selection }: Props) {
           className="flour-entry-name"
           type="text"
           value={flour.name}
-          contentEditable={false}
+          readOnly
         />
       </td>
       <td>

@@ -3,7 +3,7 @@ import { Flour, Selection } from '../models/flour'
 
 interface Props {
   flours: Flour[]
-  addNewSelection: React.Dispatch<React.SetStateAction<Selection>>
+  addNewSelection: (selection: Selection) => void
 }
 
 interface NewSelection {
@@ -107,8 +107,10 @@ export function NewSelection({ flours, addNewSelection }: Props) {
         </td>
       </tr>
       <tr>
-        <button onClick={submitNewSelection}>Accept</button>
-        <button onClick={() => setEditing(false)}>Reject</button>
+        <td>
+          <button onClick={submitNewSelection}>Accept</button>
+          <button onClick={() => setEditing(false)}>Reject</button>
+        </td>
       </tr>
     </>
   ) : (

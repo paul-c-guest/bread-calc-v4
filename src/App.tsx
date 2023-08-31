@@ -6,8 +6,6 @@ import { Selection, Flour } from './models/flour'
 import { Starter } from './components/Starter'
 import { Calculations } from './components/Calculations'
 
-// const initialSelectionData: Selection[] = []
-
 export default function App() {
   // todo replace with useQuery
   const [selections, setSelections] = useState<Selection[]>(devData)
@@ -34,7 +32,7 @@ const devFlours: Flour[] = [
   { id: 101, name: 'Wheat', defaultHydration: 75, isGlutenFree: false },
   {
     id: 102,
-    name: 'Wholemeal Wheat',
+    name: 'Wholemeal',
     defaultHydration: 70,
     isGlutenFree: false,
   },
