@@ -34,8 +34,8 @@ export function Selection({ selection }: Props) {
         <input
           className="flour-entry-name"
           type="text"
-          // contentEditable={false}
-          defaultValue={flour.name}
+          value={flour.name}
+          contentEditable={false}
         />
       </td>
       <td>

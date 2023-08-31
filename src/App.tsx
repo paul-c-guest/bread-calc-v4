@@ -12,13 +12,17 @@ export default function App() {
   // todo replace with useQuery
   const [selections, setSelections] = useState<Selection[]>(devData)
 
+  const addNewSelection = (selection: Selection) => {
+    setSelections([...selections, selection])
+  }
+
   return (
     <>
       <Title />
       <Selections
         flours={devFlours}
         selections={selections}
-        setSelections={setSelections}
+        addNewSelection={addNewSelection}
       />
       <Starter />
       <Calculations />

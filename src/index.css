@@ -151,7 +151,6 @@ a:visited {
   input,
   button,
   select {
-    /* padding: 0.9vw; */
     font-size: 3.5vw;
     min-height: 4vw;
   }

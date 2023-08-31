@@ -3,7 +3,7 @@ import { Flour, Selection } from '../models/flour'
 
 interface Props {
   flours: Flour[]
-  setSelections: React.Dispatch<React.SetStateAction<Selection[]>>
+  addNewSelection: React.Dispatch<React.SetStateAction<Selection>>
 }
 
 interface NewSelection {
@@ -12,7 +12,7 @@ interface NewSelection {
   hydration: number
 }
 
-export function NewSelection({ flours, setSelections }: Props) {
+export function NewSelection({ flours, addNewSelection }: Props) {
   const initialValues: NewSelection = {
     flourId: flours[0].id,
     amount: 100,
@@ -24,11 +24,16 @@ export function NewSelection({ flours, setSelections }: Props) {
 
   const updateSelection = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectionId = Number(event.target.value)
+    const thisFlour = flours.find((flour) => flour.id === selectionId)
+
+    if (!thisFlour) {
+      return
+    }
+
     setSelection({
-      [event.target.id]: selectionId,
+      flourId: selectionId,
       amount: selection.amount,
-      hydration: flours.find((flour) => flour.id === selectionId)
-        ?.defaultHydration,
+      hydration: thisFlour.defaultHydration,
     })
   }
 
@@ -37,6 +42,27 @@ export function NewSelection({ flours, setSelections }: Props) {
       ...selection,
       [event.target.id]: Number(event.target.value),
     })
+  }
+
+  const submitNewSelection = () => {
+    if (selection.amount && selection.hydration) {
+      const thisFlour = flours.find((flour) => flour.id === selection.flourId)
+      console.log(thisFlour)
+
+      const newSelection = {
+        ...thisFlour,
+        amount: selection.amount,
+        alteredHydration:
+          selection.hydration !== thisFlour?.defaultHydration
+            ? selection.hydration
+            : undefined,
+      } as Selection
+
+      addNewSelection(newSelection)
+
+      setEditing(false)
+      setSelection(initialValues)
+    }
   }
 
   return editing ? (
@@ -79,7 +105,10 @@ export function NewSelection({ flours, setSelections }: Props) {
             onChange={updateValues}
           />
         </td>
-        <td></td>
+      </tr>
+      <tr>
+        <button onClick={submitNewSelection}>Accept</button>
+        <button onClick={() => setEditing(false)}>Reject</button>
       </tr>
     </>
   ) : (

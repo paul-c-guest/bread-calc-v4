@@ -8,10 +8,10 @@ import { Selection } from './Selection'
 interface Props {
   flours: FlourModel[]
   selections: SelectionModel[]
-  setSelections: React.Dispatch<React.SetStateAction<SelectionModel[]>>
+  addNewSelection: React.Dispatch<React.SetStateAction<SelectionModel>>
 }
 
-export function Selections({ flours, selections, setSelections }: Props) {
+export function Selections({ flours, selections, addNewSelection }: Props) {
   return (
     <>
       <details open={true}>
@@ -32,7 +32,7 @@ export function Selections({ flours, selections, setSelections }: Props) {
               return <Selection selection={sel} key={sel.id} />
             })}
 
-            <NewSelection flours={flours} setSelections={setSelections} />
+            <NewSelection flours={flours} addNewSelection={addNewSelection} />
           </tbody>
         </table>
       </details>
