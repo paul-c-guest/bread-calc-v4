@@ -14,20 +14,28 @@ interface NewSelection {
 }
 
 export function NewSelection({ flours, selections, addNewSelection }: Props) {
+  const selectionIds = selections.map((sel) => sel.flourId)
+
+  const initialFlours = flours.filter(
+    (flour) => !selectionIds.includes(flour.id)
+  )
+
   const initialValues: NewSelection = {
-    flourId: flours[0].id,
+    flourId: initialFlours[0].id,
     amount: 100,
-    hydration: flours[0].defaultHydration,
+    hydration: initialFlours[0].defaultHydration,
   }
 
-  const [selection, setSelection] = useState<NewSelection>(initialValues)
+  // todo update available flours after a new selection is added
+
+  const [selectionValues, setSelectionValues] =
+    useState<NewSelection>(initialValues)
+
   const [editing, setEditing] = useState(false)
 
   useEffect(() => {
     setEditing(selections.length === 0)
   }, [selections])
-
-  const selectionIds = selections.map((sel) => sel.flourId)
 
   const updateSelection = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectionId = Number(event.target.value)
@@ -37,38 +45,40 @@ export function NewSelection({ flours, selections, addNewSelection }: Props) {
       return
     }
 
-    setSelection({
+    setSelectionValues({
       flourId: selectionId,
-      amount: selection.amount,
+      amount: selectionValues.amount,
       hydration: thisFlour.defaultHydration,
     })
   }
 
   const updateValues = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelection({
-      ...selection,
+    setSelectionValues({
+      ...selectionValues,
       [event.target.id]: Number(event.target.value),
     })
   }
 
   const submitNewSelection = () => {
-    if (selection.amount && selection.hydration) {
-      const thisFlour = flours.find((flour) => flour.id === selection.flourId)
+    if (selectionValues.amount && selectionValues.hydration) {
+      const thisFlour = flours.find(
+        (flour) => flour.id === selectionValues.flourId
+      )
       // console.log(thisFlour)
 
       const newSelection = {
         ...thisFlour,
-        amount: selection.amount,
+        amount: selectionValues.amount,
         alteredHydration:
-          selection.hydration !== thisFlour?.defaultHydration
-            ? selection.hydration
+          selectionValues.hydration !== thisFlour?.defaultHydration
+            ? selectionValues.hydration
             : undefined,
       } as Selection
 
       addNewSelection(newSelection)
 
       setEditing(false)
-      setSelection(initialValues)
+      setSelectionValues(initialValues)
     }
   }
 
@@ -80,6 +90,7 @@ export function NewSelection({ flours, selections, addNewSelection }: Props) {
             name="new-selection"
             id="flourId"
             className="new-selection"
+            defaultValue={flours[0].name}
             onChange={updateSelection}
           >
             {flours
@@ -98,7 +109,7 @@ export function NewSelection({ flours, selections, addNewSelection }: Props) {
             type="number"
             min={0}
             step={10}
-            value={selection.amount}
+            value={selectionValues.amount}
             onChange={updateValues}
           />
         </td>
@@ -109,7 +120,7 @@ export function NewSelection({ flours, selections, addNewSelection }: Props) {
             type="number"
             min={0}
             step={1}
-            value={selection.hydration}
+            value={selectionValues.hydration}
             onChange={updateValues}
           />
         </td>
@@ -123,7 +134,9 @@ export function NewSelection({ flours, selections, addNewSelection }: Props) {
       <tr>
         <td>
           <button onClick={submitNewSelection}>Accept</button>
-          <button onClick={() => setEditing(selections.length ? false : true)}>Reject</button>
+          <button onClick={() => setEditing(selections.length ? false : true)}>
+            Reject
+          </button>
         </td>
       </tr>
     </>
