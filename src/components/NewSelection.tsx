@@ -16,14 +16,21 @@ interface NewSelection {
 export function NewSelection({ flours, selections, addNewSelection }: Props) {
   const selectionIds = selections.map((sel) => sel.flourId)
 
-  const initialFlours = flours.filter(
+  const unusedFlours = flours.filter(
     (flour) => !selectionIds.includes(flour.id)
   )
 
+  // console.log('used ids', selectionIds)
+  // console.log(
+  //   'unused ids',
+  //   unusedFlours.map((f) => f.id)
+  // )
+  // console.log('selections', selections)
+
   const initialValues: NewSelection = {
-    flourId: initialFlours[0].id,
+    flourId: unusedFlours[0].id,
     amount: 100,
-    hydration: initialFlours[0].defaultHydration,
+    hydration: unusedFlours[0].defaultHydration,
   }
 
   // todo update available flours after a new selection is added
@@ -64,16 +71,20 @@ export function NewSelection({ flours, selections, addNewSelection }: Props) {
       const thisFlour = flours.find(
         (flour) => flour.id === selectionValues.flourId
       )
-      // console.log(thisFlour)
+
+      if (!thisFlour) return
 
       const newSelection = {
         ...thisFlour,
+        flourId: thisFlour.id,
         amount: selectionValues.amount,
         alteredHydration:
           selectionValues.hydration !== thisFlour?.defaultHydration
             ? selectionValues.hydration
             : undefined,
       } as Selection
+
+      console.log(newSelection)
 
       addNewSelection(newSelection)
 
