@@ -44,7 +44,7 @@ export function Selections({
               )
             })}
 
-            <NewSelection flours={flours} addNewSelection={addNewSelection} />
+            <NewSelection flours={flours} selections={selections} addNewSelection={addNewSelection} />
           </tbody>
         </table>
       </details>

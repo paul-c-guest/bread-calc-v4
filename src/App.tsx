@@ -15,10 +15,10 @@ export default function App() {
   }
 
   const deleteSelection = (id: number) => {
-    console.log(id)
-    const requested = selections.find(selection => selection.id === id)
+    // console.log(id)
+    const requested = selections.find((selection) => selection.id === id)
     if (requested) {
-      setSelections(selections.filter(selection => selection.id !== id))
+      setSelections(selections.filter((selection) => selection.id !== id))
     }
   }
 
@@ -39,27 +39,26 @@ export default function App() {
 
 const devFlours: Flour[] = [
   { id: 101, name: 'Wheat', defaultHydration: 75, isGlutenFree: false },
-  {
-    id: 102,
-    name: 'Wholemeal',
-    defaultHydration: 70,
-    isGlutenFree: false,
-  },
+  { id: 102, name: 'Wholemeal', defaultHydration: 70, isGlutenFree: false },
   { id: 103, name: 'Rye', defaultHydration: 65, isGlutenFree: false },
   { id: 104, name: 'Rice', defaultHydration: 62, isGlutenFree: true },
   { id: 105, name: 'Tapioca', defaultHydration: 58, isGlutenFree: true },
+  { id: 106, name: 'Spelt', defaultHydration: 63, isGlutenFree: false },
+  { id: 107, name: 'Tapioca', defaultHydration: 58, isGlutenFree: true },
 ]
 
 const devData: Selection[] = [
   {
-    id: 101,
+    id: 1000,
+    flourId: 101,
     name: 'Wheat',
     defaultHydration: 75,
     isGlutenFree: false,
     amount: 250,
   },
   {
-    id: 102,
+    id: 1001,
+    flourId: 103,
     name: 'Rye',
     defaultHydration: 65,
     alteredHydration: 72,
@@ -67,7 +66,8 @@ const devData: Selection[] = [
     amount: 150,
   },
   {
-    id: 103,
+    id: 1002,
+    flourId: 104,
     name: 'Rice',
     defaultHydration: 60,
     isGlutenFree: true,

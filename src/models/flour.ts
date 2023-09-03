@@ -10,5 +10,6 @@ export interface Flour extends FlourData {
 
 export interface Selection extends Flour {
   amount: number
+  flourId: number
   alteredHydration?: number
 }

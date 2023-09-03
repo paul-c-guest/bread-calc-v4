@@ -3,6 +3,7 @@ import { Flour, Selection } from '../models/flour'
 
 interface Props {
   flours: Flour[]
+  selections: Selection[]
   addNewSelection: (selection: Selection) => void
 }
 
@@ -12,12 +13,14 @@ interface NewSelection {
   hydration: number
 }
 
-export function NewSelection({ flours, addNewSelection }: Props) {
+export function NewSelection({ flours, selections, addNewSelection }: Props) {
   const initialValues: NewSelection = {
     flourId: flours[0].id,
     amount: 100,
     hydration: flours[0].defaultHydration,
   }
+
+  const selectionIds = selections.map((sel) => sel.flourId)
 
   const [selection, setSelection] = useState<NewSelection>(initialValues)
   const [editing, setEditing] = useState(false)
@@ -47,7 +50,7 @@ export function NewSelection({ flours, addNewSelection }: Props) {
   const submitNewSelection = () => {
     if (selection.amount && selection.hydration) {
       const thisFlour = flours.find((flour) => flour.id === selection.flourId)
-      console.log(thisFlour)
+      // console.log(thisFlour)
 
       const newSelection = {
         ...thisFlour,
@@ -76,11 +79,13 @@ export function NewSelection({ flours, addNewSelection }: Props) {
             placeholder="add new..."
             onChange={updateSelection}
           >
-            {flours.map((flour) => (
-              <option key={flour.id} value={flour.id}>
-                {flour.name}
-              </option>
-            ))}
+            {flours
+              .filter((flour) => !selectionIds.includes(flour.id))
+              .map((flour) => (
+                <option key={flour.id} value={flour.id}>
+                  {flour.name}
+                </option>
+              ))}
           </select>
         </td>
         <td>
