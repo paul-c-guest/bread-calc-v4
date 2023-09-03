@@ -84,7 +84,7 @@ export function NewSelection({ flours, selections, addNewSelection }: Props) {
             : undefined,
       } as Selection
 
-      console.log(newSelection)
+      // console.log(newSelection)
 
       addNewSelection(newSelection)
 
