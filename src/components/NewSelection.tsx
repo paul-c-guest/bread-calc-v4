@@ -25,7 +25,7 @@ export function NewSelection({ flours, selections, addNewSelection }: Props) {
 
   useEffect(() => {
     setEditing(selections.length === 0)
-  }, [editing, selections])
+  }, [selections])
 
   const selectionIds = selections.map((sel) => sel.flourId)
 
@@ -123,7 +123,7 @@ export function NewSelection({ flours, selections, addNewSelection }: Props) {
       <tr>
         <td>
           <button onClick={submitNewSelection}>Accept</button>
-          <button onClick={() => setEditing(false)}>Reject</button>
+          <button onClick={() => setEditing(selections.length ? false : true)}>Reject</button>
         </td>
       </tr>
     </>
