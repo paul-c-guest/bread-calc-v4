@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Flour, Selection } from '../models/flour'
 
 interface Props {
@@ -20,10 +20,14 @@ export function NewSelection({ flours, selections, addNewSelection }: Props) {
     hydration: flours[0].defaultHydration,
   }
 
-  const selectionIds = selections.map((sel) => sel.flourId)
-
   const [selection, setSelection] = useState<NewSelection>(initialValues)
   const [editing, setEditing] = useState(false)
+
+  useEffect(() => {
+    setEditing(selections.length === 0)
+  }, [editing, selections])
+
+  const selectionIds = selections.map((sel) => sel.flourId)
 
   const updateSelection = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectionId = Number(event.target.value)
@@ -109,6 +113,12 @@ export function NewSelection({ flours, selections, addNewSelection }: Props) {
             value={selection.hydration}
             onChange={updateValues}
           />
+        </td>
+        <td>
+          <button
+            className="flour-delete-button"
+            style={{ visibility: 'hidden' }}
+          ></button>
         </td>
       </tr>
       <tr>

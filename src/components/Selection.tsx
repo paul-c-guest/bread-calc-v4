@@ -69,7 +69,6 @@ export function Selection({ selection, deleteSelection }: Props) {
       <td>
         <button
           className="flour-delete-button"
-          // name={parent.}
           onClick={removeSelection}
         ></button>
       </td>
