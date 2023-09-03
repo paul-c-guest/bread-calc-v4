@@ -18,6 +18,10 @@ export function Selections({
   addNewSelection,
   deleteSelection,
 }: Props) {
+  const orderSelectionsByAmount = () => {
+    // todo - probably handle in App state?
+  }
+
   return (
     <>
       <details open={true}>
@@ -29,7 +33,7 @@ export function Selections({
           <tbody>
             <tr className="table-headings">
               <td>Flour</td>
-              <td>Amount</td>
+              <td onClick={orderSelectionsByAmount}>Amount</td>
               <td>Hydration</td>
               <td></td>
             </tr>
