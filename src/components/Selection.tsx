@@ -3,10 +3,15 @@ import { Selection as SelectionModel } from '../models/flour'
 
 interface Props {
   selection: SelectionModel
+  deleteSelection: (id: number) => void
 }
 
-export function Selection({ selection }: Props) {
+export function Selection({ selection, deleteSelection }: Props) {
   const [flour, setFlour] = useState<SelectionModel>(selection)
+
+  const removeSelection = () => {
+    deleteSelection(selection.id)
+  }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newFlour = { ...flour }
@@ -62,7 +67,11 @@ export function Selection({ selection }: Props) {
         />
       </td>
       <td>
-        <button className="flour-delete-button"></button>
+        <button
+          className="flour-delete-button"
+          // name={parent.}
+          onClick={removeSelection}
+        ></button>
       </td>
     </tr>
   )

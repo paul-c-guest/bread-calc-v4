@@ -14,6 +14,14 @@ export default function App() {
     setSelections([...selections, selection])
   }
 
+  const deleteSelection = (id: number) => {
+    console.log(id)
+    const requested = selections.find(selection => selection.id === id)
+    if (requested) {
+      setSelections(selections.filter(selection => selection.id !== id))
+    }
+  }
+
   return (
     <>
       <Title />
@@ -21,6 +29,7 @@ export default function App() {
         flours={devFlours}
         selections={selections}
         addNewSelection={addNewSelection}
+        deleteSelection={deleteSelection}
       />
       <Starter />
       <Calculations />

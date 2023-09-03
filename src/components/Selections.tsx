@@ -9,9 +9,15 @@ interface Props {
   flours: FlourModel[]
   selections: SelectionModel[]
   addNewSelection: (selection: SelectionModel) => void
+  deleteSelection: (id: number) => void
 }
 
-export function Selections({ flours, selections, addNewSelection }: Props) {
+export function Selections({
+  flours,
+  selections,
+  addNewSelection,
+  deleteSelection,
+}: Props) {
   return (
     <>
       <details open={true}>
@@ -29,7 +35,13 @@ export function Selections({ flours, selections, addNewSelection }: Props) {
             </tr>
 
             {selections.map((selection) => {
-              return <Selection selection={selection} key={Math.random()} />
+              return (
+                <Selection
+                  selection={selection}
+                  deleteSelection={deleteSelection}
+                  key={Math.random()}
+                />
+              )
             })}
 
             <NewSelection flours={flours} addNewSelection={addNewSelection} />
