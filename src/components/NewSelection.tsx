@@ -80,7 +80,6 @@ export function NewSelection({ flours, selections, addNewSelection }: Props) {
             name="new-selection"
             id="flourId"
             className="new-selection"
-            placeholder="add new..."
             onChange={updateSelection}
           >
             {flours

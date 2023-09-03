@@ -1,14 +1,22 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Title } from './components/Title'
 import { Selections } from './components/Selections'
 import { Selection, Flour } from './models/flour'
 import { Starter } from './components/Starter'
 import { Calculations } from './components/Calculations'
+import { StarterData } from './models/starter'
 
 export default function App() {
   // todo replace with useQuery
   const [selections, setSelections] = useState<Selection[]>(devData)
+
+  const [starterData, setStarterData] =
+    useState<StarterData>(initialStarterData)
+
+  // useEffect(() => {
+  //   console.log(starterData)
+  // }, [starterData])
 
   const addNewSelection = (selection: Selection) => {
     setSelections([...selections, selection])
@@ -26,18 +34,22 @@ export default function App() {
     <>
       <Title />
       <Selections
-        flours={devFlours}
+        flours={flourDb}
         selections={selections}
         addNewSelection={addNewSelection}
         deleteSelection={deleteSelection}
       />
-      <Starter />
+      <Starter
+        starterData={starterData}
+        setStarterData={setStarterData}
+        flours={flourDb}
+      />
       <Calculations />
     </>
   )
 }
 
-const devFlours: Flour[] = [
+const flourDb: Flour[] = [
   { id: 101, name: 'Wheat', defaultHydration: 75, isGlutenFree: false },
   { id: 102, name: 'Wholemeal', defaultHydration: 70, isGlutenFree: false },
   { id: 103, name: 'Rye', defaultHydration: 65, isGlutenFree: false },
@@ -45,6 +57,7 @@ const devFlours: Flour[] = [
   { id: 105, name: 'Tapioca', defaultHydration: 58, isGlutenFree: true },
   { id: 106, name: 'Spelt', defaultHydration: 63, isGlutenFree: false },
   { id: 107, name: 'Tapioca', defaultHydration: 58, isGlutenFree: true },
+  { id: 108, name: 'Buckwheat', defaultHydration: 53, isGlutenFree: true },
 ]
 
 const devData: Selection[] = [
@@ -74,3 +87,9 @@ const devData: Selection[] = [
     amount: 65,
   },
 ]
+
+const initialStarterData: StarterData = {
+  flourId: flourDb[0].id || undefined,
+  wet: 80,
+  dry: 80,
+}
