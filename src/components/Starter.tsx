@@ -3,12 +3,15 @@ import { StarterData } from '../models/starter'
 
 interface Props {
   flours: Flour[]
-  starterData: StarterData
-  setStarterData: React.Dispatch<React.SetStateAction<StarterData>>
+  starter: StarterData
+  setStarter: React.Dispatch<React.SetStateAction<StarterData>>
 }
 
-export function Starter({ flours, starterData, setStarterData }: Props) {
-
+export function Starter({
+  flours,
+  starter: starterData,
+  setStarter: setStarterData,
+}: Props) {
   const updateValues = (event: React.ChangeEvent<HTMLInputElement>) => {
     setStarterData({
       ...starterData,

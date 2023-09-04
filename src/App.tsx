@@ -4,19 +4,18 @@ import { Title } from './components/Title'
 import { Selections } from './components/Selections'
 import { Selection, Flour } from './models/flour'
 import { Starter } from './components/Starter'
-import { Calculations } from './components/Calculations'
+import { Totals } from './components/Totals'
 import { StarterData } from './models/starter'
 
 export default function App() {
   // todo replace with useQuery
   const [selections, setSelections] = useState<Selection[]>(devData)
 
-  const [starterData, setStarterData] =
-    useState<StarterData>(initialStarterData)
+  const [starter, setStarter] = useState<StarterData>(initialStarterData)
 
   useEffect(() => {
     // console.log(starterData)
-  }, [starterData])
+  }, [starter])
 
   const addNewSelection = (selection: Selection) => {
     setSelections([...selections, selection])
@@ -39,12 +38,8 @@ export default function App() {
         addNewSelection={addNewSelection}
         deleteSelection={deleteSelection}
       />
-      <Starter
-        starterData={starterData}
-        setStarterData={setStarterData}
-        flours={flourDb}
-      />
-      <Calculations />
+      <Starter starter={starter} setStarter={setStarter} flours={flourDb} />
+      <Totals selections={selections} starter={starter} />
     </>
   )
 }
