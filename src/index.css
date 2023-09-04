@@ -65,6 +65,9 @@ select {
   padding: 0.5em;
   font-size: 100%;
 }
+input[type='number']:hover::-webkit-inner-spin-button {
+  height: 2.4em;
+}
 
 .new-selection {
   width: 9.2em;

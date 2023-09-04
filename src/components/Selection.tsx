@@ -4,9 +4,10 @@ import { Selection as SelectionModel } from '../models/flour'
 interface Props {
   selection: SelectionModel
   deleteSelection: (id: number) => void
+  updateSelection: (selection: SelectionModel) => void
 }
 
-export function Selection({ selection, deleteSelection }: Props) {
+export function Selection({ selection, deleteSelection, updateSelection }: Props) {
   const [flour, setFlour] = useState<SelectionModel>(selection)
 
   const removeSelection = () => {
@@ -31,6 +32,7 @@ export function Selection({ selection, deleteSelection }: Props) {
     }
 
     setFlour(newFlour)
+    updateSelection(newFlour)
   }
 
   return (

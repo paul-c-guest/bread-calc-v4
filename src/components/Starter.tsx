@@ -7,21 +7,17 @@ interface Props {
   setStarter: React.Dispatch<React.SetStateAction<StarterData>>
 }
 
-export function Starter({
-  flours,
-  starter: starterData,
-  setStarter: setStarterData,
-}: Props) {
+export function Starter({ flours, starter, setStarter }: Props) {
   const updateValues = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setStarterData({
-      ...starterData,
+    setStarter({
+      ...starter,
       [event.target.name]: Number(event.target.value),
     })
   }
 
   const updateSelection = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setStarterData({
-      ...starterData,
+    setStarter({
+      ...starter,
       flourId: Number(event.target.value),
     })
   }
@@ -47,13 +43,14 @@ export function Starter({
                   name="flourId"
                   className="new-selection"
                   onChange={updateSelection}
+                  value={starter.flourId}
                 >
                   {flours.map((flour) => (
                     <option key={flour.id} value={flour.id}>
                       {flour.name}
                     </option>
                   ))}
-                </select>{' '}
+                </select>
               </td>
               <td>
                 <input
@@ -61,7 +58,7 @@ export function Starter({
                   step={5}
                   min={0}
                   className="flour-entry-number"
-                  defaultValue={starterData.dry}
+                  defaultValue={starter.dry}
                   name="dry"
                   onChange={updateValues}
                 />
@@ -72,7 +69,7 @@ export function Starter({
                   step={5}
                   min={0}
                   className="flour-entry-number"
-                  defaultValue={starterData.wet}
+                  defaultValue={starter.wet}
                   name="wet"
                   onChange={updateValues}
                 />

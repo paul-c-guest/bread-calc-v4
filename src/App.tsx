@@ -29,6 +29,11 @@ export default function App() {
     }
   }
 
+  const updateSelection = (selection: Selection) => {
+    const otherSelections = selections.filter((sel) => sel.id !== selection.id)
+    setSelections([...otherSelections, selection])
+  }
+
   return (
     <>
       <Title />
@@ -37,6 +42,7 @@ export default function App() {
         selections={selections}
         addNewSelection={addNewSelection}
         deleteSelection={deleteSelection}
+        updateSelection={updateSelection}
       />
       <Starter starter={starter} setStarter={setStarter} flours={flourDb} />
       <Totals selections={selections} starter={starter} />
@@ -61,7 +67,7 @@ const devData: Selection[] = [
     name: 'Wheat',
     defaultHydration: 75,
     isGlutenFree: false,
-    amount: 250,
+    amount: 310,
   },
   {
     id: 1001,
@@ -74,16 +80,16 @@ const devData: Selection[] = [
   },
   {
     id: 1002,
-    flourId: 104,
-    name: 'Rice',
-    defaultHydration: 60,
-    isGlutenFree: true,
-    amount: 65,
+    flourId: 106,
+    name: 'Spelt',
+    defaultHydration: 63,
+    isGlutenFree: false,
+    amount: 40,
   },
 ]
 
 const initialStarterData: StarterData = {
-  flourId: flourDb[0].id || undefined,
-  wet: 80,
-  dry: 80,
+  flourId: flourDb[2].id || undefined,
+  wet: 100,
+  dry: 100,
 }

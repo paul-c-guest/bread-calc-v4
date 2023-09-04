@@ -10,6 +10,7 @@ interface Props {
   selections: SelectionModel[]
   addNewSelection: (selection: SelectionModel) => void
   deleteSelection: (id: number) => void
+  updateSelection: (selection: SelectionModel) => void
 }
 
 export function Selections({
@@ -17,6 +18,7 @@ export function Selections({
   selections,
   addNewSelection,
   deleteSelection,
+  updateSelection,
 }: Props) {
   const orderSelectionsByAmount = () => {
     // todo - probably handle in App state?
@@ -43,6 +45,7 @@ export function Selections({
                 <Selection
                   selection={selection}
                   deleteSelection={deleteSelection}
+                  updateSelection={updateSelection}
                   key={Math.random()}
                 />
               )
