@@ -10,7 +10,8 @@ import { Update } from './models/update'
 
 export default function App() {
   // todo replace with useQuery
-  const [selections, setSelections] = useState(devData)
+  const [selections, setSelections] =
+    useState<Record<string, Selection>>(devData)
 
   const [starter, setStarter] = useState<StarterData>(initialStarterData)
 
@@ -30,9 +31,15 @@ export default function App() {
   }
 
   const updateSelection = (update: Update) => {
-    //  delete alteredhydration if update.key == defaultHydreation
+    // todo delete alteredhydration if update.key == defaultHydreation
+    // console.log(update)
     const updated = selections
-    // updated[update.id][update.key]=[update.value]
+    updated[String(update.id)][update.key] = update.value
+
+    console.log(updated[String(update.id)][update.key])
+
+    setSelections(updated)
+
     // const otherSelections = selections.filter((sel) => sel.id !== selection.id)
     // setSelections([...otherSelections, selection])
   }
@@ -63,8 +70,8 @@ const flourDb: Flour[] = [
   { id: 107, name: 'Buckwheat', defaultHydration: 53, isGlutenFree: true },
 ]
 
-const devData = {
-  1000: {
+const devData: Record<string, Selection> = {
+  '1000': {
     id: 1000,
     flourId: 101,
     name: 'Wheat',
@@ -72,7 +79,7 @@ const devData = {
     isGlutenFree: false,
     amount: 310,
   },
-  1001: {
+  '1001': {
     id: 1001,
     flourId: 103,
     name: 'Rye',
@@ -81,7 +88,7 @@ const devData = {
     isGlutenFree: false,
     amount: 150,
   },
-  1002: {
+  '1002': {
     id: 1002,
     flourId: 106,
     name: 'Spelt',
