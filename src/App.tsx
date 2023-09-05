@@ -24,18 +24,21 @@ export default function App() {
   }
 
   const deleteSelection = (id: number) => {
-    // console.log(id)
-    // const requested = selections.find((selection) => selection.id === id)
-    // if (requested) {
-    // setSelections(selections.filter((selection) => selection.id !== id))
+    const updated = {...selections}
+    delete updated[id]
+    setSelections(updated)
   }
 
   const updateSelection = (update: Update) => {
-    // todo delete alteredhydration if update.key == defaultHydreation
-
     const updated = { ...selections }
 
-    updated[update.id][update.key] = update.value
+    if (update.key === 'defaultHydration') {
+      delete updated[update.id].alteredHydration
+    } else {
+      updated[update.id][update.key] = update.value
+    }
+
+    // console.log(update, updated[update.id][update.key])
 
     setSelections(updated)
   }

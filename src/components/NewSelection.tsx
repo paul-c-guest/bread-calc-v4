@@ -3,7 +3,7 @@ import { Flour, Selection } from '../models/flour'
 
 interface Props {
   flours: Flour[]
-  selections: object
+  selections: Record<number, Selection>
   addNewSelection: (selection: Selection) => void
 }
 
@@ -14,7 +14,7 @@ interface NewSelection {
 }
 
 export function NewSelection({ flours, selections, addNewSelection }: Props) {
-  const selectionIds = selections.map((sel) => sel.flourId)
+  const selectionIds = Object.values(selections).map((sel) => sel.flourId)
 
   const unusedFlours = flours.filter(
     (flour) => !selectionIds.includes(flour.id)
@@ -41,7 +41,7 @@ export function NewSelection({ flours, selections, addNewSelection }: Props) {
   const [editing, setEditing] = useState(false)
 
   useEffect(() => {
-    setEditing(selections.length === 0)
+    setEditing(Object.keys(selections).length === 0)
   }, [selections])
 
   const updateSelection = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -145,7 +145,11 @@ export function NewSelection({ flours, selections, addNewSelection }: Props) {
       <tr>
         <td>
           <button onClick={submitNewSelection}>Accept</button>
-          <button onClick={() => setEditing(selections.length ? false : true)}>
+          <button
+            onClick={() =>
+              setEditing(Object.keys(selections).length ? false : true)
+            }
+          >
             Reject
           </button>
         </td>

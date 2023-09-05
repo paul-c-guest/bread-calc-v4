@@ -8,7 +8,7 @@ import { Selection } from './Selection'
 
 interface Props {
   flours: FlourModel[]
-  selections: object
+  selections: Record<number, SelectionModel>
   addNewSelection: (selection: SelectionModel) => void
   deleteSelection: (id: number) => void
   updateSelection: (update: Update) => void
@@ -52,11 +52,11 @@ export function Selections({
               )
             })}
 
-            {/* <NewSelection
+            <NewSelection
               flours={flours}
               selections={selections}
               addNewSelection={addNewSelection}
-            /> */}
+            />
           </tbody>
         </table>
       </details>
