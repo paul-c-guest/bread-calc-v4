@@ -3,7 +3,7 @@ import { Flour, Selection } from '../models/flour'
 
 interface Props {
   flours: Flour[]
-  selections: Selection[]
+  selections: object
   addNewSelection: (selection: Selection) => void
 }
 

@@ -2,15 +2,16 @@ import {
   Flour as FlourModel,
   Selection as SelectionModel,
 } from '../models/flour'
+import { Update } from '../models/update'
 import { NewSelection } from './NewSelection'
 import { Selection } from './Selection'
 
 interface Props {
   flours: FlourModel[]
-  selections: SelectionModel[]
+  selections: object
   addNewSelection: (selection: SelectionModel) => void
   deleteSelection: (id: number) => void
-  updateSelection: (selection: SelectionModel) => void
+  updateSelection: (update: Update) => void
 }
 
 export function Selections({
@@ -40,7 +41,7 @@ export function Selections({
               <td></td>
             </tr>
 
-            {selections.map((selection) => {
+            {Object.values(selections).map((selection) => {
               return (
                 <Selection
                   selection={selection}
@@ -51,11 +52,11 @@ export function Selections({
               )
             })}
 
-            <NewSelection
+            {/* <NewSelection
               flours={flours}
               selections={selections}
               addNewSelection={addNewSelection}
-            />
+            /> */}
           </tbody>
         </table>
       </details>

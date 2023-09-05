@@ -6,10 +6,11 @@ import { Selection, Flour } from './models/flour'
 import { Starter } from './components/Starter'
 import { Totals } from './components/Totals'
 import { StarterData } from './models/starter'
+import { Update } from './models/update'
 
 export default function App() {
   // todo replace with useQuery
-  const [selections, setSelections] = useState<Selection[]>(devData)
+  const [selections, setSelections] = useState(devData)
 
   const [starter, setStarter] = useState<StarterData>(initialStarterData)
 
@@ -18,20 +19,22 @@ export default function App() {
   }, [starter])
 
   const addNewSelection = (selection: Selection) => {
-    setSelections([...selections, selection])
+    setSelections({ ...selections, [selection.id]: selection })
   }
 
   const deleteSelection = (id: number) => {
     // console.log(id)
-    const requested = selections.find((selection) => selection.id === id)
-    if (requested) {
-      setSelections(selections.filter((selection) => selection.id !== id))
-    }
+    // const requested = selections.find((selection) => selection.id === id)
+    // if (requested) {
+    // setSelections(selections.filter((selection) => selection.id !== id))
   }
 
-  const updateSelection = (selection: Selection) => {
-    const otherSelections = selections.filter((sel) => sel.id !== selection.id)
-    setSelections([...otherSelections, selection])
+  const updateSelection = (update: Update) => {
+    //  delete alteredhydration if update.key == defaultHydreation
+    const updated = selections
+    // updated[update.id][update.key]=[update.value]
+    // const otherSelections = selections.filter((sel) => sel.id !== selection.id)
+    // setSelections([...otherSelections, selection])
   }
 
   return (
@@ -60,8 +63,8 @@ const flourDb: Flour[] = [
   { id: 107, name: 'Buckwheat', defaultHydration: 53, isGlutenFree: true },
 ]
 
-const devData: Selection[] = [
-  {
+const devData = {
+  1000: {
     id: 1000,
     flourId: 101,
     name: 'Wheat',
@@ -69,7 +72,7 @@ const devData: Selection[] = [
     isGlutenFree: false,
     amount: 310,
   },
-  {
+  1001: {
     id: 1001,
     flourId: 103,
     name: 'Rye',
@@ -78,7 +81,7 @@ const devData: Selection[] = [
     isGlutenFree: false,
     amount: 150,
   },
-  {
+  1002: {
     id: 1002,
     flourId: 106,
     name: 'Spelt',
@@ -86,7 +89,7 @@ const devData: Selection[] = [
     isGlutenFree: false,
     amount: 40,
   },
-]
+}
 
 const initialStarterData: StarterData = {
   flourId: flourDb[2].id || undefined,

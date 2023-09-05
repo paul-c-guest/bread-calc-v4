@@ -2,7 +2,7 @@ import { Selection } from '../models/flour'
 import { StarterData } from '../models/starter'
 
 interface Props {
-  selections: Selection[]
+  selections: object
   starter: StarterData
 }
 
@@ -10,11 +10,11 @@ export function Totals({ selections, starter }: Props) {
   let wet: number = 0
   let dry: number = 0
 
-  selections.forEach((sel) => {
-    dry += sel.amount
-    wet += sel.amount * (sel.alteredHydration || sel.defaultHydration) * 0.01
-    console.log(wet, dry, wet / dry)
-  })
+  // selections.forEach((sel) => {
+  //   dry += sel.amount
+  //   wet += sel.amount * (sel.alteredHydration || sel.defaultHydration) * 0.01
+  //   console.log(wet, dry, wet / dry)
+  // })
 
   const hydration: number = Number(((wet / dry) * 100).toFixed(0))
 

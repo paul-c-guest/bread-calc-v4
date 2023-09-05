@@ -1,38 +1,58 @@
-import { useState } from 'react'
 import { Selection as SelectionModel } from '../models/flour'
+import { Update } from '../models/update'
 
 interface Props {
   selection: SelectionModel
   deleteSelection: (id: number) => void
-  updateSelection: (selection: SelectionModel) => void
+  updateSelection: (update: Update) => void
 }
 
-export function Selection({ selection, deleteSelection, updateSelection }: Props) {
-  const [flour, setFlour] = useState<SelectionModel>(selection)
+export function Selection({
+  selection,
+  deleteSelection,
+  updateSelection,
+}: Props) {
+  // const [flour, setFlour] = useState<SelectionModel>(selection)
 
   const removeSelection = () => {
     deleteSelection(selection.id)
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newFlour = { ...flour }
-    const newValue: number = Number(event.target.value)
+    // const newFlour = { ...flour }
+
+    const newValue = Number(event.target.value)
+
+    const updates: Update = {
+      id: selection.id,
+      key: '',
+      value: newValue,
+    }
 
     switch (event.target.id) {
       case 'amount':
-        newFlour.amount = newValue
+        // newFlour.amount = newValue
+        updateSelection({
+          ...updates,
+          key: 'amount',
+        })
         break
 
       case 'hydration':
         if (newValue !== selection.defaultHydration) {
-          newFlour.alteredHydration = newValue
+          updateSelection({
+            ...updates,
+            key: 'alteredHydration',
+          })
         } else {
-          delete newFlour.alteredHydration
+          updateSelection({
+            ...updates,
+            key: 'defaultHydration',
+          })
         }
     }
 
-    setFlour(newFlour)
-    updateSelection(newFlour)
+    // setFlour(newFlour)
   }
 
   return (
@@ -41,7 +61,7 @@ export function Selection({ selection, deleteSelection, updateSelection }: Props
         <input
           className="flour-entry-name"
           type="text"
-          value={flour.name}
+          value={selection.name}
           readOnly
         />
       </td>
@@ -53,7 +73,7 @@ export function Selection({ selection, deleteSelection, updateSelection }: Props
           type="number"
           min={0}
           step={10}
-          value={flour.amount}
+          value={selection.amount}
         />
       </td>
       <td>
@@ -65,7 +85,7 @@ export function Selection({ selection, deleteSelection, updateSelection }: Props
           min={0}
           max={200}
           step={1}
-          value={flour.alteredHydration || flour.defaultHydration}
+          value={selection.alteredHydration || selection.defaultHydration}
         />
       </td>
       <td>
