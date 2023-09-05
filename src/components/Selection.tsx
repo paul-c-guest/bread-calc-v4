@@ -24,7 +24,7 @@ export function Selection({
     const newValue = Number(event.target.value)
 
     const updates: Update = {
-      id: selection.id,
+      id: Number(selection.id),
       key: '',
       value: newValue,
     }
