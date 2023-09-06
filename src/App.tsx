@@ -24,7 +24,7 @@ export default function App() {
   }
 
   const deleteSelection = (id: number) => {
-    const updated = {...selections}
+    const updated = { ...selections }
     delete updated[id]
     setSelections(updated)
   }
@@ -77,6 +77,7 @@ const devData: Record<string, Selection> = {
     defaultHydration: 75,
     isGlutenFree: false,
     amount: 310,
+    position: 1,
   },
   1001: {
     id: 1001,
@@ -86,6 +87,7 @@ const devData: Record<string, Selection> = {
     alteredHydration: 72,
     isGlutenFree: false,
     amount: 150,
+    position: 2,
   },
   1002: {
     id: 1002,
@@ -94,6 +96,7 @@ const devData: Record<string, Selection> = {
     defaultHydration: 63,
     isGlutenFree: false,
     amount: 40,
+    position: 3,
   },
 }
 

@@ -74,17 +74,31 @@ export function NewSelection({ flours, selections, addNewSelection }: Props) {
 
       if (!thisFlour) return
 
-      const newSelection = {
+      const getNextPosition = () => {
+        return (
+          1 +
+          Object.values(selections)
+            .map((sel) => sel.position)
+            .reduce((previous, current) => {
+              return current > previous ? current : previous
+            }, 1)
+        )
+      }
+
+      // console.log(getNextPosition())
+
+      const newSelection: Selection = {
         ...thisFlour,
+        position: getNextPosition(),
         flourId: thisFlour.id,
         amount: selectionValues.amount,
         alteredHydration:
           selectionValues.hydration !== thisFlour?.defaultHydration
             ? selectionValues.hydration
             : undefined,
-      } as Selection
+      }
 
-      // console.log(newSelection)
+      console.log(newSelection)
 
       addNewSelection(newSelection)
 
