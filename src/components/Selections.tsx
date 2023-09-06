@@ -41,16 +41,18 @@ export function Selections({
               <td></td>
             </tr>
 
-            {Object.values(selections).map((selection) => {
-              return (
-                <Selection
-                  selection={selection}
-                  deleteSelection={deleteSelection}
-                  updateSelection={updateSelection}
-                  key={Math.random()}
-                />
-              )
-            })}
+            {Object.values(selections)
+              .sort((a, b) => (a.position > b.position ? 1 : -1))
+              .map((selection) => {
+                return (
+                  <Selection
+                    selection={selection}
+                    deleteSelection={deleteSelection}
+                    updateSelection={updateSelection}
+                    key={Math.random()}
+                  />
+                )
+              })}
 
             <NewSelection
               flours={flours}
