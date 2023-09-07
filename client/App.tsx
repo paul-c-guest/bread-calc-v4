@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 
 import { Title } from './components/Title'
@@ -9,15 +9,28 @@ import { Totals } from './components/Totals'
 import { StarterData } from '../models/starter'
 import { Update } from '../models/update'
 import { getFlours } from './api/flours'
+import { Nav } from './components/Nav'
+import { useAuth0 } from '@auth0/auth0-react'
 
 export default function App() {
+  const { user } = useAuth0()
   const { data: flourDb, isError, isLoading } = useQuery(['flours'], getFlours)
 
-  const [selections, setSelections] = useState<SelectionsModel>(devData)
+  const locallyStoredSelections: SelectionsModel =
+    JSON.parse(localStorage.getItem('selections') ?? '') ?? devData
+  console.log(locallyStoredSelections)
+
+  const [selections, setSelections] = useState<SelectionsModel>(
+    user ? locallyStoredSelections : devData
+  )
 
   const [starter, setStarter] = useState<StarterData>(initialStarterData)
 
-  if (isError || isLoading) return <p>... please wait ...</p>
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('selections', JSON.stringify(selections))
+    }
+  }, [selections, user])
 
   const addNewSelection = (selection: Selection) => {
     setSelections({ ...selections, [selection.id]: selection })
@@ -49,8 +62,11 @@ export default function App() {
     setSelections(updated)
   }
 
+  if (isError || isLoading) return <p>... please wait ...</p>
+
   return (
     <>
+      <Nav />
       <Title />
       <Selections
         flours={flourDb}

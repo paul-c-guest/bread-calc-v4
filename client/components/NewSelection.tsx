@@ -94,8 +94,6 @@ export function NewSelection({ flours, selections, addNewSelection }: Props) {
             : undefined,
       }
 
-      console.log(newSelection)
-
       addNewSelection(newSelection)
 
       setEditing(false)
