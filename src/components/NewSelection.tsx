@@ -20,6 +20,8 @@ export function NewSelection({ flours, selections, addNewSelection }: Props) {
     (flour) => !selectionIds.includes(flour.id)
   )
 
+  if (unusedFlours.length === 0) return <></>
+
   // console.log('used ids', selectionIds)
   // console.log(
   //   'unused ids',
