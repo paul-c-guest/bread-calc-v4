@@ -20,20 +20,13 @@ export function NewSelection({ flours, selections, addNewSelection }: Props) {
     (flour) => !selectionIds.includes(flour.id)
   )
 
-  // console.log('used ids', selectionIds)
-  // console.log(
-  //   'unused ids',
-  //   unusedFlours.map((f) => f.id)
-  // )
-  // console.log('selections', selections)
-
-  const initialValues: NewSelection = {
-    flourId: unusedFlours[0].id,
-    amount: 100,
-    hydration: unusedFlours[0].defaultHydration,
-  }
-
-  // todo update available flours after a new selection is added
+  const initialValues: NewSelection = unusedFlours.length
+    ? {
+        flourId: unusedFlours[0].id,
+        amount: 100,
+        hydration: unusedFlours[0].defaultHydration,
+      }
+    : ({} as NewSelection)
 
   const [selectionValues, setSelectionValues] =
     useState<NewSelection>(initialValues)
@@ -43,6 +36,9 @@ export function NewSelection({ flours, selections, addNewSelection }: Props) {
   useEffect(() => {
     setEditing(Object.keys(selections).length === 0)
   }, [selections])
+
+  // break early if no need to render elements...
+  if (unusedFlours.length === 0) return <></>
 
   const updateSelection = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectionId = Number(event.target.value)
