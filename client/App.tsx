@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react'
 
 import { Title } from './components/Title'
 import { Selections } from './components/Selections'
-import { Selection, Flour } from './models/flour'
+import { Selection, Flour } from '../models/flour'
 import { Starter } from './components/Starter'
 import { Totals } from './components/Totals'
-import { StarterData } from './models/starter'
-import { Update } from './models/update'
+import { StarterData } from '../models/starter'
+import { Update } from '../models/update'
 
 export default function App() {
   // todo replace with useQuery

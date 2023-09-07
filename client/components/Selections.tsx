@@ -1,8 +1,8 @@
 import {
   Flour as FlourModel,
   Selection as SelectionModel,
-} from '../models/flour'
-import { Update } from '../models/update'
+} from '../../models/flour'
+import { Update } from '../../models/update'
 import { NewSelection } from './NewSelection'
 import { Selection } from './Selection'
 

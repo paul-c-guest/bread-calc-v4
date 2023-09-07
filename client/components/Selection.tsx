@@ -1,5 +1,5 @@
-import { Selection as SelectionModel } from '../models/flour'
-import { Update } from '../models/update'
+import { Selection as SelectionModel } from '../../models/flour'
+import { Update } from '../../models/update'
 
 interface Props {
   selection: SelectionModel

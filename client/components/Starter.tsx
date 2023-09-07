@@ -1,5 +1,5 @@
-import { Flour } from '../models/flour'
-import { StarterData } from '../models/starter'
+import { Flour } from '../../models/flour'
+import { StarterData } from '../../models/starter'
 
 interface Props {
   flours: Flour[]

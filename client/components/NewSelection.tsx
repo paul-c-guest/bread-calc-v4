@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Flour, Selection } from '../models/flour'
+import { Flour, Selection } from '../../models/flour'
 
 interface Props {
   flours: Flour[]
