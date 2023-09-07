@@ -1,23 +1,27 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 
 import { Title } from './components/Title'
 import { Selections } from './components/Selections'
-import { Selection, Flour } from '../models/flour'
+import {
+  Selection,
+  Flour,
+  Selections as SelectionsModel,
+} from '../models/flour'
 import { Starter } from './components/Starter'
 import { Totals } from './components/Totals'
 import { StarterData } from '../models/starter'
 import { Update } from '../models/update'
+import { getFlours } from './api/flours'
 
 export default function App() {
-  // todo replace with useQuery
-  const [selections, setSelections] =
-    useState<Record<number, Selection>>(devData)
+  const { data: flourDb, isError, isLoading } = useQuery(['flours'], getFlours)
+
+  const [selections, setSelections] = useState<SelectionsModel>(devData)
 
   const [starter, setStarter] = useState<StarterData>(initialStarterData)
 
-  useEffect(() => {
-    // console.log(starterData)
-  }, [starter])
+  if (isError || isLoading) return <p>... please wait ...</p>
 
   const addNewSelection = (selection: Selection) => {
     setSelections({ ...selections, [selection.id]: selection })
@@ -35,10 +39,8 @@ export default function App() {
     if (update.key === 'defaultHydration') {
       delete updated[update.id].alteredHydration
     } else {
-      updated[update.id].defaultHydration = update.value
+      updated[update.id][update.key] = update.value
     }
-
-    // console.log(update, updated[update.id][update.key])
 
     setSelections(updated)
   }
@@ -59,17 +61,7 @@ export default function App() {
   )
 }
 
-const flourDb: Flour[] = [
-  { id: 101, name: 'Wheat', defaultHydration: 75, isGlutenFree: false },
-  { id: 102, name: 'Wholemeal', defaultHydration: 70, isGlutenFree: false },
-  { id: 103, name: 'Rye', defaultHydration: 65, isGlutenFree: false },
-  { id: 104, name: 'Rice', defaultHydration: 62, isGlutenFree: true },
-  { id: 105, name: 'Tapioca', defaultHydration: 58, isGlutenFree: true },
-  { id: 106, name: 'Spelt', defaultHydration: 63, isGlutenFree: false },
-  { id: 107, name: 'Buckwheat', defaultHydration: 53, isGlutenFree: true },
-]
-
-const devData: Record<string, Selection> = {
+const devData: SelectionsModel = {
   1000: {
     id: 1000,
     flourId: 101,
@@ -101,7 +93,7 @@ const devData: Record<string, Selection> = {
 }
 
 const initialStarterData: StarterData = {
-  flourId: flourDb[2].id || undefined,
+  flourId: 103,
   wet: 100,
   dry: 100,
 }

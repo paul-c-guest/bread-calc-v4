@@ -14,3 +14,5 @@ export interface Selection extends Flour {
   position: number
   alteredHydration?: number
 }
+
+export type Selections = Record<number, Selection>
