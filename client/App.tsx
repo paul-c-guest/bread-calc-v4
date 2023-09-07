@@ -3,11 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import { Title } from './components/Title'
 import { Selections } from './components/Selections'
-import {
-  Selection,
-  Flour,
-  Selections as SelectionsModel,
-} from '../models/flour'
+import { Selection, Selections as SelectionsModel } from '../models/flour'
 import { Starter } from './components/Starter'
 import { Totals } from './components/Totals'
 import { StarterData } from '../models/starter'
@@ -36,10 +32,18 @@ export default function App() {
   const updateSelection = (update: Update) => {
     const updated = { ...selections }
 
-    if (update.key === 'defaultHydration') {
-      delete updated[update.id].alteredHydration
-    } else {
-      updated[update.id][update.key] = update.value
+    switch (update.key) {
+      case 'defaultHydration':
+        delete updated[update.id].alteredHydration
+        break
+
+      case 'alteredHydration':
+        updated[update.id].alteredHydration = update.value
+        break
+
+      case 'amount':
+        updated[update.id].amount = update.value
+        break
     }
 
     setSelections(updated)

@@ -12,15 +12,11 @@ export function Selection({
   deleteSelection,
   updateSelection,
 }: Props) {
-  // const [flour, setFlour] = useState<SelectionModel>(selection)
-
   const removeSelection = () => {
     deleteSelection(selection.id)
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // const newFlour = { ...flour }
-
     const newValue = Number(event.target.value)
 
     const updates: Update = {
@@ -31,7 +27,6 @@ export function Selection({
 
     switch (event.target.id) {
       case 'amount':
-        // newFlour.amount = newValue
         updateSelection({
           ...updates,
           key: 'amount',
@@ -51,8 +46,6 @@ export function Selection({
           })
         }
     }
-
-    // setFlour(newFlour)
   }
 
   return (

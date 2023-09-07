@@ -1,6 +1,7 @@
 import {
   Flour as FlourModel,
   Selection as SelectionModel,
+  Selections as SelectionsModel,
 } from '../../models/flour'
 import { Update } from '../../models/update'
 import { NewSelection } from './NewSelection'
@@ -8,7 +9,7 @@ import { Selection } from './Selection'
 
 interface Props {
   flours: FlourModel[]
-  selections: Record<number, SelectionModel>
+  selections: SelectionsModel
   addNewSelection: (selection: SelectionModel) => void
   deleteSelection: (id: number) => void
   updateSelection: (update: Update) => void

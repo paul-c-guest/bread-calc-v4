@@ -1,8 +1,8 @@
-import { Selection } from '../../models/flour'
+import { Selection, Selections } from '../../models/flour'
 import { StarterData } from '../../models/starter'
 
 interface Props {
-  selections: object // Record<string, Selection>
+  selections: Selections
   starter: StarterData
 }
 
