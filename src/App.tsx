@@ -35,7 +35,7 @@ export default function App() {
     if (update.key === 'defaultHydration') {
       delete updated[update.id].alteredHydration
     } else {
-      updated[update.id][update.key] = update.value
+      updated[update.id].defaultHydration = update.value
     }
 
     // console.log(update, updated[update.id][update.key])
