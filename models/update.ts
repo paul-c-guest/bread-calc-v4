@@ -1,5 +1,5 @@
 export interface Update {
-  id: number
-  key: string
-  value: number
+  id: number;
+  key: string;
+  value: number;
 }

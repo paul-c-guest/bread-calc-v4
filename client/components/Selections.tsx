@@ -2,17 +2,17 @@ import {
   Flour as FlourModel,
   Selection as SelectionModel,
   Selections as SelectionsModel,
-} from '../../models/flour'
-import { Update } from '../../models/update'
-import { NewSelection } from './NewSelection'
-import { Selection } from './Selection'
+} from "../../models/flour";
+import { Update } from "../../models/update";
+import { NewSelection } from "./NewSelection";
+import { Selection } from "./Selection";
 
 interface Props {
-  flours: FlourModel[]
-  selections: SelectionsModel
-  addNewSelection: (selection: SelectionModel) => void
-  deleteSelection: (id: number) => void
-  updateSelection: (update: Update) => void
+  flours: FlourModel[];
+  selections: SelectionsModel;
+  addNewSelection: (selection: SelectionModel) => void;
+  deleteSelection: (id: number) => void;
+  updateSelection: (update: Update) => void;
 }
 
 export function Selections({
@@ -24,7 +24,7 @@ export function Selections({
 }: Props) {
   const orderSelectionsByAmount = () => {
     // todo - probably handle in App state?
-  }
+  };
 
   return (
     <>
@@ -52,7 +52,7 @@ export function Selections({
                     updateSelection={updateSelection}
                     key={Math.random()}
                   />
-                )
+                );
               })}
 
             <NewSelection
@@ -65,5 +65,5 @@ export function Selections({
       </details>
       <hr />
     </>
-  )
+  );
 }

@@ -1,31 +1,31 @@
-import { Selection, Selections } from '../../models/flour'
-import { StarterData } from '../../models/starter'
+import { Selection, Selections } from "../../models/flour";
+import { StarterData } from "../../models/starter";
 
 interface Props {
-  selections: Selections
-  starter: StarterData
+  selections: Selections;
+  starter: StarterData;
 }
 
 export function Totals({ selections, starter }: Props) {
-  let dry: number = 0
-  let wet: number = 0
+  let dry: number = 0;
+  let wet: number = 0;
 
   // sum values for selections
   Object.values(selections).forEach((sel: Selection) => {
-    dry += sel.amount
-    wet += sel.amount * (sel.alteredHydration || sel.defaultHydration) * 0.01
-  })
+    dry += sel.amount;
+    wet += sel.amount * (sel.alteredHydration || sel.defaultHydration) * 0.01;
+  });
 
   // sum values for starter
-  dry += starter.dry
-  wet += starter.wet
+  dry += starter.dry;
+  wet += starter.wet;
 
   // todo: remove some hydration from wet amount ot account for overhydration of starter
   // make a new api route to do getFlourById(starter.flourId)
   // use preferred hydration of returned flour to determine how much to subtract from wet total
 
   // get final expected hydration of dough
-  const hydration: number = Number(((wet / dry) * 100).toFixed(0))
+  const hydration: number = Number(((wet / dry) * 100).toFixed(0));
 
   return (
     <>
@@ -61,5 +61,5 @@ export function Totals({ selections, starter }: Props) {
         </tbody>
       </table>
     </>
-  )
+  );
 }

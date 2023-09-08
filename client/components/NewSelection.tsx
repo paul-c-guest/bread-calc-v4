@@ -1,24 +1,24 @@
-import { useEffect, useState } from 'react'
-import { Flour, Selection } from '../../models/flour'
+import { useEffect, useState } from "react";
+import { Flour, Selection } from "../../models/flour";
 
 interface Props {
-  flours: Flour[]
-  selections: Record<number, Selection>
-  addNewSelection: (selection: Selection) => void
+  flours: Flour[];
+  selections: Record<number, Selection>;
+  addNewSelection: (selection: Selection) => void;
 }
 
 interface NewSelection {
-  flourId: number
-  amount: number
-  hydration: number
+  flourId: number;
+  amount: number;
+  hydration: number;
 }
 
 export function NewSelection({ flours, selections, addNewSelection }: Props) {
-  const selectionIds = Object.values(selections).map((sel) => sel.flourId)
+  const selectionIds = Object.values(selections).map((sel) => sel.flourId);
 
   const unusedFlours = flours.filter(
-    (flour) => !selectionIds.includes(flour.id)
-  )
+    (flour) => !selectionIds.includes(flour.id),
+  );
 
   const initialValues: NewSelection = unusedFlours.length
     ? {
@@ -26,49 +26,49 @@ export function NewSelection({ flours, selections, addNewSelection }: Props) {
         amount: 100,
         hydration: unusedFlours[0].defaultHydration,
       }
-    : ({} as NewSelection)
+    : ({} as NewSelection);
 
   const [selectionValues, setSelectionValues] =
-    useState<NewSelection>(initialValues)
+    useState<NewSelection>(initialValues);
 
-  const [editing, setEditing] = useState(false)
+  const [editing, setEditing] = useState(false);
 
   useEffect(() => {
-    setEditing(Object.keys(selections).length === 0)
-  }, [selections])
+    setEditing(Object.keys(selections).length === 0);
+  }, [selections]);
 
   // break early if no need to render elements...
-  if (unusedFlours.length === 0) return <></>
+  if (unusedFlours.length === 0) return <></>;
 
   const updateSelection = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectionId = Number(event.target.value)
-    const thisFlour = flours.find((flour) => flour.id === selectionId)
+    const selectionId = Number(event.target.value);
+    const thisFlour = flours.find((flour) => flour.id === selectionId);
 
     if (!thisFlour) {
-      return
+      return;
     }
 
     setSelectionValues({
       flourId: selectionId,
       amount: selectionValues.amount,
       hydration: thisFlour.defaultHydration,
-    })
-  }
+    });
+  };
 
   const updateValues = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectionValues({
       ...selectionValues,
       [event.target.id]: Number(event.target.value),
-    })
-  }
+    });
+  };
 
   const submitNewSelection = () => {
     if (selectionValues.amount && selectionValues.hydration) {
       const thisFlour = flours.find(
-        (flour) => flour.id === selectionValues.flourId
-      )
+        (flour) => flour.id === selectionValues.flourId,
+      );
 
-      if (!thisFlour) return
+      if (!thisFlour) return;
 
       const getNextPosition = () => {
         return (
@@ -76,10 +76,10 @@ export function NewSelection({ flours, selections, addNewSelection }: Props) {
           Object.values(selections)
             .map((sel) => sel.position)
             .reduce((previous, current) => {
-              return current > previous ? current : previous
+              return current > previous ? current : previous;
             }, 1)
-        )
-      }
+        );
+      };
 
       // console.log(getNextPosition())
 
@@ -92,14 +92,14 @@ export function NewSelection({ flours, selections, addNewSelection }: Props) {
           selectionValues.hydration !== thisFlour?.defaultHydration
             ? selectionValues.hydration
             : undefined,
-      }
+      };
 
-      addNewSelection(newSelection)
+      addNewSelection(newSelection);
 
-      setEditing(false)
-      setSelectionValues(initialValues)
+      setEditing(false);
+      setSelectionValues(initialValues);
     }
-  }
+  };
 
   return editing ? (
     <>
@@ -146,7 +146,7 @@ export function NewSelection({ flours, selections, addNewSelection }: Props) {
         <td>
           <button
             className="flour-delete-button"
-            style={{ visibility: 'hidden' }}
+            style={{ visibility: "hidden" }}
           ></button>
         </td>
       </tr>
@@ -171,5 +171,5 @@ export function NewSelection({ flours, selections, addNewSelection }: Props) {
         </td>
       </tr>
     </>
-  )
+  );
 }

@@ -1,10 +1,10 @@
-import { Update } from '../../models/update'
-import { Selection as SelectionModel } from '../../models/flour'
+import { Update } from "../../models/update";
+import { Selection as SelectionModel } from "../../models/flour";
 
 interface Props {
-  selection: SelectionModel
-  deleteSelection: (id: number) => void
-  updateSelection: (update: Update) => void
+  selection: SelectionModel;
+  deleteSelection: (id: number) => void;
+  updateSelection: (update: Update) => void;
 }
 
 export function Selection({
@@ -13,40 +13,40 @@ export function Selection({
   updateSelection,
 }: Props) {
   const removeSelection = () => {
-    deleteSelection(selection.id)
-  }
+    deleteSelection(selection.id);
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = Number(event.target.value)
+    const newValue = Number(event.target.value);
 
     const updates: Update = {
       id: Number(selection.id),
-      key: '',
+      key: "",
       value: newValue,
-    }
+    };
 
     switch (event.target.id) {
-      case 'amount':
+      case "amount":
         updateSelection({
           ...updates,
-          key: 'amount',
-        })
-        break
+          key: "amount",
+        });
+        break;
 
-      case 'hydration':
+      case "hydration":
         if (newValue !== selection.defaultHydration) {
           updateSelection({
             ...updates,
-            key: 'alteredHydration',
-          })
+            key: "alteredHydration",
+          });
         } else {
           updateSelection({
             ...updates,
-            key: 'defaultHydration',
-          })
+            key: "defaultHydration",
+          });
         }
     }
-  }
+  };
 
   return (
     <tr>
@@ -60,7 +60,11 @@ export function Selection({
       </td>
       <td>
         <input
-          className={selection.amount > 0 ? "flour-entry-number" : "flour-entry-number warning"}
+          className={
+            selection.amount > 0
+              ? "flour-entry-number"
+              : "flour-entry-number warning"
+          }
           id="amount"
           onChange={handleChange}
           type="number"
@@ -88,5 +92,5 @@ export function Selection({
         ></button>
       </td>
     </tr>
-  )
+  );
 }
