@@ -13,24 +13,30 @@ import { Nav } from './components/Nav'
 import { useAuth0 } from '@auth0/auth0-react'
 
 export default function App() {
-  const { user } = useAuth0()
   const { data: flourDb, isError, isLoading } = useQuery(['flours'], getFlours)
 
-  const locallyStoredSelections: SelectionsModel =
-    JSON.parse(localStorage.getItem('selections') ?? '') ?? devData
-  console.log(locallyStoredSelections)
+  const { user } = useAuth0()
 
+  const locallyStoredSelections = localStorage.getItem('selections')
   const [selections, setSelections] = useState<SelectionsModel>(
-    user ? locallyStoredSelections : devData
+    user && locallyStoredSelections
+      ? JSON.parse(locallyStoredSelections)
+      : defaultSelectionsData
   )
 
-  const [starter, setStarter] = useState<StarterData>(initialStarterData)
+  const locallyStoredStarter = localStorage.getItem('starter')
+  const [starter, setStarter] = useState<StarterData>(
+    user && locallyStoredStarter
+      ? JSON.parse(locallyStoredStarter)
+      : defaultStarterData
+  )
 
   useEffect(() => {
     if (user) {
       localStorage.setItem('selections', JSON.stringify(selections))
+      localStorage.setItem('starter', JSON.stringify(starter))
     }
-  }, [selections, user])
+  }, [selections, starter, user])
 
   const addNewSelection = (selection: Selection) => {
     setSelections({ ...selections, [selection.id]: selection })
@@ -81,7 +87,7 @@ export default function App() {
   )
 }
 
-const devData: SelectionsModel = {
+const defaultSelectionsData: SelectionsModel = {
   1000: {
     id: 1000,
     flourId: 101,
@@ -112,7 +118,7 @@ const devData: SelectionsModel = {
   },
 }
 
-const initialStarterData: StarterData = {
+const defaultStarterData: StarterData = {
   flourId: 103,
   wet: 100,
   dry: 100,
