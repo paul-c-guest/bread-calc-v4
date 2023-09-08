@@ -24,7 +24,7 @@ export function Starter({ flours, starter, setStarter }: Props) {
 
   return (
     <>
-      <details>
+      <details open={true}>
         <summary>
           <h2>My Starter</h2>
         </summary>

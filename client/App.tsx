@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 
-import { Title } from './components/Title'
 import { Selections } from './components/Selections'
 import { Selection, Selections as SelectionsModel } from '../models/flour'
 import { Starter } from './components/Starter'
@@ -18,15 +17,17 @@ export default function App() {
   const { user } = useAuth0()
 
   const locallyStoredSelections = localStorage.getItem('selections')
+  const locallyStoredStarter = localStorage.getItem('starter')
+  // console.log(locallyStoredSelections, locallyStoredStarter)
+
   const [selections, setSelections] = useState<SelectionsModel>(
-    user && locallyStoredSelections
+    locallyStoredSelections && user
       ? JSON.parse(locallyStoredSelections)
       : defaultSelectionsData
   )
 
-  const locallyStoredStarter = localStorage.getItem('starter')
   const [starter, setStarter] = useState<StarterData>(
-    user && locallyStoredStarter
+    locallyStoredStarter && user
       ? JSON.parse(locallyStoredStarter)
       : defaultStarterData
   )
@@ -34,16 +35,19 @@ export default function App() {
   useEffect(() => {
     if (user) {
       localStorage.setItem('selections', JSON.stringify(selections))
-      localStorage.setItem('starter', JSON.stringify(starter))
     }
-  }, [selections, starter, user])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selections])
 
   useEffect(() => {
-    if (
-      user &&
-      (locallyStoredSelections || locallyStoredStarter) &&
-      confirm('Load the selections from your last visit?')
-    ) {
+    if (user) {
+      localStorage.setItem('starter', JSON.stringify(starter))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [starter])
+
+  useEffect(() => {
+    if (user && locallyStoredSelections && locallyStoredStarter) {
       if (locallyStoredSelections) {
         setSelections(JSON.parse(locallyStoredSelections))
       }
