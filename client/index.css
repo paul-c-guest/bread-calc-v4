@@ -64,6 +64,7 @@ button,
 select {
   padding: 0.5em;
   font-size: 100%;
+  transition: 1s;
 }
 input[type='number']:hover::-webkit-inner-spin-button {
   height: 1.25em;

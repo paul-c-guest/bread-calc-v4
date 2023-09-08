@@ -19,14 +19,16 @@ export default function App() {
 
   const locallyStoredSelections = localStorage.getItem('selections')
   const [selections, setSelections] = useState<SelectionsModel>(
-    locallyStoredSelections
+    user && locallyStoredSelections
       ? JSON.parse(locallyStoredSelections)
       : defaultSelectionsData
   )
 
   const locallyStoredStarter = localStorage.getItem('starter')
   const [starter, setStarter] = useState<StarterData>(
-    locallyStoredStarter ? JSON.parse(locallyStoredStarter) : defaultStarterData
+    user && locallyStoredStarter
+      ? JSON.parse(locallyStoredStarter)
+      : defaultStarterData
   )
 
   useEffect(() => {
@@ -35,6 +37,22 @@ export default function App() {
       localStorage.setItem('starter', JSON.stringify(starter))
     }
   }, [selections, starter, user])
+
+  useEffect(() => {
+    if (
+      user &&
+      (locallyStoredSelections || locallyStoredStarter) &&
+      confirm('Load the selections from your last visit?')
+    ) {
+      if (locallyStoredSelections) {
+        setSelections(JSON.parse(locallyStoredSelections))
+      }
+      if (locallyStoredStarter) {
+        setStarter(JSON.parse(locallyStoredStarter))
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user])
 
   const addNewSelection = (selection: Selection) => {
     setSelections({ ...selections, [selection.id]: selection })
