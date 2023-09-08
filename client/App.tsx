@@ -19,16 +19,14 @@ export default function App() {
 
   const locallyStoredSelections = localStorage.getItem('selections')
   const [selections, setSelections] = useState<SelectionsModel>(
-    user && locallyStoredSelections
+    locallyStoredSelections
       ? JSON.parse(locallyStoredSelections)
       : defaultSelectionsData
   )
 
   const locallyStoredStarter = localStorage.getItem('starter')
   const [starter, setStarter] = useState<StarterData>(
-    user && locallyStoredStarter
-      ? JSON.parse(locallyStoredStarter)
-      : defaultStarterData
+    locallyStoredStarter ? JSON.parse(locallyStoredStarter) : defaultStarterData
   )
 
   useEffect(() => {
@@ -73,7 +71,7 @@ export default function App() {
   return (
     <>
       <Nav />
-      <Title />
+      {/* <Title /> */}
       <Selections
         flours={flourDb}
         selections={selections}
@@ -94,28 +92,28 @@ const defaultSelectionsData: SelectionsModel = {
     name: 'Wheat',
     defaultHydration: 75,
     isGlutenFree: false,
-    amount: 310,
+    amount: 300,
     position: 1,
   },
-  1001: {
-    id: 1001,
-    flourId: 103,
-    name: 'Rye',
-    defaultHydration: 65,
-    alteredHydration: 72,
-    isGlutenFree: false,
-    amount: 150,
-    position: 2,
-  },
-  1002: {
-    id: 1002,
-    flourId: 106,
-    name: 'Spelt',
-    defaultHydration: 63,
-    isGlutenFree: false,
-    amount: 40,
-    position: 3,
-  },
+  // 1001: {
+  //   id: 1001,
+  //   flourId: 103,
+  //   name: 'Rye',
+  //   defaultHydration: 65,
+  //   alteredHydration: 72,
+  //   isGlutenFree: false,
+  //   amount: 150,
+  //   position: 2,
+  // },
+  // 1002: {
+  //   id: 1002,
+  //   flourId: 106,
+  //   name: 'Spelt',
+  //   defaultHydration: 63,
+  //   isGlutenFree: false,
+  //   amount: 50,
+  //   position: 3,
+  // },
 }
 
 const defaultStarterData: StarterData = {

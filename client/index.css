@@ -70,6 +70,10 @@ input[type='number']:hover::-webkit-inner-spin-button {
   padding: 0.25em;
 }
 
+.log-button {
+  font-size: 0.8em;
+}
+
 .new-selection {
   width: 9.2em;
 }
@@ -150,7 +154,12 @@ a:visited {
     font-size: 5.3vw;
   }
 
+  h3 {
+    font-size: 4vw;
+  }
+
   hr {
+    margin-top: 3vw;
     width: 84vw;
   }
 
@@ -158,6 +167,11 @@ a:visited {
   button,
   select {
     font-size: 3.5vw;
+    min-height: 4vw;
+  }
+
+  .log-button {
+    font-size: 2.8vw;
     min-height: 4vw;
   }
 
