@@ -47,13 +47,15 @@ export default function App() {
   }, [starter])
 
   useEffect(() => {
-    if (user && locallyStoredSelections && locallyStoredStarter) {
-      if (locallyStoredSelections) {
-        setSelections(JSON.parse(locallyStoredSelections))
-      }
-      if (locallyStoredStarter) {
-        setStarter(JSON.parse(locallyStoredStarter))
-      }
+    if (user && locallyStoredSelections) {
+      setSelections(JSON.parse(locallyStoredSelections))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user])
+
+  useEffect(() => {
+    if (user && locallyStoredStarter) {
+      setStarter(JSON.parse(locallyStoredStarter))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
