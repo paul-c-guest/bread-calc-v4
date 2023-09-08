@@ -15,7 +15,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       redirect_uri: window.location.origin,
     }}
     cacheLocation="localstorage"
-    useRefreshTokens
   >
     <QueryClientProvider client={qclient}>
       <App />

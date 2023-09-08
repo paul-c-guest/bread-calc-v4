@@ -1,20 +1,26 @@
 import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-
-import { Selections } from './components/Selections'
-import { Selection, Selections as SelectionsModel } from '../models/flour'
-import { Starter } from './components/Starter'
-import { Totals } from './components/Totals'
-import { StarterData } from '../models/starter'
-import { Update } from '../models/update'
-import { getFlours } from './api/flours'
-import { Nav } from './components/Nav'
 import { useAuth0 } from '@auth0/auth0-react'
 
-export default function App() {
-  const { data: flourDb, isError, isLoading } = useQuery(['flours'], getFlours)
+import { getFlours } from './api/flours'
 
-  const { user } = useAuth0()
+import { Selection, Selections as SelectionsModel } from '../models/flour'
+import { StarterData } from '../models/starter'
+import { Update } from '../models/update'
+
+import { Selections } from './components/Selections'
+import { Starter } from './components/Starter'
+import { Totals } from './components/Totals'
+import { Nav } from './components/Nav'
+
+export default function App() {
+  const { user, isLoading: authIsLoading, isAuthenticated } = useAuth0()
+
+  const {
+    data: flourDb,
+    isError,
+    isLoading: queryIsLoading,
+  } = useQuery(['flours'], getFlours)
 
   const locallyStoredSelections = localStorage.getItem('selections')
   const locallyStoredStarter = localStorage.getItem('starter')
@@ -42,23 +48,25 @@ export default function App() {
   useEffect(() => {
     if (user) {
       localStorage.setItem('starter', JSON.stringify(starter))
+      console.log(starter);
+      
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [starter])
 
   useEffect(() => {
-    if (user && locallyStoredSelections) {
+    if (user && locallyStoredSelections != null) {
       setSelections(JSON.parse(locallyStoredSelections))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user])
+  }, [user, isAuthenticated])
 
   useEffect(() => {
-    if (user && locallyStoredStarter) {
+    if (user && locallyStoredStarter != null) {
       setStarter(JSON.parse(locallyStoredStarter))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user])
+  }, [user, isAuthenticated])
 
   const addNewSelection = (selection: Selection) => {
     setSelections({ ...selections, [selection.id]: selection })
@@ -90,7 +98,8 @@ export default function App() {
     setSelections(updated)
   }
 
-  if (isError || isLoading) return <p>... please wait ...</p>
+  if (isError || queryIsLoading || authIsLoading)
+    return <p>... please wait ...</p>
 
   return (
     <>

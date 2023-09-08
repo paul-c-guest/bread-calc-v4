@@ -64,7 +64,6 @@ button,
 select {
   padding: 0.5em;
   font-size: 100%;
-  transition: 1s;
 }
 input[type='number']:hover::-webkit-inner-spin-button {
   height: 1.25em;
@@ -98,6 +97,11 @@ hr {
 .flour-entry-number {
   width: 4em;
   text-align: center;
+}
+
+.warning {
+  background-color: rgb(255, 213, 213);
+  outline: auto;
 }
 
 .flour-delete-button {

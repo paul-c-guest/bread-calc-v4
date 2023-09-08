@@ -1,5 +1,5 @@
-import { Selection as SelectionModel } from '../../models/flour'
 import { Update } from '../../models/update'
+import { Selection as SelectionModel } from '../../models/flour'
 
 interface Props {
   selection: SelectionModel
@@ -60,7 +60,7 @@ export function Selection({
       </td>
       <td>
         <input
-          className="flour-entry-number"
+          className={selection.amount > 0 ? "flour-entry-number" : "flour-entry-number warning"}
           id="amount"
           onChange={handleChange}
           type="number"

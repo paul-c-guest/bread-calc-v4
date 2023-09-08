@@ -24,7 +24,7 @@ export function Starter({ flours, starter, setStarter }: Props) {
 
   return (
     <>
-      <details open={true}>
+      <details open={false}>
         <summary>
           <h2>My Starter</h2>
         </summary>
@@ -57,10 +57,15 @@ export function Starter({ flours, starter, setStarter }: Props) {
                   type="number"
                   step={5}
                   min={0}
-                  className="flour-entry-number"
+                  className={
+                    starter.dry > 0
+                      ? 'flour-entry-number'
+                      : 'flour-entry-number warning'
+                  }
                   defaultValue={starter.dry}
                   name="dry"
                   onChange={updateValues}
+                  required
                 />
               </td>
               <td>
@@ -68,10 +73,15 @@ export function Starter({ flours, starter, setStarter }: Props) {
                   type="number"
                   step={5}
                   min={0}
-                  className="flour-entry-number"
+                  className={
+                    starter.wet > 0
+                      ? 'flour-entry-number'
+                      : 'flour-entry-number warning'
+                  }
                   defaultValue={starter.wet}
                   name="wet"
                   onChange={updateValues}
+                  required
                 />
               </td>
               <td>

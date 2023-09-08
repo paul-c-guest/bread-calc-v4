@@ -14,13 +14,17 @@ export function Totals({ selections, starter }: Props) {
   Object.values(selections).forEach((sel: Selection) => {
     dry += sel.amount
     wet += sel.amount * (sel.alteredHydration || sel.defaultHydration) * 0.01
-    // console.log(wet, dry, wet / dry)
   })
 
   // sum values for starter
   dry += starter.dry
   wet += starter.wet
 
+  // todo: remove some hydration from wet amount ot account for overhydration of starter
+  // make a new api route to do getFlourById(starter.flourId)
+  // use preferred hydration of returned flour to determine how much to subtract from wet total
+
+  // get final expected hydration of dough
   const hydration: number = Number(((wet / dry) * 100).toFixed(0))
 
   return (
