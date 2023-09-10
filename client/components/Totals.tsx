@@ -37,7 +37,7 @@ export function Totals({ selections, starter }: Props) {
             <th className="center">Total Weight</th>
           </tr>
           <tr>
-            <td className="total">{(wet + dry).toFixed(0)}g</td>
+            <td className="total center">{(wet + dry).toFixed(0)}g</td>
           </tr>
         </tbody>
       </table>
