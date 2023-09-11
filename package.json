@@ -7,6 +7,7 @@
     "dev": "run-p dev:client dev:server",
     "dev:client": "vite --host",
     "dev:server": "tsx watch server/index.ts",
+    "knex": "knex --knexfile ./server/db/knexfile.js",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
@@ -18,6 +19,8 @@
     "express-jwt": "^8.4.1",
     "jwks-rsa": "^3.0.1",
     "jwt-auth": "^2.0.1",
+    "knex": "^2.5.1",
+    "sqlite3": "^5.1.6",
     "superagent": "^8.1.2"
   },
   "devDependencies": {
@@ -40,5 +43,8 @@
     "tsx": "^3.12.8",
     "typescript": "^5.0.2",
     "vite": "^4.4.5"
+  },
+  "prettier": {
+    "semi": false
   }
 }
