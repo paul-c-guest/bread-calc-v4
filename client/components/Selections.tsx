@@ -48,7 +48,7 @@ export function Selections({
                     selection={selection}
                     deleteSelection={deleteSelection}
                     updateSelection={updateSelection}
-                    key={Math.random()}
+                    key={selection.id}
                   />
                 )
               })}
