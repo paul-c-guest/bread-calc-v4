@@ -15,4 +15,10 @@ router.get("/:id", async (req, res) => {
   res.status(200).json(flour)
 })
 
+router.post("/", async (req, res) => {
+  const result = db.putFlour(req.body)
+  if (result) res.status(200).json(result)
+  else res.status(500).send("something went wrong entering the flour to the db")
+})
+
 export default router
