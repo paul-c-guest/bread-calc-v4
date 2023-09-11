@@ -16,7 +16,7 @@ router.get("/:id", async (req, res) => {
 })
 
 router.post("/", async (req, res) => {
-  const result = db.putFlour(req.body)
+  const result = await db.putFlour(req.body)
   if (result) res.status(200).json(result)
   else res.status(500).send("something went wrong entering the flour to the db")
 })

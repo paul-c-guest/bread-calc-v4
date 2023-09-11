@@ -11,7 +11,8 @@ export const getFlourById = (id: number): Promise<Flour> => {
 }
 
 export const putFlour = (newFlour: FlourData): Promise<Flour> => {
-  return connection("flours").insert({ ...newFlour })
+  console.log("newFlour", newFlour)
+  return connection("flours").insert(newFlour)
 }
 
 export const putOverride = (override: Override): Promise<Override> => {

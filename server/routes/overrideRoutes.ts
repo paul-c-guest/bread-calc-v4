@@ -12,7 +12,7 @@ router.get("/:user", async (req, res) => {
 })
 
 router.post("/", async (req, res) => {
-  const result = db.putOverride(req.body)
+  const result = await db.putOverride(req.body)
   if (result) res.status(200).json(result)
   else
     res

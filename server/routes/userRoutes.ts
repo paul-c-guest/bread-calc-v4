@@ -5,8 +5,8 @@ import * as db from "../db/db"
 
 // GET api/v1/user/:id
 router.get("/:id", (req, res) => {
-  // await db.get
-  res.status(500).send("not implemented yet - PG")
+  db
+  res.status(500).send(`nothing implemented yet [get user ${req.params.id}]`)
 })
 
 export default router

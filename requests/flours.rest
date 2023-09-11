@@ -1,0 +1,20 @@
+### GET all
+
+GET http://localhost:3000/api/v1/flours
+
+### GET Wheat
+
+GET http://localhost:3000/api/v1/flours/101
+
+### post a new flour
+
+POST http://localhost:3000/api/v1/flours
+Content-Type: application/json
+
+{
+  "name": "Horse",
+  "defaultHydration": "50",
+  "isGlutenFree" : false
+}
+
+###
