@@ -1,5 +1,5 @@
-import { Selection, Selections } from '../../models/flour'
-import { StarterData } from '../../models/starter'
+import { Selection, Selections } from "../../models/flour"
+import { StarterData } from "../../models/starter"
 
 interface Props {
   selections: Selections
@@ -20,9 +20,11 @@ export function Totals({ selections, starter }: Props) {
   dry += starter.dry
   wet += starter.wet
 
-  // todo: remove some hydration from wet amount ot account for overhydration of starter
-  // make a new api route to do getFlourById(starter.flourId)
-  // use preferred hydration of returned flour to determine how much to subtract from wet total
+  //  remove some hydration from total wet amount to account for overhydration of starter
+  const starterExcessHydration =
+    starter.wet - starter.wet * (starter.hydration * 0.01)
+
+  wet -= starterExcessHydration
 
   // get final expected hydration of dough
   const hydration: number = Number(((wet / dry) * 100).toFixed(0))
@@ -34,9 +36,11 @@ export function Totals({ selections, starter }: Props) {
       <table>
         <tbody>
           <tr className="table-headings">
-            <th className="center">Total Weight</th>
+            <th className="center">Liquid To Add</th>
+            <th className="center">Total Dough</th>
           </tr>
           <tr>
+            <td className="total center">{(wet - starter.wet).toFixed(0)}ml</td>
             <td className="total center">{(wet + dry).toFixed(0)}g</td>
           </tr>
         </tbody>
@@ -45,19 +49,19 @@ export function Totals({ selections, starter }: Props) {
       <table>
         <tbody>
           <tr>
+            <th className="center">Final Hydration</th>
             <th className="center">Dry</th>
             <th className="center">Wet</th>
-            <th className="center">Hydration</th>
           </tr>
           <tr>
+            <td className="center sub-total" id="hydration-total">
+              {!isNaN(hydration) ? hydration : 0}%
+            </td>
             <td className="center sub-total" id="dry-total">
               {dry.toFixed(0)}g
             </td>
             <td className="center sub-total" id="wet-total">
               {wet.toFixed(0)}ml
-            </td>
-            <td className="center sub-total" id="hydration-total">
-              {!isNaN(hydration) ? hydration : 0}%
             </td>
           </tr>
         </tbody>

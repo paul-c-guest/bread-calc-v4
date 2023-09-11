@@ -1,11 +1,12 @@
-import ReactDOM from "react-dom/client";
-import { Auth0Provider } from "@auth0/auth0-react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ReactDOM from "react-dom/client"
+import { Auth0Provider } from "@auth0/auth0-react"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 
-import App from "./App.js";
-import "./index.css";
+import App from "./App.js"
+import "./index.css"
 
-const qclient = new QueryClient();
+const qclient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <Auth0Provider
@@ -18,6 +19,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   >
     <QueryClientProvider client={qclient}>
       <App />
+      <ReactQueryDevtools />
     </QueryClientProvider>
   </Auth0Provider>,
-);
+)

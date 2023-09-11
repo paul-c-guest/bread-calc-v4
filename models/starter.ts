@@ -1,5 +1,6 @@
 export interface StarterData {
-  flourId: number | undefined;
-  dry: number;
-  wet: number;
+  flourId: number
+  dry: number
+  wet: number
+  hydration: number
 }

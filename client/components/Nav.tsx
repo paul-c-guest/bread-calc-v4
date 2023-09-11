@@ -1,11 +1,11 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth0 } from "@auth0/auth0-react"
 
 export function Nav() {
-  const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
+  const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0()
 
   const handleLogin = () => {
-    user ? logout() : loginWithRedirect();
-  };
+    user ? logout() : loginWithRedirect()
+  }
 
   return (
     <nav>
@@ -18,5 +18,5 @@ export function Nav() {
       )}
       <hr />
     </nav>
-  );
+  )
 }

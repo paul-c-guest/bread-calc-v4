@@ -4,5 +4,5 @@ export function Title() {
       <h1 id="title">Good Leavening</h1>
       <hr />
     </>
-  );
+  )
 }

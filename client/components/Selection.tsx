@@ -1,5 +1,5 @@
-import { Update } from '../../models/update'
-import { Selection as SelectionModel } from '../../models/flour'
+import { Update } from "../../models/update"
+import { Selection as SelectionModel } from "../../models/flour"
 
 interface Props {
   selection: SelectionModel
@@ -21,28 +21,28 @@ export function Selection({
 
     const updates: Update = {
       id: Number(selection.id),
-      key: '',
+      key: "",
       value: newValue,
     }
 
     switch (event.target.id) {
-      case 'amount':
+      case "amount":
         updateSelection({
           ...updates,
-          key: 'amount',
+          key: "amount",
         })
         break
 
-      case 'hydration':
+      case "hydration":
         if (newValue !== selection.defaultHydration) {
           updateSelection({
             ...updates,
-            key: 'alteredHydration',
+            key: "alteredHydration",
           })
         } else {
           updateSelection({
             ...updates,
-            key: 'defaultHydration',
+            key: "defaultHydration",
           })
         }
     }
@@ -63,8 +63,8 @@ export function Selection({
         <input
           className={
             selection.amount > 0
-              ? 'flour-entry-number'
-              : 'flour-entry-number warning'
+              ? "flour-entry-number"
+              : "flour-entry-number warning"
           }
           id="amount"
           onChange={handleChange}

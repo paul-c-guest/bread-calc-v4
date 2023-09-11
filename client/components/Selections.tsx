@@ -2,10 +2,10 @@ import {
   Flour as FlourModel,
   Selection as SelectionModel,
   Selections as SelectionsModel,
-} from '../../models/flour'
-import { Update } from '../../models/update'
-import { NewSelection } from './NewSelection'
-import { Selection } from './Selection'
+} from "../../models/flour"
+import { Update } from "../../models/update"
+import { NewSelection } from "./NewSelection"
+import { Selection } from "./Selection"
 
 interface Props {
   flours: FlourModel[]

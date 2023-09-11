@@ -1,5 +1,5 @@
-import { Flour } from '../../models/flour'
-import { StarterData } from '../../models/starter'
+import { Flour } from "../../models/flour"
+import { StarterData } from "../../models/starter"
 
 interface Props {
   flours: Flour[]
@@ -8,17 +8,21 @@ interface Props {
 }
 
 export function Starter({ flours, starter, setStarter }: Props) {
+  const updateSelection = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const id = Number(event.target.value)
+    const flour = flours.find((flour) => flour.id === id)!
+
+    setStarter({
+      ...starter,
+      hydration: flour.defaultHydration,
+      flourId: id,
+    })
+  }
+
   const updateValues = (event: React.ChangeEvent<HTMLInputElement>) => {
     setStarter({
       ...starter,
       [event.target.name]: Number(event.target.value),
-    })
-  }
-
-  const updateSelection = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setStarter({
-      ...starter,
-      flourId: Number(event.target.value),
     })
   }
 
@@ -59,8 +63,8 @@ export function Starter({ flours, starter, setStarter }: Props) {
                   min={0}
                   className={
                     starter.dry > 0
-                      ? 'flour-entry-number'
-                      : 'flour-entry-number warning'
+                      ? "flour-entry-number"
+                      : "flour-entry-number warning"
                   }
                   defaultValue={starter.dry}
                   name="dry"
@@ -76,8 +80,8 @@ export function Starter({ flours, starter, setStarter }: Props) {
                   min={0}
                   className={
                     starter.wet > 0
-                      ? 'flour-entry-number'
-                      : 'flour-entry-number warning'
+                      ? "flour-entry-number"
+                      : "flour-entry-number warning"
                   }
                   defaultValue={starter.wet}
                   name="wet"
