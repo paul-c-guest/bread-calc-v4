@@ -111,6 +111,7 @@ export function NewSelection({ flours, selections, addNewSelection }: Props) {
             className="new-selection"
             defaultValue={flours[0].name}
             onChange={updateSelection}
+            aria-label="select the new flour type"
           >
             {flours
               .filter((flour) => !selectionIds.includes(flour.id))
@@ -130,6 +131,7 @@ export function NewSelection({ flours, selections, addNewSelection }: Props) {
             step={10}
             value={selectionValues.amount}
             onChange={updateValues}
+            aria-label="new selection's amount in grams"
           />
         </td>
         <td>
@@ -141,13 +143,16 @@ export function NewSelection({ flours, selections, addNewSelection }: Props) {
             step={1}
             value={selectionValues.hydration}
             onChange={updateValues}
+            aria-label="new selection's hydration as a percentage of flour"
           />
         </td>
         <td>
           <button
             className="flour-delete-button"
             style={{ visibility: "hidden" }}
-          ></button>
+          >
+            X
+          </button>
         </td>
       </tr>
       <tr>
