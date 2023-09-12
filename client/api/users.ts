@@ -9,6 +9,6 @@ export const getUserById = async (id: number): Promise<User> => {
 
 export const getUserByAuth = async (sub: string): Promise<User> => {
   const response = await request.get(`/api/v1/users/sub/${sub}`)
-  console.log(response.body)
+  // console.log(response.body)
   return response.body
 }

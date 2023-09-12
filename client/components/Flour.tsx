@@ -2,20 +2,19 @@ import { useState } from "react"
 import { Flour as FlourModel } from "../../models/flour"
 import { Override } from "../../models/user"
 import { UseMutationResult } from "@tanstack/react-query"
-import { getUserByAuth } from "../api/users"
 
 interface Props {
   flour: FlourModel
   mutateByDelete: UseMutationResult<unknown, unknown, Override, unknown>
   mutateByUpdate: UseMutationResult<unknown, unknown, Override, unknown>
-  sub: string
+  // userId: number
 }
 
 export const Flour = ({
   flour,
   mutateByDelete,
   mutateByUpdate,
-  sub,
+  // userId,
 }: Props) => {
   const [hydration, setHydration] = useState(flour.defaultHydration)
 
@@ -24,10 +23,9 @@ export const Flour = ({
   }
 
   const handleUpdate = async () => {
-    // const userId = await getUserByAuth(sub)
-    const userId = 2
+    // const user = await getUserByAuth(sub)
     const override: Override = {
-      userId: Number(userId),
+      // userId,
       flourId: flour.id,
       hydrationOverride: hydration,
     }

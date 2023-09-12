@@ -1,17 +1,42 @@
 import { useAuth0 } from "@auth0/auth0-react"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { Navigate } from "react-router-dom"
-import { getFlours } from "../api/flours"
+
 import { Flour } from "./Flour"
-import { deleteOverride, putOverride } from "../api/overrides"
+import { getFlours } from "../api/flours"
+import {
+  deleteOverride,
+  getOverridesForUserId,
+  putOverride,
+} from "../api/overrides"
+import { getUserByAuth } from "../api/users"
 
 export const FloursPage = () => {
-  const { user, isAuthenticated, isLoading: authIsLoading } = useAuth0()
+  const {
+    user: auth0User,
+    isAuthenticated,
+    isLoading: authIsLoading,
+  } = useAuth0()
 
   const { data: flourDb, isLoading: queryIsLoading } = useQuery(
     ["flours"],
     getFlours,
   )
+
+  const { data: user, isLoading: userIsLoading } = useQuery(
+    ["user"],
+    () => getUserByAuth('sdfger5t5r4rg54trf'),
+  )
+
+  console.log(user);
+  
+
+  const { data: userOverrides, isLoading: overridesIsLoading } = useQuery(
+    ["overrides"],
+    () =>  getOverridesForUserId(user?.id),
+  )
+
+  console.log(userOverrides)
 
   const queryClient = useQueryClient()
 
@@ -23,7 +48,8 @@ export const FloursPage = () => {
     onSuccess: async () => queryClient.invalidateQueries(),
   })
 
-  if (queryIsLoading || authIsLoading) return <p>...please wait...</p>
+  if (authIsLoading || queryIsLoading || overridesIsLoading || userIsLoading)
+    return <p>...please wait...</p>
 
   if (!isAuthenticated) return <Navigate to={"/"} />
 
@@ -45,7 +71,7 @@ export const FloursPage = () => {
                 mutateByDelete={mutateByDelete}
                 mutateByUpdate={mutateByUpdate}
                 flour={flour}
-                sub={user?.sub || ''}
+                // userId={user.id}
               />
             ))}
           </tbody>
