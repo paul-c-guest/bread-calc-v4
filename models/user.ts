@@ -10,6 +10,6 @@ export interface User extends UserData {
 
 export interface Override {
   flourId: number
-  userId: number
+  userId?: number
   hydrationOverride: number
 }

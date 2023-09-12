@@ -1,9 +1,10 @@
 import { useAuth0 } from "@auth0/auth0-react"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
 export function Nav() {
   const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0()
   const navigate = useNavigate()
+  const location = useLocation()
 
   const handleLogin = () => {
     user ? logout() : loginWithRedirect()
@@ -16,9 +17,14 @@ export function Nav() {
         <button className="nav-button" onClick={handleLogin}>
           {isAuthenticated ? "Logout" : "Login"}
         </button>
-        {isAuthenticated && (
-          <button onClick={() => navigate("flours")} className="nav-button">
+        {isAuthenticated && location.pathname !== "/flours" && (
+          <button className="nav-button" onClick={() => navigate("flours")}>
             Flours
+          </button>
+        )}
+        {isAuthenticated && location.pathname !== "/" && (
+          <button className="nav-button" onClick={() => navigate("/")}>
+            Selections
           </button>
         )}
         {isAuthenticated && (
