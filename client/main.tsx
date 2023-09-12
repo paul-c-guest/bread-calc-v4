@@ -2,11 +2,13 @@ import ReactDOM from "react-dom/client"
 import { Auth0Provider } from "@auth0/auth0-react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import { RouterProvider, createBrowserRouter } from "react-router-dom"
 
-import App from "./App.js"
 import "./index.css"
+import { routes } from "./routes"
 
 const qclient = new QueryClient()
+const router = createBrowserRouter(routes)
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <Auth0Provider
@@ -18,7 +20,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     cacheLocation="localstorage"
   >
     <QueryClientProvider client={qclient}>
-      <App />
+      <RouterProvider router={router} />
       <ReactQueryDevtools />
     </QueryClientProvider>
   </Auth0Provider>,

@@ -1,31 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Montagu+Slab:wght@700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montagu+Slab:wght@700&display=swap");
 
 :root {
   --min-button-width: 1.5em;
+  --width: 25em;
   font-family: sans-serif;
   font-size: 130%;
 }
 
 body {
-  margin: 2em;
+  margin: 1em;
   text-align: center;
 }
 
 h1 {
-  margin: 0.6em auto;
+  margin: 0.25em auto;
   font-weight: normal;
-  font-family: 'Montagu Slab', sans-serif;
+  font-family: "Montagu Slab", sans-serif;
   font-size: 2.6em;
 }
 
 #title::before {
-  content: '🎩 ';
+  content: "🎩 ";
+}
+
+.welcome-string {
+  font-weight: bold;
+  margin: 0 auto 0 0;
+  padding: 0;
 }
 
 h2 {
   margin: 0.5em auto;
   font-weight: normal;
-  font-family: 'Montagu Slab', sans-serif;
+  font-family: "Montagu Slab", sans-serif;
   font-size: 1.7em;
   transition: 0.1s;
 }
@@ -67,13 +74,25 @@ select {
   padding: 0.5em;
   font-size: 100%;
 }
-input[type='number']:hover::-webkit-inner-spin-button {
+
+input[type="number"]:hover::-webkit-inner-spin-button {
   height: 1.25em;
   padding: 0.25em;
 }
 
-.log-button {
-  font-size: 0.8em;
+.nav-button-block {
+  display: flex;
+  flex: auto;
+  flex-flow: row-reverse;
+  width: var(--width);
+  margin: auto;
+}
+
+.nav-button {
+  /* button row is flex-reversed */
+  margin-left: 1em;
+  padding: 0.25em 0.5em;
+  font-size: 0.7em;
 }
 
 .new-selection {
@@ -87,7 +106,7 @@ input:focus-visible {
 
 hr {
   margin-top: 1em;
-  width: 25em;
+  width: var(--width);
   border-color: #0000;
   background-color: black;
 }
@@ -114,7 +133,7 @@ hr {
 }
 
 .flour-delete-button::after {
-  content: '⨯';
+  content: "⨯";
 }
 
 .sub-total {
@@ -167,9 +186,9 @@ a:visited {
 
   hr {
     margin-top: 3vw;
-    width: 84vw;
+    width: 80vw;
   }
-
+  .welcome-string,
   input,
   button,
   select {
@@ -177,9 +196,12 @@ a:visited {
     min-height: 4vw;
   }
 
-  .log-button {
-    font-size: 2.8vw;
-    min-height: 4vw;
+  .nav-button-block {
+    width: 80vw;
+  }
+
+  .nav-button {
+    font-size: 2.2vw;
   }
 
   td {

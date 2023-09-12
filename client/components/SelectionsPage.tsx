@@ -2,18 +2,17 @@ import { useEffect, useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { useAuth0 } from "@auth0/auth0-react"
 
-import { getFlours } from "./api/flours"
+import { getFlours } from "../api/flours"
 
-import { Selection, Selections as SelectionsModel } from "../models/flour"
-import { StarterData } from "../models/starter"
-import { Update } from "../models/update"
+import { Selection, Selections as SelectionsModel } from "../../models/flour"
+import { StarterData } from "../../models/starter"
+import { Update } from "../../models/update"
 
-import { Selections } from "./components/Selections"
-import { Starter } from "./components/Starter"
-import { Totals } from "./components/Totals"
-import { Nav } from "./components/Nav"
+import { Selections } from "./Selections"
+import { Starter } from "./Starter"
+import { Totals } from "./Totals"
 
-export default function App() {
+export default function SelectionsPage() {
   const { user, isLoading: authIsLoading, isAuthenticated } = useAuth0()
 
   const {
@@ -103,8 +102,6 @@ export default function App() {
 
   return (
     <>
-      <Nav />
-      {/* <Title /> */}
       <Selections
         flours={flourDb}
         selections={selections}
