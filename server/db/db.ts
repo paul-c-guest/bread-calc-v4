@@ -1,6 +1,6 @@
 import connection from "./connection"
 import { Flour, FlourData, Selections } from "../../models/flour"
-import { Override } from "../../models/user"
+import { Override, User } from "../../models/user"
 
 export const getAllFlours = (): Promise<Selections> => {
   return connection("flours").select()
@@ -25,4 +25,8 @@ export const getOverridesForUser = (id: number): Promise<Override[]> => {
 
 export const deleteOverride = (override: Override): Promise<Override> => {
   return connection("overrides").where({ flourId: override.flourId }).delete()
+}
+
+export const getUserByAuth = (sub: string): Promise<User> => {
+  return connection("users").where({ auth0id: sub }).first()
 }

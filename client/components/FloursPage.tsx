@@ -6,7 +6,7 @@ import { Flour } from "./Flour"
 import { deleteOverride, putOverride } from "../api/overrides"
 
 export const FloursPage = () => {
-  const { isAuthenticated, isLoading: authIsLoading } = useAuth0()
+  const { user, isAuthenticated, isLoading: authIsLoading } = useAuth0()
 
   const { data: flourDb, isLoading: queryIsLoading } = useQuery(
     ["flours"],
@@ -41,10 +41,11 @@ export const FloursPage = () => {
             </tr>
             {flourDb?.map((flour) => (
               <Flour
-              key={flour.id}
+                key={flour.id}
                 mutateByDelete={mutateByDelete}
                 mutateByUpdate={mutateByUpdate}
                 flour={flour}
+                sub={user?.sub || ''}
               />
             ))}
           </tbody>

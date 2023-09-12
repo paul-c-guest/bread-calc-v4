@@ -10,3 +10,8 @@ router.get("/:id", (req, res) => {
 })
 
 export default router
+
+router.get("/sub/:sub", (req, res) => {
+  const result = db.getUserByAuth(req.params.sub)
+  res.status(200).json(result)
+})
