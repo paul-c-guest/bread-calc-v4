@@ -1,6 +1,6 @@
-import { useAuth0 } from "@auth0/auth0-react"
+// import { useAuth0 } from "@auth0/auth0-react"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { Navigate } from "react-router-dom"
+// import { Navigate } from "react-router-dom"
 
 import { Flour } from "./Flour"
 import { deleteFlour, getFlours, putNewFlour } from "../api/flours"
@@ -15,7 +15,7 @@ const initialData: FlourData = {
 }
 
 export const FloursPage = () => {
-  const { isAuthenticated, isLoading: authIsLoading } = useAuth0()
+  // const { isAuthenticated, isLoading: authIsLoading } = useAuth0()
 
   const { data: flourDb, isLoading: queryIsLoading } = useQuery(
     ["flours"],
@@ -85,9 +85,11 @@ export const FloursPage = () => {
 
   // if (authIsLoading || queryIsLoading || overridesIsLoading || userIsLoading)
   //   return <p>...please wait...</p>
-  if (authIsLoading || queryIsLoading) return <p>...please wait...</p>
+  if (
+    // authIsLoading || 
+    queryIsLoading) return <p>...please wait...</p>
 
-  if (!isAuthenticated) return <Navigate to={"/"} />
+  // if (!isAuthenticated) return <Navigate to={"/"} />
 
   return (
     <>

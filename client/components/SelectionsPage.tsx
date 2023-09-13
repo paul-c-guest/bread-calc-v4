@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useQuery } from "@tanstack/react-query"
-import { useAuth0 } from "@auth0/auth0-react"
+// import { useAuth0 } from "@auth0/auth0-react"
 
 import { getFlours } from "../api/flours"
 
@@ -13,7 +13,7 @@ import { Starter } from "./Starter"
 import { Totals } from "./Totals"
 
 export default function SelectionsPage() {
-  const { user, isLoading: authIsLoading, isAuthenticated } = useAuth0()
+  // const { user, isLoading: authIsLoading, isAuthenticated } = useAuth0()
 
   const {
     data: flourDb,
@@ -26,45 +26,48 @@ export default function SelectionsPage() {
   // console.log(locallyStoredSelections, locallyStoredStarter)
 
   const [selections, setSelections] = useState<SelectionsModel>(
-    locallyStoredSelections && user
+    locallyStoredSelections 
+    // && user
       ? JSON.parse(locallyStoredSelections)
       : defaultSelectionsData,
   )
 
   const [starter, setStarter] = useState<StarterData>(
-    locallyStoredStarter && user
+    locallyStoredStarter 
+    // && user
       ? JSON.parse(locallyStoredStarter)
       : defaultStarterData,
   )
 
   useEffect(() => {
-    if (user) {
+    // if (user) {
       localStorage.setItem("selections", JSON.stringify(selections))
-    }
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selections])
 
   useEffect(() => {
-    if (user) {
+    // if (user) {
       localStorage.setItem("starter", JSON.stringify(starter))
       // console.log(starter)
-    }
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [starter])
 
-  useEffect(() => {
-    if (user && locallyStoredSelections != null) {
-      setSelections(JSON.parse(locallyStoredSelections))
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, isAuthenticated])
+  // useEffect(() => {
+  //   if (
+  //     user && locallyStoredSelections != null) {
+  //     setSelections(JSON.parse(locallyStoredSelections))
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [user, isAuthenticated])
 
-  useEffect(() => {
-    if (user && locallyStoredStarter != null) {
-      setStarter(JSON.parse(locallyStoredStarter))
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, isAuthenticated])
+  // useEffect(() => {
+  //   if (user && locallyStoredStarter != null) {
+  //     setStarter(JSON.parse(locallyStoredStarter))
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [user, isAuthenticated])
 
   const addNewSelection = (selection: Selection) => {
     setSelections({ ...selections, [selection.id]: selection })
@@ -96,7 +99,9 @@ export default function SelectionsPage() {
     setSelections(updated)
   }
 
-  if (queryIsLoading || authIsLoading) return <p>... please wait ...</p>
+  if (queryIsLoading 
+    // || authIsLoading
+    ) return <p>... please wait ...</p>
 
   if (isError) return <p>... something's wrong ...</p>
 
