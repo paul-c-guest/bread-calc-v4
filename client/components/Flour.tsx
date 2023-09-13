@@ -25,9 +25,8 @@ export const Flour = ({
   flour,
   mutateHydrationByDelete,
   mutateHydrationByUpdate,
-  mutateFlourByDelete,
-} // userId,
-: Props) => {
+  mutateFlourByDelete, // userId,
+}: Props) => {
   const [hydration, setHydration] = useState(flour.defaultHydration)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,7 +49,8 @@ export const Flour = ({
   }
 
   const handleDelete = () => {
-    mutateFlourByDelete.mutate(flour.id)
+    if (confirm(`Delete ${flour.name} from the database?`))
+      mutateFlourByDelete.mutate(flour.id)
   }
 
   return (
@@ -78,7 +78,9 @@ export const Flour = ({
         <button disabled={false}>&#8634;</button>
       </td>
       <td>
-        <button onClick={handleDelete}>&#128465;</button>
+        <button style={{ height: "2.35em" }} onClick={handleDelete}>
+          &#128465;
+        </button>
       </td>
     </tr>
   )
