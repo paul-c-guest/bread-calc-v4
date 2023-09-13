@@ -1,5 +1,5 @@
 import request from "superagent"
-import { Flour } from "../../models/flour"
+import { Flour, FlourData } from "../../models/flour"
 
 export const getFlours = async (): Promise<Flour[]> => {
   const response = await request.get("/api/v1/flours")
@@ -8,5 +8,10 @@ export const getFlours = async (): Promise<Flour[]> => {
 
 export const getFlourById = async (id: number): Promise<Flour> => {
   const response = await request.get(`/api/v1/flours/${id}`)
+  return response.body
+}
+
+export const putNewFlour = async (flour: FlourData): Promise<Flour> => {
+  const response = await request.post("/api/v1/flours").send(flour)
   return response.body
 }

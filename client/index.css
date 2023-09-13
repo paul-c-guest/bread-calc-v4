@@ -68,6 +68,11 @@ td {
   text-align: center;
 }
 
+.checkbox {
+  width: 2.25em;
+  height: 2.25em;
+}
+
 input,
 button,
 select {
