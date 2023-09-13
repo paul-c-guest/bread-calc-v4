@@ -5,17 +5,29 @@ import { UseMutationResult } from "@tanstack/react-query"
 
 interface Props {
   flour: FlourModel
-  mutateByDelete: UseMutationResult<unknown, unknown, Override, unknown>
-  mutateByUpdate: UseMutationResult<unknown, unknown, Override, unknown>
+  mutateHydrationByDelete: UseMutationResult<
+    unknown,
+    unknown,
+    Override,
+    unknown
+  >
+  mutateHydrationByUpdate: UseMutationResult<
+    unknown,
+    unknown,
+    Override,
+    unknown
+  >
+  mutateFlourByDelete: UseMutationResult<FlourModel, unknown, number, unknown>
   // userId: number
 }
 
 export const Flour = ({
   flour,
-  mutateByDelete,
-  mutateByUpdate,
-  // userId,
-}: Props) => {
+  mutateHydrationByDelete,
+  mutateHydrationByUpdate,
+  mutateFlourByDelete,
+} // userId,
+: Props) => {
   const [hydration, setHydration] = useState(flour.defaultHydration)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,10 +43,14 @@ export const Flour = ({
     }
 
     if (hydration === flour.defaultHydration) {
-      mutateByDelete.mutate(override)
+      mutateHydrationByDelete.mutate(override)
     } else {
-      mutateByUpdate.mutate(override)
+      mutateHydrationByUpdate.mutate(override)
     }
+  }
+
+  const handleDelete = () => {
+    mutateFlourByDelete.mutate(flour.id)
   }
 
   return (
@@ -43,7 +59,12 @@ export const Flour = ({
         <input type="text" value={flour.name} readOnly />
       </td>
       <td>
-        <input type="number" value={hydration} onChange={handleChange} />
+        <input
+          type="number"
+          className="flour-entry-number"
+          value={hydration}
+          onChange={handleChange}
+        />
       </td>
       <td>
         <button
@@ -55,6 +76,9 @@ export const Flour = ({
       </td>
       <td>
         <button disabled={false}>&#8634;</button>
+      </td>
+      <td>
+        <button onClick={handleDelete}>&#128465;</button>
       </td>
     </tr>
   )

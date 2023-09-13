@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { Navigate } from "react-router-dom"
 
 import { Flour } from "./Flour"
-import { getFlours, putNewFlour } from "../api/flours"
+import { deleteFlour, getFlours, putNewFlour } from "../api/flours"
 import { deleteOverride, putOverride } from "../api/overrides"
 import { useEffect, useState } from "react"
 import { FlourData } from "../../models/flour"
@@ -46,7 +46,7 @@ export const FloursPage = () => {
   }
 
   useEffect(() => {
-    console.log(newFlour)
+    // console.log(newFlour)
   }, [newFlour])
 
   // const { data: user, isLoading: userIsLoading } = useQuery(["user"], () =>
@@ -71,11 +71,15 @@ export const FloursPage = () => {
 
   const queryClient = useQueryClient()
 
-  const mutateByUpdate = useMutation(putOverride, {
+  const mutateHydrationByUpdate = useMutation(putOverride, {
     onSuccess: async () => queryClient.invalidateQueries(),
   })
 
-  const mutateByDelete = useMutation(deleteOverride, {
+  const mutateHydrationByDelete = useMutation(deleteOverride, {
+    onSuccess: async () => queryClient.invalidateQueries(),
+  })
+
+  const mutateFlourByDelete = useMutation(deleteFlour, {
     onSuccess: async () => queryClient.invalidateQueries(),
   })
 
@@ -93,8 +97,8 @@ export const FloursPage = () => {
           <tbody>
             <tr>
               <th>Name / Type</th>
-              <th>Default Hydration</th>
-              <th>Gluten Free</th>
+              <th>Hydration</th>
+              <th>Gluten Free?</th>
             </tr>
             <tr>
               <td>
@@ -145,13 +149,14 @@ export const FloursPage = () => {
           <tbody>
             <tr>
               <th>Flour Type</th>
-              <th>Preferred Hydration</th>
+              <th>Hydration</th>
             </tr>
             {flourDb?.map((flour) => (
               <Flour
                 key={flour.id}
-                mutateByDelete={mutateByDelete}
-                mutateByUpdate={mutateByUpdate}
+                mutateHydrationByDelete={mutateHydrationByDelete}
+                mutateHydrationByUpdate={mutateHydrationByUpdate}
+                mutateFlourByDelete={mutateFlourByDelete}
                 flour={flour}
                 // userId={user.id}
               />

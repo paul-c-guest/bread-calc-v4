@@ -30,3 +30,7 @@ export const deleteOverride = (override: Override): Promise<Override> => {
 export const getUserByAuth = (sub: string): Promise<User> => {
   return connection("users").where({ auth0id: sub }).first()
 }
+
+export const deleteFlour = (id: number): Promise<Flour> => {
+  return connection('flours').where({id}).delete()
+}

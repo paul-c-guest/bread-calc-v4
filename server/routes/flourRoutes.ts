@@ -24,4 +24,10 @@ router.post("/", async (req, res) => {
     res.status(500).send("something went wrong entering the flour to the db")
 })
 
+router.delete("/:id", async (req, res) => {
+  const result = await db.deleteFlour(Number(req.params.id))
+  if (result) res.status(200).send("wheee")
+  else res.status(500).send("oh noooo")
+})
+
 export default router

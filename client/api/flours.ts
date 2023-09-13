@@ -15,3 +15,8 @@ export const putNewFlour = async (flour: FlourData): Promise<Flour> => {
   const response = await request.post("/api/v1/flours").send(flour)
   return response.body
 }
+
+export const deleteFlour = async (id: number): Promise<Flour> => {
+  const response = await request.delete(`/api/v1/flours/${id}`)
+  return response.body
+}

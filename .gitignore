@@ -26,5 +26,5 @@ dist-ssr
 # dotenv
 .env
 
-# knex db
-server/db/dev.sqlite3
+# knex 
+*.sqlite3
