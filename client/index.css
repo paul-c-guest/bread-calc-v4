@@ -24,12 +24,6 @@ h1 {
   content: "🎩 ";
 }
 
-.welcome-string {
-  font-weight: bold;
-  margin: 0 auto 0 0;
-  padding: 0;
-}
-
 h2 {
   margin: 0.5em auto;
   font-weight: normal;
@@ -86,19 +80,40 @@ input[type="number"]:hover::-webkit-inner-spin-button {
   padding: 0.25em;
 }
 
+.login-block {
+  display: flex;
+  flex: auto;
+  flex-flow: row;
+  width: var(--width);
+  margin: auto;
+}
+
+.welcome-string {
+  font-weight: bold;
+  margin: 0 auto 0 0;
+  padding: 0;
+}
+
+.login-button,
+.nav-button {
+  padding: 0.25em 0.5em;
+  font-size: 0.7em;
+}  
+
+.login-button {
+  margin-right: 1em;
+}  
+
 .nav-button-block {
   display: flex;
   flex: auto;
   flex-flow: row-reverse;
-  width: var(--width);
   margin: auto;
 }
 
 .nav-button {
   /* button row is flex-reversed */
   margin-left: 1em;
-  padding: 0.25em 0.5em;
-  font-size: 0.7em;
 }
 
 .new-selection {
