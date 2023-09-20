@@ -13,25 +13,25 @@ export function Nav() {
   return (
     <nav>
       <h1 id="title">Good Leavening</h1>
-      <div className="login-block">
-        <button className="login-button" onClick={handleLogin}>
-          {isAuthenticated ? "Logout" : "Login"}
-        </button>
-        {isAuthenticated && (
-          <div className="welcome-string">
-            Welcome, {user?.given_name ?? user?.nickname}
-          </div>
+      <div className="nav-button-block">
+        {isAuthenticated && location.pathname !== "/flours" && (
+          <button className="nav-button" onClick={() => navigate("flours")}>
+            Flours
+          </button>
         )}
-        <div className="nav-button-block">
-          {isAuthenticated && location.pathname !== "/flours" && (
-            <button className="nav-button" onClick={() => navigate("flours")}>
-              Flours
-            </button>
-          )}
-          {isAuthenticated && location.pathname !== "/" && (
-            <button className="nav-button" onClick={() => navigate("/")}>
-              Selections
-            </button>
+        {isAuthenticated && location.pathname !== "/" && (
+          <button className="nav-button" onClick={() => navigate("/")}>
+            Selections
+          </button>
+        )}
+        <div className="login-block">
+          <button className="login-button" onClick={handleLogin}>
+            {isAuthenticated ? "Logout" : "Login"}
+          </button>
+          {isAuthenticated && (
+            <div className="welcome-string">
+              Welcome, {user?.given_name ?? user?.nickname}
+            </div>
           )}
         </div>
       </div>
