@@ -35,7 +35,7 @@ export function Totals({ selections, starter }: Props) {
 
       <table>
         <tbody>
-          <tr className="table-headings">
+          <tr>
             <th className="center">Liquid To Add</th>
             <th className="center">Total Dough</th>
           </tr>

@@ -43,19 +43,41 @@ summary > * {
 }
 
 table {
+  table-layout: fixed;
   cursor: auto;
   margin: 0 auto;
+  width: var(--width);
+}
+
+tbody,
+thead {
+  /* background-color: aquamarine; */
 }
 
 th {
+  /* width: min-content; */
   font-weight: bold;
   text-align: left;
-  padding: 0.5em 0.5em 0;
+  /* padding: 0.5em 0.5em 0; */
+}
+
+.expand {
+  width: auto;
+}
+
+.squash {
+  width: fit-content;
+  width: 3em;
+}
+
+input {
+  width: calc(100% - 2em);
+  /* margin: 0 0.5em; */
 }
 
 td {
   text-align: start;
-  padding: 0.5em;
+  padding: 0.5em 0 ;
 }
 
 .center {

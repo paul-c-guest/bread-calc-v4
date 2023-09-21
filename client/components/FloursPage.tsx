@@ -1,12 +1,12 @@
+import { useEffect, useState } from "react"
+import { Navigate } from "react-router-dom"
 import { useAuth0 } from "@auth0/auth0-react"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { Navigate } from "react-router-dom"
 
 import { Flour } from "./Flour"
+import { FlourData } from "../../models/flour"
 import { deleteFlour, getFlours, putNewFlour } from "../api/flours"
 import { deleteOverride, putOverride } from "../api/overrides"
-import { useEffect, useState } from "react"
-import { FlourData } from "../../models/flour"
 
 const initialData: FlourData = {
   name: "",
@@ -94,12 +94,15 @@ export const FloursPage = () => {
       <h2>Add New Flour</h2>
       <form onSubmit={submit}>
         <table>
-          <tbody>
+          <thead>
             <tr>
-              <th>Name / Type</th>
-              <th>Hydration</th>
-              <th>Gluten Free?</th>
+              <th className="expand">Name</th>
+              <th className="expand">Hydration</th>
+              <th className="squash">GF</th>
+              <th className="squash"></th>
             </tr>
+          </thead>
+          <tbody>
             <tr>
               <td>
                 <input
@@ -133,10 +136,17 @@ export const FloursPage = () => {
                   name="isGlutenFree"
                 />
               </td>
+              <td>
+                <button
+                  disabled={!newFlour.name || isNaN(newFlour.defaultHydration)}
+                  type="submit"
+                >
+                  Add
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
-        <button type="submit">Add New</button>
       </form>
 
       <hr />
