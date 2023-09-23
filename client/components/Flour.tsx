@@ -56,7 +56,12 @@ export const Flour = ({
   return (
     <tr>
       <td>
-        <input type="text" value={flour.name} style={{width: '7em'}} readOnly />
+        <input
+          type="text"
+          value={flour.name}
+          style={{ width: "7.7em" }}
+          readOnly
+        />
       </td>
       <td>
         <input

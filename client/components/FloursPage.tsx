@@ -161,7 +161,7 @@ export const FloursPage = () => {
         <table>
           <tbody>
             <tr>
-              <th style={{width: '8.2em'}} className="first-col pad-right-col">Flour Type</th>
+              <th style={{width: '8.7em'}} className="first-col pad-right-col">Flour</th>
               <th>Hydration</th>
               <th className="button-col pad-right-col"></th>
               <th className="button-col pad-right-col"></th>
