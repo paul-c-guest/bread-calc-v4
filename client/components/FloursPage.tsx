@@ -191,7 +191,6 @@ export const FloursPage = () => {
           </tbody>
         </table>
       </details>
-      <hr />
     </>
   )
 }

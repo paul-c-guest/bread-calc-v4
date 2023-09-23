@@ -3,7 +3,8 @@
 :root {
   --min-button-width: 1.5em;
   --checkbox-size: 2.35em;
-  --total-width: 25em;
+  --big-screen-max-width: 25em;
+  --small-screen-max-width: 80vw;
   font-family: sans-serif;
   font-size: 130%;
 }
@@ -51,7 +52,7 @@ table {
   table-layout: fixed;
   cursor: auto;
   margin: 0 auto;
-  width: var(--total-width);
+  width: var(--big-screen-max-width);
   margin-bottom: -0.5em;
 }
 
@@ -90,7 +91,7 @@ input:focus-visible {
 
 hr {
   margin: 0.75em auto;
-  width: var(--total-width);
+  width: var(--big-screen-max-width);
   border-color: #0000;
   background-color: black;
 }
@@ -164,7 +165,7 @@ a:visited {
 .nav-button-block {
   display: flex;
   flex: auto;
-  width: var(--total-width);
+  width: var(--big-screen-max-width);
   flex-flow: row;
   margin: auto;
 }
@@ -244,8 +245,12 @@ a:visited {
   }
 
   hr {
-    margin: 2vw auto;
-    width: 80vw;
+    margin: 3vw auto;
+    width: var(--small-screen-max-width);
+  }
+
+  table {
+    width: var(--small-screen-max-width);
   }
 
   .welcome-string,
@@ -257,7 +262,7 @@ a:visited {
   }
 
   .nav-button-block {
-    width: 80vw;
+    width: var(--small-screen-max-width);
   }
 
   .login-button,
@@ -266,7 +271,7 @@ a:visited {
   }
 
   td {
-    padding: 1vw;
+    padding: 1vw 0;
   }
 
   th {
@@ -285,7 +290,7 @@ a:visited {
 
   .flour-delete-button {
     font-size: 5vw;
-    min-height: 8vw;
+    height: 7.8vw;
     /* todo: try get correct sizing on mobile */
   }
 }
