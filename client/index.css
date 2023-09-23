@@ -55,11 +55,6 @@ table {
   margin-bottom: -0.5em;
 }
 
-tbody,
-thead {
-  /* background-color: aquamarine; */
-}
-
 th {
   font-weight: bold;
   text-align: left;

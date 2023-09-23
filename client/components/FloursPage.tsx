@@ -145,7 +145,7 @@ export const FloursPage = () => {
                   disabled={!newFlour.name || isNaN(newFlour.defaultHydration)}
                   type="submit"
                 >
-                  &#9745;
+                  &#10003;
                 </button>
               </td>
             </tr>
