@@ -24,6 +24,8 @@ export const FloursPage = () => {
 
   const [newFlour, setNewFlour] = useState<FlourData>(initialData)
 
+  const [open, setOpen] = useState(false)
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const update = { ...newFlour }
     const key = event.target.name
@@ -140,11 +142,10 @@ export const FloursPage = () => {
               </td>
               <td>
                 <button
-                  className=""
                   disabled={!newFlour.name || isNaN(newFlour.defaultHydration)}
                   type="submit"
                 >
-                  Y
+                  &#9745;
                 </button>
               </td>
             </tr>
@@ -154,14 +155,24 @@ export const FloursPage = () => {
 
       <hr />
 
-      <details open={false}>
-        <summary>
+      <details
+        open={open}
+        onToggle={(event: React.ChangeEvent<HTMLDetailsElement>) =>
+          setOpen(event.target.open)
+        }
+      >
+        <summary className={open ? "details-open" : ""}>
           <h2>All Flours</h2>
         </summary>
         <table>
           <tbody>
             <tr>
-              <th style={{width: '8.7em'}} className="first-col pad-right-col">Flour</th>
+              <th
+                style={{ width: "8.7em" }}
+                className="first-col pad-right-col"
+              >
+                Flour
+              </th>
               <th>Hydration</th>
               <th className="button-col pad-right-col"></th>
               <th className="button-col pad-right-col"></th>
