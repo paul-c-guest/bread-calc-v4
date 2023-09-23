@@ -1,4 +1,4 @@
-import { useState } from "react"
+import React, { useState } from "react"
 
 import {
   Flour as FlourModel,
@@ -32,7 +32,12 @@ export function Selections({
 
   return (
     <>
-      <details open={open} onToggle={(event) => setOpen(event.target.open)}>
+      <details
+        open={open}
+        onToggle={(event: React.ChangeEvent<HTMLDetailsElement>) =>
+          setOpen(event.target.open)
+        }
+      >
         <summary className={open ? "details-open" : ""}>
           <h2>My Selections</h2>
         </summary>
@@ -43,7 +48,7 @@ export function Selections({
               <th className="first-col pad-right-col">Flour</th>
               <th onClick={orderSelectionsByAmount}>Amount</th>
               <th>Hydration</th>
-              <th className="selection-delete-col"></th>
+              <th className="button-last-col"></th>
             </tr>
             {Object.values(selections)
               .sort((a, b) => a.position - b.position)

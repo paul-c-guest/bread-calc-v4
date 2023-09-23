@@ -96,10 +96,12 @@ export const FloursPage = () => {
         <table>
           <thead>
             <tr>
-              <th>Name</th>
+              <th
+              style={{width: '12em'}}
+              className="first-col pad-right-col">Flour Name</th>
               <th>Hydration</th>
-              <th className="checkbox-col">GF</th>
-              <th className="squash"></th>
+              <th className="checkbox-col pad-right-col">GF?</th>
+              <th className="button-last-col"></th>
             </tr>
           </thead>
           <tbody>
@@ -108,7 +110,6 @@ export const FloursPage = () => {
                 <input
                   onChange={handleInputChange}
                   type="text"
-                  placeholder="flour..."
                   name="name"
                   value={newFlour.name}
                   required
@@ -118,6 +119,7 @@ export const FloursPage = () => {
                 <input
                   onChange={handleInputChange}
                   type="number"
+                  id="amount"
                   placeholder="70"
                   name="defaultHydration"
                   min={0}
@@ -138,10 +140,11 @@ export const FloursPage = () => {
               </td>
               <td>
                 <button
+                className=""
                   disabled={!newFlour.name || isNaN(newFlour.defaultHydration)}
                   type="submit"
                 >
-                  Add
+                  Y
                 </button>
               </td>
             </tr>

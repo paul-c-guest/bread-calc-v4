@@ -31,7 +31,12 @@ export function Starter({ flours, starter, setStarter }: Props) {
 
   return (
     <>
-      <details open={open} onToggle={(event) => setOpen(event.target.open)}>
+      <details
+        open={open}
+        onToggle={(event: React.ChangeEvent<HTMLDetailsElement>) =>
+          setOpen(event.target.open)
+        }
+      >
         <summary className={open ? "details-open" : ""}>
           <h2>My Starter</h2>
         </summary>
@@ -42,7 +47,7 @@ export function Starter({ flours, starter, setStarter }: Props) {
               <th className="first-col pad-right-col">Flour</th>
               <th>Dry (g)</th>
               <th>Wet (ml)</th>
-              <th className="starter-lock-col"></th>
+              <th className="button-last-col"></th>
             </tr>
             <tr>
               <td>
@@ -97,9 +102,7 @@ export function Starter({ flours, starter, setStarter }: Props) {
                 />
               </td>
               <td>
-                <button
-                  className="flour-delete-button"
-                ></button>
+                <button className="flour-delete-button"></button>
               </td>
             </tr>
           </tbody>

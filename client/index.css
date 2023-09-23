@@ -3,7 +3,7 @@
 :root {
   --min-button-width: 1.5em;
   --checkbox-size: 2.35em;
-  --width: 25em;
+  --total-width: 25em;
   font-family: sans-serif;
   font-size: 130%;
 }
@@ -51,7 +51,7 @@ table {
   table-layout: fixed;
   cursor: auto;
   margin: 0 auto;
-  width: var(--width);
+  width: var(--total-width);
   margin-bottom: -0.5em;
 }
 
@@ -76,11 +76,16 @@ button,
 select {
   padding: 0.5em;
   font-size: 100%;
+  min-width: 2.35em;
 }
 
 input[type="number"]:hover::-webkit-inner-spin-button {
   height: 1.25em;
   padding: 0.25em;
+}
+
+input[type="checkbox"] {
+  margin: 4px 0;
 }
 
 input:active,
@@ -90,7 +95,7 @@ input:focus-visible {
 
 hr {
   margin: 0.75em auto;
-  width: var(--width);
+  width: var(--total-width);
   border-color: #0000;
   background-color: black;
 }
@@ -116,14 +121,14 @@ a:visited {
 }
 
 .checkbox-col {
-  width: 2.85em;
+  width: 2.1em;
 }
 
 .first-col {
   width: 9em;
 }
-.starter-lock-col,
-.selection-delete-col {
+
+.button-last-col {
   width: 2.25em;
   text-align: right;
 }
@@ -164,7 +169,7 @@ a:visited {
 .nav-button-block {
   display: flex;
   flex: auto;
-  width: var(--width);
+  width: var(--total-width);
   flex-flow: row;
   margin: auto;
 }
