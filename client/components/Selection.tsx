@@ -52,6 +52,7 @@ export function Selection({
     <tr>
       <td>
         <input
+          size={0}
           className="flour-entry-name"
           type="text"
           value={selection.name}
@@ -61,11 +62,7 @@ export function Selection({
       </td>
       <td>
         <input
-          className={
-            selection.amount > 0
-              ? "flour-entry-number"
-              : "flour-entry-number warning"
-          }
+          className={selection.amount > 0 ? "" : "warning"}
           id="amount"
           onChange={handleChange}
           type="number"
@@ -88,7 +85,7 @@ export function Selection({
           aria-label="hydration percentage"
         />
       </td>
-      <td>
+      <td className="last-col">
         <button
           className="flour-delete-button"
           onClick={removeSelection}

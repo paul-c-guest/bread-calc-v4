@@ -1,3 +1,5 @@
+import { useState } from "react"
+
 import {
   Flour as FlourModel,
   Selection as SelectionModel,
@@ -22,26 +24,29 @@ export function Selections({
   deleteSelection,
   updateSelection,
 }: Props) {
+  const [open, setOpen] = useState(true)
+
   const orderSelectionsByAmount = () => {
     // todo - probably handle in App state?
   }
 
   return (
     <>
-      <details open={true}>
-        <summary>
+      <details open={open} onToggle={(event) => setOpen(event.target.open)}>
+        <summary className={open ? "details-open" : ""}>
           <h2>My Selections</h2>
         </summary>
 
         <table>
           <tbody>
             <tr>
-              <th>Flour</th>
+              <th className="first-col pad-right-col">Flour</th>
               <th onClick={orderSelectionsByAmount}>Amount</th>
               <th>Hydration</th>
+              <th className="selection-delete-col"></th>
             </tr>
             {Object.values(selections)
-              .sort((a, b) => (a.position > b.position ? 1 : -1))
+              .sort((a, b) => a.position - b.position)
               .map((selection) => {
                 return (
                   <Selection

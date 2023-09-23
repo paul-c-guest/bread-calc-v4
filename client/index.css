@@ -37,6 +37,11 @@ summary {
   user-select: none;
 }
 
+.details-open {
+  padding-bottom: 1em;
+  transition: 0.1s;
+}
+
 details,
 summary > * {
   display: inline;
@@ -47,46 +52,23 @@ table {
   cursor: auto;
   margin: 0 auto;
   width: var(--width);
+  margin-bottom: -0.5em;
 }
 
 tbody,
 thead {
-  /* background-color: aquamarine; */
+  background-color: aquamarine;
 }
 
 th {
-  /* width: min-content; */
   font-weight: bold;
   text-align: left;
-  /* padding: 0.5em 0.5em 0; */
-}
-
-.expand {
-  width: auto;
-}
-
-.squash {
-  width: fit-content;
-  width: 3em;
-}
-
-input {
-  width: calc(100% - 2em);
-  /* margin: 0 0.5em; */
+  padding-bottom: 0.5em;
 }
 
 td {
   text-align: start;
-  padding: 0.5em 0 ;
-}
-
-.center {
-  text-align: center;
-}
-
-.checkbox {
-  width: var(--checkbox-size);
-  height: var(--checkbox-size);
+  padding: 0 0 1em 0;
 }
 
 input,
@@ -99,6 +81,64 @@ select {
 input[type="number"]:hover::-webkit-inner-spin-button {
   height: 1.25em;
   padding: 0.25em;
+}
+
+input:active,
+input:focus-visible {
+  outline: 1pt;
+}
+
+hr {
+  margin: 0.75em auto;
+  width: var(--width);
+  border-color: #0000;
+  background-color: black;
+}
+
+ul.dropdown {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+li {
+  border-color: #666;
+  border-style: solid;
+  border-width: 1pt;
+  border-radius: 1.6pt;
+  padding: 0.5em;
+}
+
+a,
+a:visited {
+  color: black;
+  text-decoration: none;
+}
+
+.checkbox-col {
+  width: 2.85em;
+}
+
+.first-col {
+  width: 9em;
+}
+.starter-lock-col,
+.selection-delete-col {
+  width: 2.25em;
+  text-align: right;
+}
+
+.pad-right-col {
+  padding-right: 1em;
+}
+
+.center {
+  text-align: center;
+}
+
+.checkbox {
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
 }
 
 .login-block {
@@ -135,28 +175,22 @@ input[type="number"]:hover::-webkit-inner-spin-button {
 }
 
 .new-selection {
+  padding: 0.5em;
   width: 9.2em;
-}
-
-input:active,
-input:focus-visible {
-  outline: 1pt;
-}
-
-hr {
-  margin: 0.75em auto;
-  width: var(--width);
-  border-color: #0000;
-  background-color: black;
+  height: 2.3em;
 }
 
 .flour-entry-name {
+  size: 0;
   width: 8em;
+}
+
+.number-col {
+  width: 5em;
 }
 
 .flour-entry-number {
   width: 4em;
-  text-align: center;
 }
 
 .warning {
@@ -186,24 +220,10 @@ hr {
   padding: 0 1em 0.5em;
 }
 
-ul.dropdown {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-li {
-  border-color: #666;
-  border-style: solid;
-  border-width: 1pt;
-  border-radius: 1.6pt;
-  padding: 0.5em;
-}
-
-a,
-a:visited {
-  color: black;
-  text-decoration: none;
+#amount,
+#hydration {
+  text-align: center;
+  width: 4em;
 }
 
 @media (max-width: 660px) {

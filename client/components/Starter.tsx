@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { Flour } from "../../models/flour"
 import { StarterData } from "../../models/starter"
 
@@ -8,6 +9,8 @@ interface Props {
 }
 
 export function Starter({ flours, starter, setStarter }: Props) {
+  const [open, setOpen] = useState(false)
+
   const updateSelection = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const id = Number(event.target.value)
     const flour = flours.find((flour) => flour.id === id)!
@@ -28,17 +31,18 @@ export function Starter({ flours, starter, setStarter }: Props) {
 
   return (
     <>
-      <details open={false}>
-        <summary>
+      <details open={open} onToggle={(event) => setOpen(event.target.open)}>
+        <summary className={open ? "details-open" : ""}>
           <h2>My Starter</h2>
         </summary>
 
         <table>
           <tbody>
             <tr className="table-headings">
-              <th>Flour</th>
+              <th className="first-col pad-right-col">Flour</th>
               <th>Dry (g)</th>
               <th>Wet (ml)</th>
+              <th className="starter-lock-col"></th>
             </tr>
             <tr>
               <td>
@@ -68,6 +72,7 @@ export function Starter({ flours, starter, setStarter }: Props) {
                   }
                   defaultValue={starter.dry}
                   name="dry"
+                  id="amount"
                   onChange={updateValues}
                   aria-label="amount of flour in starter in grams"
                   required
@@ -78,6 +83,7 @@ export function Starter({ flours, starter, setStarter }: Props) {
                   type="number"
                   step={5}
                   min={0}
+                  id="amount"
                   className={
                     starter.wet > 0
                       ? "flour-entry-number"
@@ -90,12 +96,11 @@ export function Starter({ flours, starter, setStarter }: Props) {
                   required
                 />
               </td>
-              {/* <td>
+              <td>
                 <button
                   className="flour-delete-button"
-                  style={{ visibility: 'hidden' }}
                 ></button>
-              </td> */}
+              </td>
             </tr>
           </tbody>
         </table>

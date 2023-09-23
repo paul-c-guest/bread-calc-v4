@@ -96,9 +96,9 @@ export const FloursPage = () => {
         <table>
           <thead>
             <tr>
-              <th className="expand">Name</th>
-              <th className="expand">Hydration</th>
-              <th className="squash">GF</th>
+              <th>Name</th>
+              <th>Hydration</th>
+              <th className="checkbox-col">GF</th>
               <th className="squash"></th>
             </tr>
           </thead>
