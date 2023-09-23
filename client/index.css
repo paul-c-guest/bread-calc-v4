@@ -128,7 +128,7 @@ a:visited {
   width: 9em;
 }
 
-.button-last-col {
+.button-col {
   width: 2.25em;
   text-align: right;
 }
@@ -153,7 +153,7 @@ a:visited {
 }
 
 .welcome-string {
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .login-button,

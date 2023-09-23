@@ -47,7 +47,7 @@ export function Starter({ flours, starter, setStarter }: Props) {
               <th className="first-col pad-right-col">Flour</th>
               <th>Dry (g)</th>
               <th>Wet (ml)</th>
-              <th className="button-last-col"></th>
+              <th className="button-col"></th>
             </tr>
             <tr>
               <td>

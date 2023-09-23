@@ -48,7 +48,7 @@ export function Selections({
               <th className="first-col pad-right-col">Flour</th>
               <th onClick={orderSelectionsByAmount}>Amount</th>
               <th>Hydration</th>
-              <th className="button-last-col"></th>
+              <th className="button-col"></th>
             </tr>
             {Object.values(selections)
               .sort((a, b) => a.position - b.position)

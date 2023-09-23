@@ -96,12 +96,12 @@ export const FloursPage = () => {
         <table>
           <thead>
             <tr>
-              <th
-              style={{width: '12em'}}
-              className="first-col pad-right-col">Flour Name</th>
+              <th style={{ width: "12em" }} className="first-col pad-right-col">
+                Flour Name
+              </th>
               <th>Hydration</th>
               <th className="checkbox-col pad-right-col">GF?</th>
-              <th className="button-last-col"></th>
+              <th className="button-col"></th>
             </tr>
           </thead>
           <tbody>
@@ -140,7 +140,7 @@ export const FloursPage = () => {
               </td>
               <td>
                 <button
-                className=""
+                  className=""
                   disabled={!newFlour.name || isNaN(newFlour.defaultHydration)}
                   type="submit"
                 >
@@ -161,8 +161,11 @@ export const FloursPage = () => {
         <table>
           <tbody>
             <tr>
-              <th>Flour Type</th>
+              <th style={{width: '8.2em'}} className="first-col pad-right-col">Flour Type</th>
               <th>Hydration</th>
+              <th className="button-col pad-right-col"></th>
+              <th className="button-col pad-right-col"></th>
+              <th className="button-col"></th>
             </tr>
             {flourDb?.map((flour) => (
               <Flour
