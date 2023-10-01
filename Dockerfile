@@ -52,7 +52,6 @@ EXPOSE 3000
 
 # ENV DATABASE_URL="/app/server/db/good-leavening.sqlite3"
 ENV DATABASE_URL="file:///data/good-leavening.sqlite3"
-# ENV DATABASE_URL="/data/good-leavening.sqlite3"
 
 # CMD "/bin/sh"
 CMD [ "npm", "run", "start" ]
