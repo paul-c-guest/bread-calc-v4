@@ -11,17 +11,17 @@ const qclient = new QueryClient()
 const router = createBrowserRouter(routes)
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <Auth0Provider
-    domain="good-leavening.au.auth0.com"
-    clientId="0vqnBRYY2SySxs4L583N3MVCoHan6CAG"
-    authorizationParams={{
-      redirect_uri: window.location.origin,
-    }}
-    cacheLocation="localstorage"
-  >
-    <QueryClientProvider client={qclient}>
-      <RouterProvider router={router} />
-      <ReactQueryDevtools />
-    </QueryClientProvider>
-  </Auth0Provider>,
+  // <Auth0Provider
+  //   domain="good-leavening.au.auth0.com"
+  //   clientId="0vqnBRYY2SySxs4L583N3MVCoHan6CAG"
+  //   authorizationParams={{
+  //     redirect_uri: window.location.origin,
+  //   }}
+  //   cacheLocation="localstorage"
+  // >
+  <QueryClientProvider client={qclient}>
+    <RouterProvider router={router} />
+    <ReactQueryDevtools />
+  </QueryClientProvider>,
+  // {/* </Auth0Provider>, */}
 )

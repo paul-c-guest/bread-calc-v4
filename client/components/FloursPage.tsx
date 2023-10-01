@@ -87,9 +87,9 @@ export const FloursPage = () => {
 
   // if (authIsLoading || queryIsLoading || overridesIsLoading || userIsLoading)
   //   return <p>...please wait...</p>
-  if (authIsLoading || queryIsLoading) return <p>...please wait...</p>
+  // if (authIsLoading || queryIsLoading) return <p>...please wait...</p>
 
-  if (!isAuthenticated) return <Navigate to={"/"} />
+  // if (!isAuthenticated) return <Navigate to={"/"} />
 
   return (
     <>

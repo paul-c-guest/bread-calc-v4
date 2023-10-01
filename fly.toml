@@ -8,12 +8,13 @@ primary_region = "syd"
 
 [build]
 
-[deploy]
-  release_command = "npm run knex:initialise"
-
-[[mounts]]
+[mounts]
   source = "data"
   destination = "/data"
+
+[experimental]
+  cmd = "knex-init.sh"
+  entrypoint = "sh"
 
 [http_service]
   internal_port = 3000

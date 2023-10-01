@@ -24,10 +24,6 @@ RUN apt-get update -qq && \
 COPY package-lock.json package.json ./
 RUN npm ci --include=dev
 
-# stop complaints muddying up the monitoring logs
-# commented out as wasn't doing anything
-# RUN npm install -g npm@10.1.0
-
 # Copy application code
 COPY . .
 
@@ -40,6 +36,10 @@ RUN npm prune --omit=dev
 # Final stage for app image
 FROM base
 
+# stop complaints muddying up the monitoring logs
+# commented out as wasn't doing anything
+RUN npm install -g npm@10.1.0
+
 # Copy built application
 COPY --from=build /app /app
 
@@ -49,5 +49,10 @@ VOLUME /data
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
-ENV DATABASE_URL="file:///data/sqlite.db"
+
+# ENV DATABASE_URL="/app/server/db/good-leavening.sqlite3"
+ENV DATABASE_URL="file:///data/good-leavening.sqlite3"
+# ENV DATABASE_URL="/data/good-leavening.sqlite3"
+
+# CMD "/bin/sh"
 CMD [ "npm", "run", "start" ]

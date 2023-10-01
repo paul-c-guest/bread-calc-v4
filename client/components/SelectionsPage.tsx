@@ -96,7 +96,11 @@ export default function SelectionsPage() {
     setSelections(updated)
   }
 
-  if (queryIsLoading || authIsLoading) return <p>... please wait ...</p>
+  if (
+    queryIsLoading
+    //  || authIsLoading
+  )
+    return <p>... please wait ...</p>
 
   if (isError) return <p>... something's wrong ...</p>
 
