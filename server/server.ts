@@ -1,5 +1,6 @@
 import express from "express"
-import * as Path from "node:path"
+import { fileURLToPath } from "url"
+import path from "path"
 import "dotenv/config"
 
 import flourRoutes from "./routes/flourRoutes"
@@ -15,9 +16,13 @@ server.use("/api/v1/users", userRoutes)
 server.use("/api/v1/overrides", overrideRoutes)
 
 if (process.env.NODE_ENV === "production") {
-  server.use("/assets", express.static(Path.resolve(__dirname, "../assets")))
-  server.get("*", (req, res) => {
-    res.sendFile(Path.resolve(__dirname, "../index.html"))
+  const __filename = fileURLToPath(import.meta.url)
+  const __dirname = path.dirname(__filename)
+
+  server.use("/assets", express.static(path.join(__dirname, "assets")))
+
+  server.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "index.html"))
   })
 }
 
