@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === "production") {
 
   server.use("/assets", express.static(path.join(__dirname, "assets")))
 
-  server.get("/", (req, res) => {
+  server.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "index.html"))
   })
 }
