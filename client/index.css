@@ -227,6 +227,10 @@ a:visited {
   width: 4em;
 }
 
+#new-flour-name {
+  width: 11em;
+}
+
 @media (max-width: 660px) {
   body {
     margin: 0;

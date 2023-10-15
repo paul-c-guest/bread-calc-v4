@@ -110,6 +110,7 @@ export const FloursPage = () => {
             <tr>
               <td>
                 <input
+                  id="new-flour-name"
                   onChange={handleInputChange}
                   type="text"
                   name="name"

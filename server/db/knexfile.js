@@ -41,7 +41,7 @@ export default {
     client: "sqlite3",
     useNullAsDefault: true,
     connection: {
-      filename: URL.parse(process.env.DATABASE_URL).pathname,
+      filename: URL.parse(process.env.DATABASE_URL ?? '').pathname,
     },
     pool: {
       afterCreate: (conn, cb) => conn.run("PRAGMA foreign_keys = ON", cb),
