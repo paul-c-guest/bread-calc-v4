@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
 
 import {
-  Flour,
   Flour as FlourModel,
   Selection as SelectionModel,
   Selections as SelectionsModel,
@@ -28,7 +27,7 @@ export function Selections({ flours, selections, setSelections }: Props) {
 
   useEffect(() => {
     setAvailable(getUnusedFlours())
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selections])
 
   const [open, setOpen] = useState(true)
@@ -50,7 +49,7 @@ export function Selections({ flours, selections, setSelections }: Props) {
   const updateSelection = (update: Update) => {
     const updated = { ...selections }
 
-    const flour: Flour | undefined = flours.find(
+    const flour: FlourModel | undefined = flours.find(
       (flour) => flour.id === update.id,
     )
 
@@ -122,6 +121,7 @@ export function Selections({ flours, selections, setSelections }: Props) {
             <NewSelection
               flours={flours}
               selections={selections}
+              available={available}
               addNewSelection={addNewSelection}
             />
           </tbody>
