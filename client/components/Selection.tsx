@@ -90,9 +90,9 @@ export function Selection({
           id="amount"
           onChange={handleChange}
           type="number"
-          min={0}
+          min={10}
           step={10}
-          value={selection.amount}
+          value={selection.amount.toString()}
           aria-label="flour amount in grams"
         />
       </td>
@@ -100,12 +100,17 @@ export function Selection({
         <input
           type="number"
           id="hydration"
-          className="flour-entry-number"
+          className={`flour-entry-number ${
+            selection.alteredHydration == 0 ? "warning" : ""
+          }`}
           onChange={handleChange}
-          min={0}
+          min={1}
           max={200}
           step={1}
-          value={selection.alteredHydration || selection.defaultHydration}
+          value={
+            selection.alteredHydration?.toString() ||
+            selection.defaultHydration.toString()
+          }
           aria-label="hydration percentage"
         />
       </td>
