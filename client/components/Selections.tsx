@@ -1,6 +1,7 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import {
+  Flour,
   Flour as FlourModel,
   Selection as SelectionModel,
   Selections as SelectionsModel,
@@ -12,32 +13,78 @@ import { Selection } from "./Selection"
 interface Props {
   flours: FlourModel[]
   selections: SelectionsModel
-  addNewSelection: (selection: SelectionModel) => void
-  deleteSelection: (id: number) => void
-  updateSelection: (update: Update) => void
+  setSelections: React.Dispatch<React.SetStateAction<SelectionsModel>>
 }
 
-export function Selections({
-  flours,
-  selections,
-  addNewSelection,
-  deleteSelection,
-  updateSelection,
-}: Props) {
+export function Selections({ flours, selections, setSelections }: Props) {
   const getUnusedFlours = (): FlourModel[] => {
     const selected: number[] = Object.values(selections).map(
       (selection) => selection.flourId,
     )
-
     return flours.filter((flour) => !selected.includes(flour.id))
   }
 
   const [available, setAvailable] = useState<FlourModel[]>(getUnusedFlours())
 
+  useEffect(() => {
+    setAvailable(getUnusedFlours())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selections])
+
   const [open, setOpen] = useState(true)
 
   const orderSelectionsByAmount = () => {
     // todo - probably handle in App state?
+  }
+
+  const addNewSelection = (selection: SelectionModel) => {
+    setSelections({ ...selections, [selection.id]: selection })
+  }
+
+  const deleteSelection = (id: number) => {
+    const updated = { ...selections }
+    delete updated[id]
+    setSelections(updated)
+  }
+
+  const updateSelection = (update: Update) => {
+    const updated = { ...selections }
+
+    const flour: Flour | undefined = flours.find(
+      (flour) => flour.id === update.id,
+    )
+
+    switch (update.key) {
+      case "flour":
+        for (const record in updated) {
+          if (updated[record].position === update.position) {
+            delete updated[record]
+          }
+        }
+
+        updated[update.id] = {
+          ...flour,
+          amount: update.value,
+          position: update.position,
+          flourId: flour!.id,
+        } as SelectionModel
+
+        break
+
+      case "defaultHydration":
+        delete updated[update.id].alteredHydration
+        break
+
+      case "alteredHydration":
+        updated[update.id].alteredHydration = update.value
+        break
+
+      case "amount":
+        updated[update.id].amount = update.value
+        break
+    }
+
+    setSelections(updated)
   }
 
   return (

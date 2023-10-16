@@ -5,12 +5,9 @@ import { useAuth0 } from "@auth0/auth0-react"
 import { getFlours } from "../api/flours"
 
 import {
-  Flour,
-  Selection,
   Selections as SelectionsModel,
 } from "../../models/flour"
 import { StarterData } from "../../models/starter"
-import { Update } from "../../models/update"
 
 import { Selections } from "./Selections"
 import { Starter } from "./Starter"
@@ -70,55 +67,6 @@ export default function SelectionsPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, isAuthenticated])
 
-  const addNewSelection = (selection: Selection) => {
-    setSelections({ ...selections, [selection.id]: selection })
-  }
-
-  const deleteSelection = (id: number) => {
-    const updated = { ...selections }
-    delete updated[id]
-    setSelections(updated)
-  }
-
-  const updateSelection = (update: Update) => {
-    const updated = { ...selections }
-
-    const flour: Flour | undefined = flourDb?.find(
-      (flour) => flour.id === update.id,
-    )
-
-    switch (update.key) {
-      case "flour":
-        for (const record in updated) {
-          if (updated[record].position === update.position)
-            delete updated[record]
-        }
-
-        updated[update.id] = {
-          ...flour,
-          amount: update.value,
-          position: update.position!,
-          flourId: flour!.id,
-        } as Selection
-
-        break
-
-      case "defaultHydration":
-        delete updated[update.id].alteredHydration
-        break
-
-      case "alteredHydration":
-        updated[update.id].alteredHydration = update.value
-        break
-
-      case "amount":
-        updated[update.id].amount = update.value
-        break
-    }
-
-    setSelections(updated)
-  }
-
   if (queryIsLoading || authIsLoading) return <p>... please wait ...</p>
 
   if (isError) return <p>... something's wrong ...</p>
@@ -128,9 +76,7 @@ export default function SelectionsPage() {
       <Selections
         flours={flourDb}
         selections={selections}
-        addNewSelection={addNewSelection}
-        deleteSelection={deleteSelection}
-        updateSelection={updateSelection}
+        setSelections={setSelections}
       />
       <Starter starter={starter} setStarter={setStarter} flours={flourDb} />
       <Totals selections={selections} starter={starter} />
