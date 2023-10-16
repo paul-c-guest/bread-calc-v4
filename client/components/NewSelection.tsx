@@ -7,12 +7,6 @@ interface Props {
   addNewSelection: (selection: Selection) => void
 }
 
-interface NewSelection {
-  flourId: number
-  amount: number
-  hydration: number
-}
-
 export function NewSelection({
   available,
   flours,
@@ -21,12 +15,12 @@ export function NewSelection({
 }: Props) {
   const getNextPosition = () => {
     return (
-      1 +
       Object.values(selections)
         .map((sel) => sel.position)
-        .reduce((previous, current) => {
-          return current > previous ? current : previous
-        }, 1)
+        .reduce(
+          (previous, current) => (current > previous ? current : previous),
+          1,
+        ) + 1
     )
   }
 
