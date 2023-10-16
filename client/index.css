@@ -206,10 +206,6 @@ a:visited {
   min-height: 1.5em;
 }
 
-.flour-delete-button::after {
-  content: "⨯";
-}
-
 .sub-total {
   font-size: 2em;
   min-width: 3em;
@@ -262,7 +258,7 @@ a:visited {
   button,
   select {
     font-size: 3.2vw;
-    min-height: 4vw;
+    /* min-height: 4vw; */
   }
 
   .nav-button-block {
@@ -294,7 +290,7 @@ a:visited {
 
   .flour-delete-button {
     font-size: 5vw;
-    height: 7.8vw;
+    /* height: 8.8vw; */
     /* todo: try get correct sizing on mobile */
   }
 }

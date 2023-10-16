@@ -24,6 +24,16 @@ export function Selections({
   deleteSelection,
   updateSelection,
 }: Props) {
+  const getUnusedFlours = (): FlourModel[] => {
+    const selected: number[] = Object.values(selections).map(
+      (selection) => selection.flourId,
+    )
+
+    return flours.filter((flour) => !selected.includes(flour.id))
+  }
+
+  const [available, setAvailable] = useState<FlourModel[]>(getUnusedFlours())
+
   const [open, setOpen] = useState(true)
 
   const orderSelectionsByAmount = () => {
@@ -52,16 +62,15 @@ export function Selections({
             </tr>
             {Object.values(selections)
               .sort((a, b) => a.position - b.position)
-              .map((selection) => {
-                return (
-                  <Selection
-                    selection={selection}
-                    deleteSelection={deleteSelection}
-                    updateSelection={updateSelection}
-                    key={selection.id}
-                  />
-                )
-              })}
+              .map((selection) => (
+                <Selection
+                  available={available}
+                  selection={selection}
+                  deleteSelection={deleteSelection}
+                  updateSelection={updateSelection}
+                  key={selection.id}
+                />
+              ))}
 
             <NewSelection
               flours={flours}

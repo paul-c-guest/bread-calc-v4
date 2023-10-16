@@ -1,27 +1,40 @@
 import { Update } from "../../models/update"
-import { Selection as SelectionModel } from "../../models/flour"
+import { Flour, Selection as SelectionModel } from "../../models/flour"
 
 interface Props {
   selection: SelectionModel
+  available: Flour[]
   deleteSelection: (id: number) => void
   updateSelection: (update: Update) => void
 }
 
 export function Selection({
+  available,
   selection,
   deleteSelection,
   updateSelection,
 }: Props) {
-  const removeSelection = () => {
-    deleteSelection(selection.id)
+  const handleSelectionChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    const newSelectionId = Number(event.target.value)
+    const newSelection = available.find((flour) => flour.id === newSelectionId)
+
+    if (newSelection) {
+      updateSelection({
+        id: newSelectionId,
+        key: "flour",
+        value: selection.amount,
+        position: selection.position,
+      })
+    }
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(event.target.value)
 
-    const updates: Update = {
+    const updates = {
       id: Number(selection.id),
-      key: "",
       value: newValue,
     }
 
@@ -48,17 +61,28 @@ export function Selection({
     }
   }
 
+  const handleDelete = () => {
+    deleteSelection(selection.id)
+  }
+
   return (
     <tr>
       <td>
-        <input
-          size={0}
-          className="flour-entry-name"
-          type="text"
-          value={selection.name}
-          aria-label="flour type"
-          readOnly
-        />
+        <select
+          className="new-selection"
+          name="new-selection"
+          id="flourId"
+          onChange={handleSelectionChange}
+          aria-label="flour selection"
+        >
+          <option value={selection.id}>{selection.name}</option>
+
+          {available.map((flour) => (
+            <option key={flour.id} value={flour.id}>
+              {flour.name}
+            </option>
+          ))}
+        </select>
       </td>
       <td>
         <input
@@ -74,10 +98,10 @@ export function Selection({
       </td>
       <td>
         <input
-          className="flour-entry-number"
-          id="hydration"
-          onChange={handleChange}
           type="number"
+          id="hydration"
+          className="flour-entry-number"
+          onChange={handleChange}
           min={0}
           max={200}
           step={1}
@@ -85,12 +109,14 @@ export function Selection({
           aria-label="hydration percentage"
         />
       </td>
-      <td className="last-col">
-        <button
+      <td>
+        <input
+          type="button"
           className="flour-delete-button"
-          onClick={removeSelection}
+          value={"⨯"}
+          onClick={handleDelete}
           aria-label="delete this selection"
-        ></button>
+        />
       </td>
     </tr>
   )

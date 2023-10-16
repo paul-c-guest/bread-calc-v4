@@ -4,7 +4,11 @@ import { useAuth0 } from "@auth0/auth0-react"
 
 import { getFlours } from "../api/flours"
 
-import { Selection, Selections as SelectionsModel } from "../../models/flour"
+import {
+  Flour,
+  Selection,
+  Selections as SelectionsModel,
+} from "../../models/flour"
 import { StarterData } from "../../models/starter"
 import { Update } from "../../models/update"
 
@@ -79,7 +83,26 @@ export default function SelectionsPage() {
   const updateSelection = (update: Update) => {
     const updated = { ...selections }
 
+    const flour: Flour | undefined = flourDb?.find(
+      (flour) => flour.id === update.id,
+    )
+
     switch (update.key) {
+      case "flour":
+        for (const record in updated) {
+          if (updated[record].position === update.position)
+            delete updated[record]
+        }
+
+        updated[update.id] = {
+          ...flour,
+          amount: update.value,
+          position: update.position!,
+          flourId: flour!.id,
+        } as Selection
+
+        break
+
       case "defaultHydration":
         delete updated[update.id].alteredHydration
         break
