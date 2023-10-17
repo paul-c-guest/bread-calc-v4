@@ -4,9 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react"
 
 import { getFlours } from "../api/flours"
 
-import {
-  Selections as SelectionsModel,
-} from "../../models/flour"
+import { Selections as SelectionsModel } from "../../models/flour"
 import { StarterData } from "../../models/starter"
 
 import { Selections } from "./Selections"
@@ -17,14 +15,13 @@ export default function SelectionsPage() {
   const { user, isLoading: authIsLoading, isAuthenticated } = useAuth0()
 
   const {
-    data: flourDb,
-    isError,
+    data: flours,
+    isError: queryIsError,
     isLoading: queryIsLoading,
   } = useQuery(["flours"], getFlours)
 
   const locallyStoredSelections = localStorage.getItem("selections")
   const locallyStoredStarter = localStorage.getItem("starter")
-  // console.log(locallyStoredSelections, locallyStoredStarter)
 
   const [selections, setSelections] = useState<SelectionsModel>(
     locallyStoredSelections && user
@@ -48,7 +45,6 @@ export default function SelectionsPage() {
   useEffect(() => {
     if (user) {
       localStorage.setItem("starter", JSON.stringify(starter))
-      // console.log(starter)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [starter])
@@ -69,16 +65,16 @@ export default function SelectionsPage() {
 
   if (queryIsLoading || authIsLoading) return <p>... please wait ...</p>
 
-  if (isError) return <p>... something's wrong ...</p>
+  if (queryIsError) return <p>... something's wrong ...</p>
 
   return (
     <>
       <Selections
-        flours={flourDb}
+        flours={flours}
         selections={selections}
         setSelections={setSelections}
       />
-      <Starter starter={starter} setStarter={setStarter} flours={flourDb} />
+      <Starter flours={flours} starter={starter} setStarter={setStarter} />
       <Totals selections={selections} starter={starter} />
     </>
   )

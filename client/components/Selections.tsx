@@ -25,20 +25,17 @@ export function Selections({ flours, selections, setSelections }: Props) {
 
   const [available, setAvailable] = useState<FlourModel[]>(getUnusedFlours())
 
-  useEffect(() => {
-    setAvailable(getUnusedFlours())
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selections])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => setAvailable(getUnusedFlours()), [selections])
 
-  const [open, setOpen] = useState(true)
+  const [selectionsIsOpen, setSelectionsIsOpen] = useState(true)
 
   const orderSelectionsByAmount = () => {
     // todo - probably handle in App state?
   }
 
-  const addNewSelection = (selection: SelectionModel) => {
+  const addNewSelection = (selection: SelectionModel) =>
     setSelections({ ...selections, [selection.id]: selection })
-  }
 
   const deleteSelection = (id: number) => {
     const updated = { ...selections }
@@ -53,14 +50,17 @@ export function Selections({ flours, selections, setSelections }: Props) {
       (flour) => flour.id === update.id,
     )
 
-    switch (update.key) {
+    switch (update.type) {
       case "flour":
+        // find and delete the flour at the replacement position
         for (const record in updated) {
           if (updated[record].position === update.position) {
             delete updated[record]
+            break
           }
         }
 
+        // insert the replacement
         updated[update.id] = {
           ...flour,
           amount: update.value,
@@ -89,12 +89,12 @@ export function Selections({ flours, selections, setSelections }: Props) {
   return (
     <>
       <details
-        open={open}
+        open={selectionsIsOpen}
         onToggle={(event: React.ChangeEvent<HTMLDetailsElement>) =>
-          setOpen(event.target.open)
+          setSelectionsIsOpen(event.target.open)
         }
       >
-        <summary className={open ? "details-open" : ""}>
+        <summary className={selectionsIsOpen ? "details-open" : ""}>
           <h2>My Selections</h2>
         </summary>
 

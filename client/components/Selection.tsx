@@ -17,20 +17,21 @@ export function Selection({
   const handleSelectionChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
-    const newSelectionId = Number(event.target.value)
-    const newSelection = available.find((flour) => flour.id === newSelectionId)
+    const selectedId = Number(event.target.value)
+    const selectionChange = available.find((flour) => flour.id === selectedId)
 
-    if (newSelection) {
+    // return value of selectionChange will be 'undefined' if no change
+    if (selectionChange) {
       updateSelection({
-        id: newSelectionId,
-        key: "flour",
+        id: selectedId,
+        type: "flour",
         value: selection.amount,
         position: selection.position,
       })
     }
   }
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(event.target.value)
 
     const updates = {
@@ -42,7 +43,7 @@ export function Selection({
       case "amount":
         updateSelection({
           ...updates,
-          key: "amount",
+          type: "amount",
         })
         break
 
@@ -50,20 +51,19 @@ export function Selection({
         if (newValue !== selection.defaultHydration) {
           updateSelection({
             ...updates,
-            key: "alteredHydration",
+            type: "alteredHydration",
           })
         } else {
           updateSelection({
             ...updates,
-            key: "defaultHydration",
+            type: "defaultHydration",
           })
         }
+        break
     }
   }
 
-  const handleDelete = () => {
-    deleteSelection(selection.id)
-  }
+  const handleDelete = () => deleteSelection(selection.id)
 
   return (
     <tr>
@@ -88,7 +88,7 @@ export function Selection({
         <input
           className={selection.amount > 0 ? "" : "warning"}
           id="amount"
-          onChange={handleChange}
+          onChange={handleValueChange}
           type="number"
           min={10}
           step={10}
@@ -103,7 +103,7 @@ export function Selection({
           className={`flour-entry-number ${
             selection.alteredHydration == 0 ? "warning" : ""
           }`}
-          onChange={handleChange}
+          onChange={handleValueChange}
           min={1}
           max={200}
           step={1}
