@@ -1,7 +1,7 @@
 import express from "express"
 const router = express.Router()
 
-import * as db from "../db/db"
+import * as db from "../db/queries/overrides"
 import { Override } from "../../models/user"
 
 // GET api/v1/overrides/:user

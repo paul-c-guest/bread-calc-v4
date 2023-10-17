@@ -1,7 +1,7 @@
 import express from "express"
 const router = express.Router()
 
-import * as db from "../db/db"
+import * as db from "../db/queries/flours"
 
 // GET api/v1/flours
 router.get("/", async (req, res) => {
@@ -18,7 +18,7 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   const result = await db.putFlour(req.body)
   if (result) {
-    console.log(result)
+    // console.log(result)
     res.status(200).json(result)
   } else
     res.status(500).send("something went wrong entering the flour to the db")
@@ -26,8 +26,10 @@ router.post("/", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   const result = await db.deleteFlour(Number(req.params.id))
-  if (result) res.status(200).send("wheee")
-  else res.status(500).send("oh noooo")
+  if (result)
+    res.status(200).send(`successfully deleted flour ${req.params.id}`)
+  else
+    res.status(500).send(`something went wrong deleting flour ${req.params.id}`)
 })
 
 export default router
