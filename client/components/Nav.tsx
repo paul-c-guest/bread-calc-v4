@@ -6,8 +6,8 @@ export function Nav() {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const handleLogin = () => {
-    user ? logout() : loginWithRedirect()
+  const handleClick = () => {
+    isAuthenticated ? logout() : loginWithRedirect()
   }
 
   return (
@@ -25,7 +25,7 @@ export function Nav() {
           </button>
         )}
         <div className="login-block">
-          <button className="login-button" onClick={handleLogin}>
+          <button className="login-button" onClick={handleClick}>
             {isAuthenticated ? "Logout" : "Login"}
           </button>
           {isAuthenticated && (

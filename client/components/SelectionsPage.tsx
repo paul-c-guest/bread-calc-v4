@@ -12,7 +12,7 @@ import { Starter } from "./Starter"
 import { Totals } from "./Totals"
 
 export default function SelectionsPage() {
-  const { user, isLoading: authIsLoading, isAuthenticated } = useAuth0()
+  const { isLoading: authIsLoading, isAuthenticated } = useAuth0()
 
   const {
     data: flours,
@@ -24,44 +24,44 @@ export default function SelectionsPage() {
   const locallyStoredStarter = localStorage.getItem("starter")
 
   const [selections, setSelections] = useState<SelectionsModel>(
-    locallyStoredSelections && user
+    locallyStoredSelections && isAuthenticated
       ? JSON.parse(locallyStoredSelections)
       : defaultSelectionsData,
   )
 
   const [starter, setStarter] = useState<StarterData>(
-    locallyStoredStarter && user
+    locallyStoredStarter && isAuthenticated
       ? JSON.parse(locallyStoredStarter)
       : defaultStarterData,
   )
 
   useEffect(() => {
-    if (user) {
+    if (isAuthenticated) {
       localStorage.setItem("selections", JSON.stringify(selections))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selections])
 
   useEffect(() => {
-    if (user) {
+    if (isAuthenticated) {
       localStorage.setItem("starter", JSON.stringify(starter))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [starter])
 
   useEffect(() => {
-    if (user && locallyStoredSelections != null) {
+    if (isAuthenticated && locallyStoredSelections != null) {
       setSelections(JSON.parse(locallyStoredSelections))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, isAuthenticated])
+  }, [isAuthenticated])
 
   useEffect(() => {
-    if (user && locallyStoredStarter != null) {
+    if (isAuthenticated && locallyStoredStarter != null) {
       setStarter(JSON.parse(locallyStoredStarter))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, isAuthenticated])
+  }, [isAuthenticated])
 
   if (queryIsLoading || authIsLoading) return <p>... please wait ...</p>
 

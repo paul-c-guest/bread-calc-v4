@@ -17,7 +17,7 @@ const initialData: FlourData = {
 export const FloursPage = () => {
   const { isAuthenticated, isLoading: authIsLoading } = useAuth0()
 
-  const { data: flourDb, isLoading: queryIsLoading } = useQuery(
+  const { data: flours, isLoading: queryIsLoading } = useQuery(
     ["flours"],
     getFlours,
   )
@@ -179,7 +179,7 @@ export const FloursPage = () => {
               <th className="button-col pad-right-col"></th>
               <th className="button-col"></th>
             </tr>
-            {flourDb?.map((flour) => (
+            {flours?.map((flour) => (
               <Flour
                 key={flour.id}
                 mutateHydrationByDelete={mutateHydrationByDelete}
