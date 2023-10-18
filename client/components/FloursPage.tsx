@@ -15,7 +15,11 @@ const initialData: FlourData = {
 }
 
 export const FloursPage = () => {
-  const { isAuthenticated, isLoading: authIsLoading } = useAuth0()
+  const {
+    isAuthenticated,
+    isLoading: authIsLoading,
+    getAccessTokenSilently,
+  } = useAuth0()
 
   const { data: flours, isLoading: queryIsLoading } = useQuery(
     ["flours"],
@@ -60,9 +64,10 @@ export const FloursPage = () => {
 
   // console.log(userOverrides)
 
-  const submit = (event: React.FormEvent<HTMLFormElement>) => {
+  const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    putNewFlour(newFlour)
+    const token = await getAccessTokenSilently()
+    putNewFlour(newFlour, token)
     setNewFlour(initialData)
     queryClient.invalidateQueries(["flours"])
   }

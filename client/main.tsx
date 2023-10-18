@@ -16,6 +16,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     clientId="0vqnBRYY2SySxs4L583N3MVCoHan6CAG"
     authorizationParams={{
       redirect_uri: window.location.origin,
+      audience: "https://good-leavening/api/",
     }}
     cacheLocation="localstorage"
   >

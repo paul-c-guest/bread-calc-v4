@@ -1,4 +1,4 @@
-### get override value 69% for user 2 'brick shit house' for flour 102 'wheat'
+###
 
 GET http://localhost:3000/api/v1/overrides/user2
 

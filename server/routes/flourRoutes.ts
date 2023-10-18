@@ -2,6 +2,7 @@ import express from "express"
 const router = express.Router()
 
 import * as db from "../db/queries/flours"
+import checkJwt, { JwtRequest } from "../auth0"
 
 // GET api/v1/flours
 router.get("/", async (req, res) => {
@@ -15,13 +16,11 @@ router.get("/:id", async (req, res) => {
   res.status(200).json(flour)
 })
 
-router.post("/", async (req, res) => {
+// POST api/v1/flours
+router.post("/", checkJwt, async (req: JwtRequest, res) => {
   const result = await db.putFlour(req.body)
-  if (result) {
-    // console.log(result)
-    res.status(200).json(result)
-  } else
-    res.status(500).send("something went wrong entering the flour to the db")
+  if (result) res.status(200).json(result)
+  else res.status(500).send("something went wrong entering the flour to the db")
 })
 
 router.delete("/:id", async (req, res) => {

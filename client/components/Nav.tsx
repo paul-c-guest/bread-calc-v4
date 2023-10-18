@@ -30,7 +30,7 @@ export function Nav() {
           </button>
           {isAuthenticated && (
             <div className="welcome-string">
-              Welcome, {user?.given_name ?? user?.nickname}
+              Welcome, {user?.given_name ?? user?.nickname ?? "anon"}
             </div>
           )}
         </div>

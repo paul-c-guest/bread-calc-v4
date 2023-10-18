@@ -11,8 +11,14 @@ export const getFlourById = async (id: number): Promise<Flour> => {
   return response.body
 }
 
-export const putNewFlour = async (flour: FlourData): Promise<Flour> => {
-  const response = await request.post("/api/v1/flours").send(flour)
+export const putNewFlour = async (
+  flour: FlourData,
+  token: string,
+): Promise<Flour> => {
+  const response = await request
+    .post("/api/v1/flours")
+    .set("Authorization", `Bearer ${token}`)
+    .send(flour)
   return response.body
 }
 
