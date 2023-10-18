@@ -4,7 +4,7 @@ GET http://localhost:3000/api/v1/flours
 
 ### GET Wheat
 
-GET http://localhost:3000/api/v1/flours/101
+GET http://localhost:3000/api/v1/flours/108
 
 ### post a new flour
 
@@ -14,9 +14,10 @@ Content-Type: application/json
 {
   "name": "Horse Bones",
   "defaultHydration": "123",
-  "isGlutenFree" : false
+  "isGlutenFree" : false,
+  "owner": "John"
 }
 
 ###
 
-DELETE http://localhost:3000/api/v1/flours/111
+DELETE http://localhost:3000/api/v1/flours/108

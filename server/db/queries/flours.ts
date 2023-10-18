@@ -1,8 +1,12 @@
 import connection from "../connection"
 import { Flour, FlourData, Selections } from "../../../models/flour"
 
-export const getAllFlours = (): Promise<Selections> => {
+export const getAllFlours = (): Promise<Flour[]> => {
   return connection("flours").select()
+}
+
+export const getFloursForUser = (sub: string): Promise<Selections> => {
+  return connection("flours").where({sub}).select()
 }
 
 export const getFlourById = (id: number): Promise<Flour> => {

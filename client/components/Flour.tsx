@@ -36,9 +36,9 @@ export const Flour = ({
   const handleUpdate = async () => {
     // const user = await getUserByAuth(sub)
     const override: Override = {
-      // userId,
+      userAuth0Sub: 'user',
       flourId: flour.id,
-      hydrationOverride: hydration,
+      hydration: hydration,
     }
 
     if (hydration === flour.defaultHydration) {

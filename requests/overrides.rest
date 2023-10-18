@@ -1,6 +1,6 @@
 ### get override value 69% for user 2 'brick shit house' for flour 102 'wheat'
 
-GET http://localhost:3000/api/v1/overrides/2
+GET http://localhost:3000/api/v1/overrides/user2
 
 ###
 
@@ -9,8 +9,9 @@ Content-Type: application/json
 
 {
   "flourId": 103,
-  "userId": 1,
-  "hydrationOverride": 103
+  "userAuth0Sub": "user",
+  "hydration": 103,
+  "name": "Rye Rye"
 }
 
 ###

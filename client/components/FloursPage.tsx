@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Navigate } from "react-router-dom"
 import { useAuth0 } from "@auth0/auth0-react"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
@@ -24,7 +24,7 @@ export const FloursPage = () => {
 
   const [newFlour, setNewFlour] = useState<FlourData>(initialData)
 
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(true)
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const update = { ...newFlour }
@@ -46,10 +46,6 @@ export const FloursPage = () => {
 
     setNewFlour(update)
   }
-
-  useEffect(() => {
-    // console.log(newFlour)
-  }, [newFlour])
 
   // const { data: user, isLoading: userIsLoading } = useQuery(["user"], () =>
   //   getUserByAuth("sdfger5t5r4rg54trf"),

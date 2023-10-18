@@ -5,8 +5,9 @@
 export const up = (knex) => {
   return knex.schema.createTable("overrides", (table) => {
     table.integer("flourId").references("flours.id")
-    table.integer("userId").references("users.id")
-    table.integer("hydrationOverride")
+    table.string("userAuth0Sub")
+    table.integer("hydration")
+    table.string("name")
   })
 }
 

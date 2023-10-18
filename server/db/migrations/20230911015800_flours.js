@@ -8,6 +8,7 @@ export const up = (knex) => {
     table.string("name")
     table.integer("defaultHydration")
     table.boolean("isGlutenFree")
+    table.string("owner")
   })
 }
 
