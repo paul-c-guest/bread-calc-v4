@@ -31,8 +31,6 @@ router.delete("/:id", checkJwt, async (req: JwtRequest, res) => {
   const targetId = Number(req.params.id)
   const target = await db.getFlourById(targetId)
   
-  console.log(target.owner, req.auth?.sub, target.owner !== req.auth?.sub);
-  
   if (target.owner !== req.auth?.sub)
     return res.status(400).send("not authorised to delete this flour")
 

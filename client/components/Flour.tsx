@@ -58,9 +58,8 @@ export const Flour = ({
 
   const handleDelete = async () => {
     if (confirm(`Delete ${flour.name} from the database?`)) {
-      const id = flour.id
       const token = await getAccessTokenSilently()
-      mutateFlourByDelete.mutate([id, token])
+      mutateFlourByDelete.mutate([flour.id, token])
     }
   }
 

@@ -21,6 +21,8 @@ export const FloursPage = () => {
     getAccessTokenSilently,
   } = useAuth0()
 
+  const queryClient = useQueryClient()
+
   const { data: flours, isLoading: queryIsLoading } = useQuery(
     ["flours"],
     getFlours,
@@ -68,11 +70,13 @@ export const FloursPage = () => {
     event.preventDefault()
     const token = await getAccessTokenSilently()
     putNewFlour(newFlour, token)
-    setNewFlour(initialData)
-    await queryClient.invalidateQueries(["flours"])
-  }
 
-  const queryClient = useQueryClient()
+    // both invalidate and refetch seem to be required to always ensure list refreshes after new flour added
+    await queryClient.invalidateQueries(["flours"])
+    await queryClient.refetchQueries()
+
+    setNewFlour(initialData)
+  }
 
   const mutateHydrationByUpdate = useMutation(putOverride, {
     onSuccess: async () => queryClient.invalidateQueries(),
