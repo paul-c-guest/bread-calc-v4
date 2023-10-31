@@ -69,7 +69,7 @@ export const FloursPage = () => {
     const token = await getAccessTokenSilently()
     putNewFlour(newFlour, token)
     setNewFlour(initialData)
-    queryClient.invalidateQueries(["flours"])
+    await queryClient.invalidateQueries(["flours"])
   }
 
   const queryClient = useQueryClient()
