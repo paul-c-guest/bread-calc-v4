@@ -5,7 +5,9 @@ import { JwtPayload } from "jsonwebtoken"
 import jwks from "jwks-rsa"
 
 const domain = "https://good-leavening.au.auth0.com"
-const audience = "https://good-leavening/api/"
+
+// audience is now set in Auth0Provider options in client/main.tsx
+// const audience = "https://good-leavening/api/"
 
 const checkJwt = jwt({
   secret: jwks.expressJwtSecret({
@@ -14,7 +16,7 @@ const checkJwt = jwt({
     jwksRequestsPerMinute: 5,
     jwksUri: `${domain}/.well-known/jwks.json`,
   }) as GetVerificationKey,
-  audience: audience,
+  // audience: audience,
   issuer: `${domain}/`,
   algorithms: ["RS256"],
 })
