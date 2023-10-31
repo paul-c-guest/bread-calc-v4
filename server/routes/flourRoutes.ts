@@ -27,8 +27,16 @@ router.post("/", checkJwt, async (req: JwtRequest, res) => {
   else res.status(500).send("something went wrong entering the flour to the db")
 })
 
-router.delete("/:id", async (req, res) => {
-  const result = await db.deleteFlour(Number(req.params.id))
+router.delete("/:id", checkJwt, async (req: JwtRequest, res) => {
+  const targetId = Number(req.params.id)
+  const target = await db.getFlourById(targetId)
+  
+  console.log(target.owner, req.auth?.sub, target.owner !== req.auth?.sub);
+  
+  if (target.owner !== req.auth?.sub)
+    return res.status(400).send("not authorised to delete this flour")
+
+  const result = await db.deleteFlour(targetId)
   if (result)
     res.status(200).send(`successfully deleted flour ${req.params.id}`)
   else
