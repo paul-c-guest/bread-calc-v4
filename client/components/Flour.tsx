@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Flour as FlourModel } from "../../models/flour"
 import { Override } from "../../models/user"
 import { UseMutationResult } from "@tanstack/react-query"
+import { useAuth0 } from "@auth0/auth0-react"
 
 interface Props {
   flour: FlourModel
@@ -17,7 +18,12 @@ interface Props {
     Override,
     unknown
   >
-  mutateFlourByDelete: UseMutationResult<FlourModel, unknown, number, unknown>
+  mutateFlourByDelete: UseMutationResult<
+    unknown,
+    unknown,
+    (string | number)[],
+    unknown
+  >
   // userId: number
 }
 
@@ -27,6 +33,8 @@ export const Flour = ({
   mutateHydrationByUpdate,
   mutateFlourByDelete, // userId,
 }: Props) => {
+  const { getAccessTokenSilently } = useAuth0()
+
   const [hydration, setHydration] = useState(flour.defaultHydration)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +44,7 @@ export const Flour = ({
   const handleUpdate = async () => {
     // const user = await getUserByAuth(sub)
     const override: Override = {
-      userAuth0Sub: 'user',
+      userAuth0Sub: "user",
       flourId: flour.id,
       hydration: hydration,
     }
@@ -48,9 +56,12 @@ export const Flour = ({
     }
   }
 
-  const handleDelete = () => {
-    if (confirm(`Delete ${flour.name} from the database?`))
-      mutateFlourByDelete.mutate(flour.id)
+  const handleDelete = async () => {
+    if (confirm(`Delete ${flour.name} from the database?`)) {
+      const id = flour.id
+      const token = await getAccessTokenSilently()
+      mutateFlourByDelete.mutate([id, token])
+    }
   }
 
   return (
