@@ -1,12 +1,20 @@
 import connection from "../connection"
-import { Flour, FlourData, Selections } from "../../../models/flour"
+import { Flour, FlourData } from "../../../models/flour"
 
+/**
+ * @deprecated in favour of only allowing getAllFloursForOwner
+ */
 export const getAllFlours = (): Promise<Flour[]> => {
   return connection("flours").select()
 }
 
-export const getFloursForUser = (sub: string): Promise<Selections> => {
-  return connection("flours").where({sub}).select()
+export const getAllFloursForOwner = (owner: string): Promise<Flour[]> => {
+  return connection
+    .select()
+    .union([
+      connection("flours").where({ owner }),
+      connection("flours").whereNull("owner"),
+    ])
 }
 
 export const getFlourById = (id: number): Promise<Flour> => {
@@ -14,7 +22,6 @@ export const getFlourById = (id: number): Promise<Flour> => {
 }
 
 export const putFlour = (newFlour: FlourData): Promise<Flour> => {
-  console.log("newFlour", newFlour)
   return connection("flours").insert(newFlour)
 }
 

@@ -5,7 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 import { Flour } from "./Flour"
 import { FlourData } from "../../models/flour"
-import { deleteFlour, getFlours, putNewFlour } from "../api/flours"
+import { deleteFlour, getFloursForOwner, putNewFlour } from "../api/flours"
 import { deleteOverride, putOverride } from "../api/overrides"
 
 const initialData: FlourData = {
@@ -25,7 +25,11 @@ export const FloursPage = () => {
 
   const { data: flours, isLoading: queryIsLoading } = useQuery(
     ["flours"],
-    getFlours,
+    async () => {
+      const token = await getAccessTokenSilently()
+      const ownerFlours = await getFloursForOwner(token)
+      return ownerFlours
+    },
   )
 
   const [newFlour, setNewFlour] = useState<FlourData>(initialData)
@@ -53,18 +57,10 @@ export const FloursPage = () => {
     setNewFlour(update)
   }
 
-  // const { data: user, isLoading: userIsLoading } = useQuery(["user"], () =>
-  //   getUserByAuth("sdfger5t5r4rg54trf"),
-  // )
-
-  // console.log(user)
-
   // const { data: userOverrides, isLoading: overridesIsLoading } = useQuery(
   //   ["overrides"],
   //   () => getOverridesForUserId(user?.id),
   // )
-
-  // console.log(userOverrides)
 
   const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()

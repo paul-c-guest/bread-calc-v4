@@ -11,8 +11,19 @@ router.get("/", async (req, res) => {
   res.status(200).json(flours)
 })
 
-// GET api/v1/flours/:id
-router.get("/:id", async (req, res) => {
+// GET api/v1/flours/owner
+router.get("/owner", checkJwt, async (req: JwtRequest, res) => {
+  if (!req.auth?.sub)
+    return res
+      .status(400)
+      .send("requests to this endpoint must include an auth token")
+
+  const flours = await db.getAllFloursForOwner(req.auth.sub)
+  res.status(200).json(flours)
+})
+
+// GET api/v1/flours/flour/:id
+router.get("/flour/:id", async (req, res) => {
   const flour = await db.getFlourById(Number(req.params.id))
   res.status(200).json(flour)
 })
@@ -30,7 +41,7 @@ router.post("/", checkJwt, async (req: JwtRequest, res) => {
 router.delete("/:id", checkJwt, async (req: JwtRequest, res) => {
   const targetId = Number(req.params.id)
   const target = await db.getFlourById(targetId)
-  
+
   if (target.owner !== req.auth?.sub)
     return res.status(400).send("not authorised to delete this flour")
 

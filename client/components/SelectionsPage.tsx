@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { useAuth0 } from "@auth0/auth0-react"
 
-import { getFlours } from "../api/flours"
+import { getFloursForOwner } from "../api/flours"
 
 import { Selections as SelectionsModel } from "../../models/flour"
 import { StarterData } from "../../models/starter"
@@ -12,13 +12,21 @@ import { Starter } from "./Starter"
 import { Totals } from "./Totals"
 
 export default function SelectionsPage() {
-  const { isLoading: authIsLoading, isAuthenticated } = useAuth0()
+  const {
+    getAccessTokenSilently,
+    isLoading: authIsLoading,
+    isAuthenticated,
+  } = useAuth0()
 
   const {
     data: flours,
     isError: queryIsError,
     isLoading: queryIsLoading,
-  } = useQuery(["flours"], getFlours)
+  } = useQuery(["flours"], async () => {
+    const token = await getAccessTokenSilently()
+    const flours = await getFloursForOwner(token)
+    return flours
+  })
 
   const locallyStoredSelections = localStorage.getItem("selections")
   const locallyStoredStarter = localStorage.getItem("starter")
