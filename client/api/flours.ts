@@ -1,10 +1,10 @@
 import request from "superagent"
 import { Flour, FlourData } from "../../models/flour"
 
-// export const getFlours = async (): Promise<Flour[]> => {
-//   const response = await request.get("/api/v1/flours")
-//   return response.body
-// }
+export const getDefaultFlours = async (): Promise<Flour[]> => {
+  const response = await request.get("/api/v1/flours")
+  return response.body
+}
 
 export const getFloursForOwner = async (token: string): Promise<Flour[]> => {
   const response = await request

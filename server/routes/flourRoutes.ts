@@ -7,7 +7,7 @@ import { FlourData } from "../../models/flour"
 
 // GET api/v1/flours
 router.get("/", async (req, res) => {
-  const flours = await db.getAllFlours()
+  const flours = await db.getDefaultFlours()
   res.status(200).json(flours)
 })
 

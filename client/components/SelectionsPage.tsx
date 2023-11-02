@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { useAuth0 } from "@auth0/auth0-react"
 
-import { getFloursForOwner } from "../api/flours"
+import { getDefaultFlours, getFloursForOwner } from "../api/flours"
 
 import { Selections as SelectionsModel } from "../../models/flour"
 import { StarterData } from "../../models/starter"
@@ -23,9 +23,14 @@ export default function SelectionsPage() {
     isError: queryIsError,
     isLoading: queryIsLoading,
   } = useQuery(["flours"], async () => {
-    const token = await getAccessTokenSilently()
-    const flours = await getFloursForOwner(token)
-    return flours
+    if (isAuthenticated) {
+      const token = await getAccessTokenSilently()
+      const flours = await getFloursForOwner(token)
+      return flours
+    } else {
+      const flours = await getDefaultFlours()
+      return flours
+    }
   })
 
   const locallyStoredSelections = localStorage.getItem("selections")

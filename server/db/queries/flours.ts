@@ -1,20 +1,17 @@
 import connection from "../connection"
 import { Flour, FlourData } from "../../../models/flour"
 
-/**
- * @deprecated in favour of only allowing getAllFloursForOwner
- */
-export const getAllFlours = (): Promise<Flour[]> => {
-  return connection("flours").select()
+// returned for unauthed visitors
+export const getDefaultFlours = (): Promise<Flour[]> => {
+  return connection("flours").select().whereNull("owner")
 }
 
+// authed users get the default set plus any that they have created
 export const getAllFloursForOwner = (owner: string): Promise<Flour[]> => {
-  return connection
-    .select()
-    .union([
-      connection("flours").where({ owner }),
-      connection("flours").whereNull("owner"),
-    ])
+  return connection.union([
+    connection("flours").where({ owner }),
+    connection("flours").whereNull("owner"),
+  ])
 }
 
 export const getFlourById = (id: number): Promise<Flour> => {
