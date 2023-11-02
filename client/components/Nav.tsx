@@ -7,7 +7,11 @@ export function Nav() {
   const location = useLocation()
 
   const handleClick = () => {
-    isAuthenticated ? logout() : loginWithRedirect()
+    isAuthenticated
+      ? logout({
+          logoutParams: { returnTo: window.location.origin },
+        })
+      : loginWithRedirect()
   }
 
   return (
