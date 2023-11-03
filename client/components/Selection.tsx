@@ -98,6 +98,7 @@ export function Selection({
       </td>
       <td>
         <input
+          readOnly
           type="number"
           id="hydration"
           className={`flour-entry-number ${

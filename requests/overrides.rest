@@ -1,15 +1,10 @@
-###
-
-GET http://localhost:3000/api/v1/overrides/user2
-
-###
 
 POST http://localhost:3000/api/v1/overrides
 Content-Type: application/json
 
 {
   "flourId": 103,
-  "userAuth0Sub": "user",
+  "owner": "user",
   "hydration": 103,
   "name": "Rye Rye"
 }

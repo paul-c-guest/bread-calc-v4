@@ -6,7 +6,11 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { Flour } from "./Flour"
 import { FlourData } from "../../models/flour"
 import { deleteFlour, getFloursForOwner, putNewFlour } from "../api/flours"
-import { deleteOverride, putOverride } from "../api/overrides"
+import {
+  deleteOverride,
+  createOverride,
+  getOverridesForOwner,
+} from "../api/overrides"
 
 const initialData: FlourData = {
   name: "",
@@ -23,7 +27,7 @@ export const FloursPage = () => {
 
   const queryClient = useQueryClient()
 
-  const { data: flours, isLoading: queryIsLoading } = useQuery(
+  const { data: flours, isLoading: floursAreLoading } = useQuery(
     ["flours"],
     async () => {
       const token = await getAccessTokenSilently()
@@ -37,6 +41,15 @@ export const FloursPage = () => {
       // then sink any that don't have an owner
       flours.sort((a, b) => (a.owner === null && b.owner !== null ? 1 : -1))
       return flours
+    },
+  )
+
+  const { data: overrides, isLoading: overridesAreLoading } = useQuery(
+    ["overrides"],
+    async () => {
+      const token = await getAccessTokenSilently()
+      const overrides = await getOverridesForOwner(token)
+      return overrides
     },
   )
 
@@ -82,7 +95,7 @@ export const FloursPage = () => {
     setNewFlour(initialData)
   }
 
-  const mutateHydrationByUpdate = useMutation(putOverride, {
+  const mutateHydrationByUpdate = useMutation(createOverride, {
     onSuccess: async () => queryClient.invalidateQueries(),
   })
 
@@ -94,9 +107,8 @@ export const FloursPage = () => {
     onSuccess: async () => queryClient.invalidateQueries(),
   })
 
-  // if (authIsLoading || queryIsLoading || overridesIsLoading || userIsLoading)
-  //   return <p>...please wait...</p>
-  if (authIsLoading || queryIsLoading) return <p>...please wait...</p>
+  if (authIsLoading || floursAreLoading || overridesAreLoading)
+    return <p>...please wait...</p>
 
   if (!isAuthenticated) return <Navigate to={"/"} />
 
@@ -191,11 +203,10 @@ export const FloursPage = () => {
             {flours?.map((flour) => (
               <Flour
                 key={flour.id}
+                flour={flour}
                 mutateHydrationByDelete={mutateHydrationByDelete}
                 mutateHydrationByUpdate={mutateHydrationByUpdate}
                 mutateFlourByDelete={mutateFlourByDelete}
-                flour={flour}
-                // userId={user.id}
               />
             ))}
           </tbody>

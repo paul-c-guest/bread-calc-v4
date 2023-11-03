@@ -24,14 +24,13 @@ interface Props {
     (string | number)[],
     unknown
   >
-  // userId: number
 }
 
 export const Flour = ({
   flour,
   mutateHydrationByDelete,
   mutateHydrationByUpdate,
-  mutateFlourByDelete, // userId,
+  mutateFlourByDelete,
 }: Props) => {
   const { user, getAccessTokenSilently } = useAuth0()
 
@@ -56,6 +55,8 @@ export const Flour = ({
       mutateHydrationByUpdate.mutate(override)
     }
   }
+
+  const handleRollback = () => {}
 
   const handleDelete = async () => {
     if (confirm(`Delete ${flour.name} from the database?`)) {
@@ -91,15 +92,16 @@ export const Flour = ({
         </button>
       </td>
       <td>
-        <button 
-        // onClick={handleRollback}
-        disabled={hydration === flour.defaultHydration}
-        >&#8634;</button>
+        <button onClick={handleRollback} disabled={true}>
+          &#8634;
+        </button>
       </td>
       <td>
-        <button style={{ height: "2.35em" }} 
-        disabled={flour.owner === null}
-        onClick={handleDelete}>
+        <button
+          style={{ height: "2.35em" }}
+          disabled={flour.owner === null}
+          onClick={handleDelete}
+        >
           &#128465;
         </button>
       </td>
