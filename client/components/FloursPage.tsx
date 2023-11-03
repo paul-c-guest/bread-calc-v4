@@ -27,8 +27,16 @@ export const FloursPage = () => {
     ["flours"],
     async () => {
       const token = await getAccessTokenSilently()
-      const ownerFlours = await getFloursForOwner(token)
-      return ownerFlours
+      const flours = await getFloursForOwner(token)
+      // sort reverse alphabetically first
+      flours.sort(
+        (a, b) =>
+          b.name.toLowerCase().charCodeAt(0) -
+          a.name.toLowerCase().charCodeAt(0),
+      )
+      // then sink any that don't have an owner
+      flours.sort((a, b) => (a.owner === null && b.owner !== null ? 1 : -1))
+      return flours
     },
   )
 

@@ -33,7 +33,7 @@ export const Flour = ({
   mutateHydrationByUpdate,
   mutateFlourByDelete, // userId,
 }: Props) => {
-  const { getAccessTokenSilently } = useAuth0()
+  const { user, getAccessTokenSilently } = useAuth0()
 
   const [hydration, setHydration] = useState(flour.defaultHydration)
 
@@ -42,9 +42,10 @@ export const Flour = ({
   }
 
   const handleUpdate = async () => {
-    // const user = await getUserByAuth(sub)
+    if (!user?.sub) return
+
     const override: Override = {
-      userAuth0Sub: "user",
+      owner: user.sub,
       flourId: flour.id,
       hydration: hydration,
     }
@@ -84,16 +85,21 @@ export const Flour = ({
       <td>
         <button
           onClick={handleUpdate}
-          // disabled={hydration === flour.defaultHydration}
+          disabled={hydration === flour.defaultHydration}
         >
           &#10003;
         </button>
       </td>
       <td>
-        <button disabled={false}>&#8634;</button>
+        <button 
+        // onClick={handleRollback}
+        disabled={hydration === flour.defaultHydration}
+        >&#8634;</button>
       </td>
       <td>
-        <button style={{ height: "2.35em" }} onClick={handleDelete}>
+        <button style={{ height: "2.35em" }} 
+        disabled={flour.owner === null}
+        onClick={handleDelete}>
           &#128465;
         </button>
       </td>

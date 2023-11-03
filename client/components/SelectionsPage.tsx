@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useQuery } from "@tanstack/react-query"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { useAuth0 } from "@auth0/auth0-react"
 
 import { getDefaultFlours, getFloursForOwner } from "../api/flours"
@@ -17,6 +17,8 @@ export default function SelectionsPage() {
     isLoading: authIsLoading,
     isAuthenticated,
   } = useAuth0()
+
+  const queryClient = useQueryClient()
 
   const {
     data: flours,
@@ -66,13 +68,13 @@ export default function SelectionsPage() {
     if (isAuthenticated && locallyStoredSelections != null) {
       setSelections(JSON.parse(locallyStoredSelections))
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated])
 
-  useEffect(() => {
     if (isAuthenticated && locallyStoredStarter != null) {
       setStarter(JSON.parse(locallyStoredStarter))
     }
+
+    queryClient.invalidateQueries(["flours"])
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated])
 

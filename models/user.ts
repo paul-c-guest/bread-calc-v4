@@ -1,6 +1,6 @@
 export interface Override {
   flourId: number
-  userAuth0Sub: string
+  owner: string
   hydration?: number
   name?: string
 }

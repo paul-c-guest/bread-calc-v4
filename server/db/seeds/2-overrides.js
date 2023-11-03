@@ -2,12 +2,12 @@ export async function seed(knex) {
   return knex("overrides").insert([
     {
       flourId: 102,
-      userAuth0Sub: "user",
+      owner: "user",
       hydration: 69,
     },
     {
       flourId: 103,
-      userAuth0Sub: "user2",
+      owner: "user2",
       name: "Horse Heads",
     },
   ])
