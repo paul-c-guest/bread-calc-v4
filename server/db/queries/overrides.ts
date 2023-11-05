@@ -16,5 +16,7 @@ export const updateOverride = (override: Override): Promise<Override> => {
 }
 
 export const deleteOverride = (override: Override): Promise<Override> => {
-  return connection("overrides").where({ flourId: override.flourId }).delete()
+  return connection("overrides")
+    .where({ flourId: override.flourId, owner: override.owner })
+    .delete()
 }

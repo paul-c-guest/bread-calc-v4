@@ -6,6 +6,12 @@ import { useAuth0 } from "@auth0/auth0-react"
 
 interface Props {
   flour: FlourModel
+  mutateOverrideByCreate: UseMutationResult<
+    Override,
+    unknown,
+    Override,
+    unknown
+  >
   mutateHydrationByDelete: UseMutationResult<
     unknown,
     unknown,
@@ -28,6 +34,7 @@ interface Props {
 
 export const Flour = ({
   flour,
+  mutateOverrideByCreate,
   mutateHydrationByDelete,
   mutateHydrationByUpdate,
   mutateFlourByDelete,
@@ -42,7 +49,7 @@ export const Flour = ({
     setHydration(Number(event.target.value))
   }
 
-  const handleUpdate = async () => {
+  const handleUpdate = () => {
     if (!user?.sub) return
 
     const override: Override = {
@@ -53,12 +60,23 @@ export const Flour = ({
 
     if (hydration === flour.defaultHydration) {
       mutateHydrationByDelete.mutate(override)
-    } else {
+    } else if (flour.alteredHydration) {
       mutateHydrationByUpdate.mutate(override)
+    } else {
+      mutateOverrideByCreate.mutate(override)
     }
   }
 
-  const handleRollback = () => {}
+  const handleRollback = async () => {
+    if (!user?.sub) return
+
+    await mutateHydrationByDelete.mutate({
+      owner: user.sub,
+      flourId: flour.id,
+    })
+
+    setHydration(flour.defaultHydration)
+  }
 
   const handleDelete = async () => {
     if (confirm(`Delete ${flour.name} from the database?`)) {
@@ -102,7 +120,7 @@ export const Flour = ({
           onClick={handleRollback}
           disabled={
             flour.alteredHydration
-              ? flour.alteredHydration === hydration
+              ? flour.alteredHydration === flour.defaultHydration
               : flour.defaultHydration === hydration
           }
         >

@@ -7,9 +7,10 @@ import { Flour } from "./Flour"
 import { Flour as FlourModel, FlourData } from "../../models/flour"
 import { deleteFlour, getFloursForOwner, putNewFlour } from "../api/flours"
 import {
-  deleteOverride,
-  createOverride,
   getOverridesForOwner,
+  createOverride,
+  updateOverride,
+  deleteOverride,
 } from "../api/overrides"
 import { Override } from "../../models/user"
 
@@ -79,11 +80,6 @@ export const FloursPage = () => {
     setNewFlour(update)
   }
 
-  // const { data: userOverrides, isLoading: overridesIsLoading } = useQuery(
-  //   ["overrides"],
-  //   () => getOverridesForUserId(user?.id),
-  // )
-
   const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const token = await getAccessTokenSilently()
@@ -96,16 +92,20 @@ export const FloursPage = () => {
     setNewFlour(initialData)
   }
 
-  const mutateHydrationByUpdate = useMutation(createOverride, {
-    onSuccess: async () => queryClient.invalidateQueries(),
+  const mutateOverrideByCreate = useMutation(createOverride, {
+    onSuccess: () => queryClient.invalidateQueries(),
   })
 
-  const mutateHydrationByDelete = useMutation(deleteOverride, {
-    onSuccess: async () => queryClient.invalidateQueries(),
+  const mutateOverrideByUpdate = useMutation(updateOverride, {
+    onSuccess: () => queryClient.invalidateQueries(),
+  })
+
+  const mutateOverrideByDelete = useMutation(deleteOverride, {
+    onSuccess: () => queryClient.invalidateQueries(),
   })
 
   const mutateFlourByDelete = useMutation(deleteFlour, {
-    onSuccess: async () => queryClient.invalidateQueries(),
+    onSuccess: () => queryClient.invalidateQueries(),
   })
 
   if (authIsLoading || floursAreLoading || overridesAreLoading)
@@ -123,11 +123,11 @@ export const FloursPage = () => {
           defaultHydration: flour.defaultHydration,
           alteredHydration: overrideMap.get(flour.id)?.hydration ?? undefined,
           isGlutenFree: flour.isGlutenFree,
-          owner: null
+          owner: null,
         } as FlourModel)
       : flour
   })
-  console.log(...mapped)
+  // console.log(...mapped)
 
   return (
     <>
@@ -221,8 +221,9 @@ export const FloursPage = () => {
               <Flour
                 key={flour.id}
                 flour={flour}
-                mutateHydrationByDelete={mutateHydrationByDelete}
-                mutateHydrationByUpdate={mutateHydrationByUpdate}
+                mutateOverrideByCreate={mutateOverrideByCreate}
+                mutateHydrationByDelete={mutateOverrideByDelete}
+                mutateHydrationByUpdate={mutateOverrideByUpdate}
                 mutateFlourByDelete={mutateFlourByDelete}
               />
             ))}
