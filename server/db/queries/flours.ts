@@ -18,8 +18,14 @@ export const getFlourById = (id: number): Promise<Flour> => {
   return connection("flours").where({ id }).first()
 }
 
-export const putFlour = (newFlour: FlourData): Promise<Flour> => {
+export const createFlour = (newFlour: FlourData): Promise<Flour> => {
   return connection("flours").insert(newFlour)
+}
+
+export const updateFlour = (update: Flour): Promise<Flour> => {
+  return connection("flours")
+    .where({ id: update.id })
+    .update({ name: update.name, defaultHydration: update.defaultHydration })
 }
 
 export const deleteFlour = (id: number): Promise<Flour> => {

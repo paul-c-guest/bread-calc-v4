@@ -12,16 +12,12 @@ interface Props {
     Override,
     unknown
   >
-  mutateHydrationByDelete: UseMutationResult<
+  mutateOverrideByDelete: UseMutationResult<unknown, unknown, Override, unknown>
+  mutateOverrideByUpdate: UseMutationResult<unknown, unknown, Override, unknown>
+  mutateFlourByUpdate: UseMutationResult<
+    FlourModel,
     unknown,
-    unknown,
-    Override,
-    unknown
-  >
-  mutateHydrationByUpdate: UseMutationResult<
-    unknown,
-    unknown,
-    Override,
+    (string | FlourModel)[],
     unknown
   >
   mutateFlourByDelete: UseMutationResult<
@@ -35,8 +31,9 @@ interface Props {
 export const Flour = ({
   flour,
   mutateOverrideByCreate,
-  mutateHydrationByDelete,
-  mutateHydrationByUpdate,
+  mutateOverrideByDelete,
+  mutateOverrideByUpdate,
+  mutateFlourByUpdate,
   mutateFlourByDelete,
 }: Props) => {
   const { user, getAccessTokenSilently } = useAuth0()
@@ -49,21 +46,33 @@ export const Flour = ({
     setHydration(Number(event.target.value))
   }
 
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
     if (!user?.sub) return
 
-    const override: Override = {
-      owner: user.sub,
-      flourId: flour.id,
-      hydration: hydration,
-    }
-
-    if (hydration === flour.defaultHydration) {
-      mutateHydrationByDelete.mutate(override)
-    } else if (flour.alteredHydration) {
-      mutateHydrationByUpdate.mutate(override)
+    if (flour.owner) {
+      // manage properties for a user's flour
+      const token = await getAccessTokenSilently()
+      const update: FlourModel = {
+        ...flour,
+        defaultHydration: hydration,
+      }
+      mutateFlourByUpdate.mutate([update, token])
     } else {
-      mutateOverrideByCreate.mutate(override)
+      // manage overrides for a default flour
+
+      const override: Override = {
+        owner: user.sub,
+        flourId: flour.id,
+        hydration: hydration,
+      }
+
+      if (hydration === flour.defaultHydration) {
+        mutateOverrideByDelete.mutate(override)
+      } else if (flour.alteredHydration) {
+        mutateOverrideByUpdate.mutate(override)
+      } else {
+        mutateOverrideByCreate.mutate(override)
+      }
     }
   }
 
@@ -81,13 +90,12 @@ export const Flour = ({
       return
     } else {
       setHydration(flour.defaultHydration)
+      mutateOverrideByDelete.mutate(override)
     }
-
-    mutateHydrationByDelete.mutate(override)
   }
 
   const handleDelete = async () => {
-    if (confirm(`Delete ${flour.name} from the database?`)) {
+    if (confirm(`Delete ${flour.name} from your database?`)) {
       const token = await getAccessTokenSilently()
       mutateFlourByDelete.mutate([flour.id, token])
     }

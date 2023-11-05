@@ -18,7 +18,7 @@ export const getFlourById = async (id: number): Promise<Flour> => {
   return response.body
 }
 
-export const putNewFlour = async (
+export const createFlour = async (
   newFlour: FlourData,
   token: string,
 ): Promise<Flour> => {
@@ -29,11 +29,22 @@ export const putNewFlour = async (
   return response.body
 }
 
+export const updateFlour = async (
+  update: (Flour | string)[]
+): Promise<Flour> => {
+  const [flour, token] = update
+  const response = await request
+    .put("/api/v1/flours")
+    .set("Authorization", `Bearer ${token}`)
+    .send(flour)
+  return response.body
+}
+
 // called from a useMutation which will only accept one arg
 export const deleteFlour = async (
-  content: (string | number)[],
+  target: (string | number)[],
 ): Promise<Flour> => {
-  const [id, token] = content
+  const [id, token] = target
   const response = await request
     .delete(`/api/v1/flours/${id}`)
     .set("Authorization", `Bearer ${token}`)

@@ -5,7 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 import { Flour } from "./Flour"
 import { Flour as FlourModel, FlourData } from "../../models/flour"
-import { deleteFlour, getFloursForOwner, putNewFlour } from "../api/flours"
+import { deleteFlour, getFloursForOwner, createFlour, updateFlour } from "../api/flours"
 import {
   getOverridesForOwner,
   createOverride,
@@ -83,7 +83,7 @@ export const FloursPage = () => {
   const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const token = await getAccessTokenSilently()
-    putNewFlour(newFlour, token)
+    createFlour(newFlour, token)
 
     // both invalidate and refetch seem to be required to always ensure list refreshes after new flour added
     await queryClient.invalidateQueries(["flours"])
@@ -102,6 +102,10 @@ export const FloursPage = () => {
 
   const mutateOverrideByDelete = useMutation(deleteOverride, {
     onSuccess: () => queryClient.invalidateQueries(),
+  })
+
+  const mutateFlourByUpdate = useMutation(updateFlour, {
+    onSuccess: () => queryClient.invalidateQueries()
   })
 
   const mutateFlourByDelete = useMutation(deleteFlour, {
@@ -127,6 +131,7 @@ export const FloursPage = () => {
         } as FlourModel)
       : flour
   })
+
   // console.log(...mapped)
 
   return (
@@ -222,8 +227,9 @@ export const FloursPage = () => {
                 key={flour.id}
                 flour={flour}
                 mutateOverrideByCreate={mutateOverrideByCreate}
-                mutateHydrationByDelete={mutateOverrideByDelete}
-                mutateHydrationByUpdate={mutateOverrideByUpdate}
+                mutateOverrideByDelete={mutateOverrideByDelete}
+                mutateOverrideByUpdate={mutateOverrideByUpdate}
+                mutateFlourByUpdate={mutateFlourByUpdate}
                 mutateFlourByDelete={mutateFlourByDelete}
               />
             ))}
