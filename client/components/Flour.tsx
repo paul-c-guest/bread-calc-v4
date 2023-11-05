@@ -34,7 +34,9 @@ export const Flour = ({
 }: Props) => {
   const { user, getAccessTokenSilently } = useAuth0()
 
-  const [hydration, setHydration] = useState(flour.defaultHydration)
+  const [hydration, setHydration] = useState(
+    flour.alteredHydration ?? flour.defaultHydration,
+  )
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setHydration(Number(event.target.value))
@@ -86,13 +88,24 @@ export const Flour = ({
       <td>
         <button
           onClick={handleUpdate}
-          disabled={hydration === flour.defaultHydration}
+          disabled={
+            flour.alteredHydration
+              ? flour.alteredHydration === hydration
+              : flour.defaultHydration === hydration
+          }
         >
           &#10003;
         </button>
       </td>
       <td>
-        <button onClick={handleRollback} disabled={true}>
+        <button
+          onClick={handleRollback}
+          disabled={
+            flour.alteredHydration
+              ? flour.alteredHydration === hydration
+              : flour.defaultHydration === hydration
+          }
+        >
           &#8634;
         </button>
       </td>

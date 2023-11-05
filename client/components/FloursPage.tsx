@@ -4,13 +4,14 @@ import { useAuth0 } from "@auth0/auth0-react"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 import { Flour } from "./Flour"
-import { FlourData } from "../../models/flour"
+import { Flour as FlourModel, FlourData } from "../../models/flour"
 import { deleteFlour, getFloursForOwner, putNewFlour } from "../api/flours"
 import {
   deleteOverride,
   createOverride,
   getOverridesForOwner,
 } from "../api/overrides"
+import { Override } from "../../models/user"
 
 const initialData: FlourData = {
   name: "",
@@ -112,6 +113,22 @@ export const FloursPage = () => {
 
   if (!isAuthenticated) return <Navigate to={"/"} />
 
+  const overrideMap = new Map<number, Override>()
+  overrides?.forEach((el) => overrideMap.set(el.flourId, el))
+  const mapped = flours?.map((flour) => {
+    return overrideMap.has(flour.id)
+      ? ({
+          id: flour.id,
+          name: overrideMap.get(flour.id)?.name ?? flour.name,
+          defaultHydration: flour.defaultHydration,
+          alteredHydration: overrideMap.get(flour.id)?.hydration ?? undefined,
+          isGlutenFree: flour.isGlutenFree,
+          owner: null
+        } as FlourModel)
+      : flour
+  })
+  console.log(...mapped)
+
   return (
     <>
       <h2>Add New Flour</h2>
@@ -200,7 +217,7 @@ export const FloursPage = () => {
               <th className="button-col pad-right-col"></th>
               <th className="button-col"></th>
             </tr>
-            {flours?.map((flour) => (
+            {mapped?.map((flour) => (
               <Flour
                 key={flour.id}
                 flour={flour}
