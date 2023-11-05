@@ -67,15 +67,23 @@ export const Flour = ({
     }
   }
 
-  const handleRollback = async () => {
+  const handleRollback = () => {
     if (!user?.sub) return
 
-    await mutateHydrationByDelete.mutate({
+    const override: Override = {
       owner: user.sub,
       flourId: flour.id,
-    })
+      hydration: hydration,
+    }
 
-    setHydration(flour.defaultHydration)
+    if (flour.alteredHydration && hydration !== flour.alteredHydration) {
+      setHydration(flour.alteredHydration)
+      return
+    } else {
+      setHydration(flour.defaultHydration)
+    }
+
+    mutateHydrationByDelete.mutate(override)
   }
 
   const handleDelete = async () => {
