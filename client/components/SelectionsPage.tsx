@@ -10,6 +10,8 @@ import { StarterData } from "../../models/starter"
 import { Selections } from "./Selections"
 import { Starter } from "./Starter"
 import { Totals } from "./Totals"
+import { applyOverridesToSortedFlours } from "../util/sort"
+import { getOverridesForOwner } from "../api/overrides"
 
 export default function SelectionsPage() {
   const {
@@ -22,8 +24,8 @@ export default function SelectionsPage() {
 
   const {
     data: flours,
-    isError: queryIsError,
-    isLoading: queryIsLoading,
+    isError: floursQueryIsError,
+    isLoading: floursAreLoading,
   } = useQuery(["flours"], async () => {
     if (isAuthenticated) {
       const token = await getAccessTokenSilently()
@@ -35,6 +37,18 @@ export default function SelectionsPage() {
     }
   })
 
+  const { data: overrides, isLoading: overridesAreLoading } = useQuery(
+    ["overrides"],
+    async () => {
+      if (isAuthenticated) {
+        const token = await getAccessTokenSilently()
+        const overrides = await getOverridesForOwner(token)
+        return overrides
+      } else {
+        return undefined
+      }
+    },
+  )
   const locallyStoredSelections = localStorage.getItem("selections")
   const locallyStoredStarter = localStorage.getItem("starter")
 
@@ -73,23 +87,26 @@ export default function SelectionsPage() {
       setStarter(JSON.parse(locallyStoredStarter))
     }
 
-    queryClient.invalidateQueries(["flours"])
+    queryClient.invalidateQueries()
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated])
 
-  if (queryIsLoading || authIsLoading) return <p>... please wait ...</p>
+  if (floursAreLoading || authIsLoading || overridesAreLoading)
+    return <p>... please wait ...</p>
 
-  if (queryIsError) return <p>... something's wrong ...</p>
+  if (floursQueryIsError) return <p>... something's wrong ...</p>
+
+  const mapped = applyOverridesToSortedFlours(flours, overrides)
 
   return (
     <>
       <Selections
-        flours={flours}
+        flours={mapped}
         selections={selections}
         setSelections={setSelections}
       />
-      <Starter flours={flours} starter={starter} setStarter={setStarter} />
+      <Starter flours={mapped} starter={starter} setStarter={setStarter} />
       <Totals selections={selections} starter={starter} />
     </>
   )

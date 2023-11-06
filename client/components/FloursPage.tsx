@@ -4,15 +4,20 @@ import { useAuth0 } from "@auth0/auth0-react"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 import { Flour } from "./Flour"
-import { Flour as FlourModel, FlourData } from "../../models/flour"
-import { deleteFlour, getFloursForOwner, createFlour, updateFlour } from "../api/flours"
+import { FlourData } from "../../models/flour"
+import {
+  deleteFlour,
+  getFloursForOwner,
+  createFlour,
+  updateFlour,
+} from "../api/flours"
 import {
   getOverridesForOwner,
   createOverride,
   updateOverride,
   deleteOverride,
 } from "../api/overrides"
-import { Override } from "../../models/user"
+import { applyOverridesToSortedFlours } from "../util/sort"
 
 const initialData: FlourData = {
   name: "",
@@ -34,14 +39,6 @@ export const FloursPage = () => {
     async () => {
       const token = await getAccessTokenSilently()
       const flours = await getFloursForOwner(token)
-      // sort reverse alphabetically first
-      flours.sort(
-        (a, b) =>
-          b.name.toLowerCase().charCodeAt(0) -
-          a.name.toLowerCase().charCodeAt(0),
-      )
-      // then sink any that don't have an owner
-      flours.sort((a, b) => (a.owner === null && b.owner !== null ? 1 : -1))
       return flours
     },
   )
@@ -105,7 +102,7 @@ export const FloursPage = () => {
   })
 
   const mutateFlourByUpdate = useMutation(updateFlour, {
-    onSuccess: () => queryClient.invalidateQueries()
+    onSuccess: () => queryClient.invalidateQueries(),
   })
 
   const mutateFlourByDelete = useMutation(deleteFlour, {
@@ -117,20 +114,7 @@ export const FloursPage = () => {
 
   if (!isAuthenticated) return <Navigate to={"/"} />
 
-  const overrideMap = new Map<number, Override>()
-  overrides?.forEach((el) => overrideMap.set(el.flourId, el))
-  const mapped = flours?.map((flour) => {
-    return overrideMap.has(flour.id)
-      ? ({
-          id: flour.id,
-          name: overrideMap.get(flour.id)?.name ?? flour.name,
-          defaultHydration: flour.defaultHydration,
-          alteredHydration: overrideMap.get(flour.id)?.hydration ?? undefined,
-          isGlutenFree: flour.isGlutenFree,
-          owner: null,
-        } as FlourModel)
-      : flour
-  })
+  const mapped = applyOverridesToSortedFlours(flours, overrides)
 
   // console.log(...mapped)
 
