@@ -38,12 +38,20 @@ export const Flour = ({
 }: Props) => {
   const { user, getAccessTokenSilently } = useAuth0()
 
-  const [hydration, setHydration] = useState(
+  const [inputHydration, setInputHydration] = useState(
     flour.alteredHydration ?? flour.defaultHydration,
   )
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setHydration(Number(event.target.value))
+  const handleHydrationChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setInputHydration(Number(event.target.value))
+  }
+
+  const [inputName, setInputName] = useState(flour.name)
+
+  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputName(event.target.value)
   }
 
   const handleUpdate = async () => {
@@ -54,7 +62,7 @@ export const Flour = ({
       const token = await getAccessTokenSilently()
       const update: FlourModel = {
         ...flour,
-        defaultHydration: hydration,
+        defaultHydration: inputHydration,
       }
       mutateFlourByUpdate.mutate([update, token])
     } else {
@@ -63,10 +71,10 @@ export const Flour = ({
       const override: Override = {
         owner: user.sub,
         flourId: flour.id,
-        hydration: hydration,
+        hydration: inputHydration,
       }
 
-      if (hydration === flour.defaultHydration) {
+      if (inputHydration === flour.defaultHydration) {
         mutateOverrideByDelete.mutate(override)
       } else if (flour.alteredHydration) {
         mutateOverrideByUpdate.mutate(override)
@@ -82,14 +90,14 @@ export const Flour = ({
     const override: Override = {
       owner: user.sub,
       flourId: flour.id,
-      hydration: hydration,
+      hydration: inputHydration,
     }
 
-    if (flour.alteredHydration && hydration !== flour.alteredHydration) {
-      setHydration(flour.alteredHydration)
+    if (flour.alteredHydration && inputHydration !== flour.alteredHydration) {
+      setInputHydration(flour.alteredHydration)
       return
     } else {
-      setHydration(flour.defaultHydration)
+      setInputHydration(flour.defaultHydration)
       mutateOverrideByDelete.mutate(override)
     }
   }
@@ -104,19 +112,28 @@ export const Flour = ({
   return (
     <tr>
       <td>
-        <input
-          type="text"
-          value={flour.name}
-          style={{ width: "7.7em" }}
-          readOnly
-        />
+        {flour.owner ? (
+          <input
+            type="text"
+            value={inputName}
+            style={{ width: "7.7em" }}
+            onChange={handleNameChange}
+          ></input>
+        ) : (
+          <input
+            type="text"
+            value={flour.name}
+            style={{ width: "7.7em" }}
+            readOnly
+          />
+        )}
       </td>
       <td>
         <input
           type="number"
           id="amount"
-          value={hydration}
-          onChange={handleChange}
+          value={inputHydration}
+          onChange={handleHydrationChange}
         />
       </td>
       <td>
@@ -124,8 +141,8 @@ export const Flour = ({
           onClick={handleUpdate}
           disabled={
             flour.alteredHydration
-              ? flour.alteredHydration === hydration
-              : flour.defaultHydration === hydration
+              ? flour.alteredHydration === inputHydration
+              : flour.defaultHydration === inputHydration
           }
         >
           &#10003;
@@ -137,7 +154,7 @@ export const Flour = ({
           disabled={
             flour.alteredHydration
               ? flour.alteredHydration === flour.defaultHydration
-              : flour.defaultHydration === hydration
+              : flour.defaultHydration === inputHydration
           }
         >
           &#8634;
