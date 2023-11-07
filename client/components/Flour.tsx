@@ -1,4 +1,4 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import { Flour as FlourModel } from "../../models/flour"
 import { Override } from "../../models/user"
 import { UseMutationResult } from "@tanstack/react-query"
@@ -38,7 +38,7 @@ export const Flour = ({
 }: Props) => {
   const { user, getAccessTokenSilently } = useAuth0()
 
-  const [inputHydration, setInputHydration] = useState(
+  const [inputHydration, setInputHydration] = useState<number>(
     flour.alteredHydration ?? flour.defaultHydration,
   )
 
@@ -48,26 +48,27 @@ export const Flour = ({
     setInputHydration(Number(event.target.value))
   }
 
-  const [inputName, setInputName] = useState(flour.name)
+  const [inputName, setInputName] = useState<string>(flour.name)
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputName(event.target.value)
+    setInputName(String(event.target.value))
   }
 
-  const handleUpdate = async () => {
+  const handleAccept = async () => {
     if (!user?.sub) return
 
+    // handle hydration amount change
     if (flour.owner) {
       // manage properties for a user's flour
       const token = await getAccessTokenSilently()
       const update: FlourModel = {
         ...flour,
+        name: inputName,
         defaultHydration: inputHydration,
       }
       mutateFlourByUpdate.mutate([update, token])
     } else {
       // manage overrides for a default flour
-
       const override: Override = {
         owner: user.sub,
         flourId: flour.id,
@@ -95,9 +96,11 @@ export const Flour = ({
 
     if (flour.alteredHydration && inputHydration !== flour.alteredHydration) {
       setInputHydration(flour.alteredHydration)
+      setInputName(flour.name)
       return
     } else {
       setInputHydration(flour.defaultHydration)
+      setInputName(flour.name)
       mutateOverrideByDelete.mutate(override)
     }
   }
@@ -115,6 +118,7 @@ export const Flour = ({
         {flour.owner ? (
           <input
             type="text"
+            id="name"
             value={inputName}
             style={{ width: "7.7em" }}
             onChange={handleNameChange}
@@ -138,9 +142,9 @@ export const Flour = ({
       </td>
       <td>
         <button
-          onClick={handleUpdate}
+          onClick={handleAccept}
           disabled={
-            flour.alteredHydration
+            flour.name !== inputName || flour.alteredHydration
               ? flour.alteredHydration === inputHydration
               : flour.defaultHydration === inputHydration
           }
@@ -152,7 +156,7 @@ export const Flour = ({
         <button
           onClick={handleRollback}
           disabled={
-            flour.alteredHydration
+            flour.name !== inputName || flour.alteredHydration
               ? flour.alteredHydration === flour.defaultHydration
               : flour.defaultHydration === inputHydration
           }

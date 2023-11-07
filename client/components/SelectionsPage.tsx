@@ -45,7 +45,7 @@ export default function SelectionsPage() {
         const overrides = await getOverridesForOwner(token)
         return overrides
       } else {
-        return undefined
+        return []
       }
     },
   )
