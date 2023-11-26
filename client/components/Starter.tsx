@@ -14,10 +14,10 @@ export function Starter({ flours, starter, setStarter }: Props) {
   const updateSelection = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const id = Number(event.target.value)
     const flour = flours.find((flour) => flour.id === id)!
-
+    
     setStarter({
       ...starter,
-      hydration: flour.defaultHydration,
+      hydration: flour.alteredHydration || flour.defaultHydration,
       flourId: id,
     })
   }
