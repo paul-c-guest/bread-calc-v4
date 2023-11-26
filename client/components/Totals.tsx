@@ -20,13 +20,13 @@ export function Totals({ selections, starter }: Props) {
   dry += starter.dry
   wet += starter.wet
 
-  //  remove some hydration from total wet amount to account for overhydration of starter
+  //  modify total wet amount to account for starter hydration being non-default
   const starterExcessHydration =
-    starter.wet - starter.wet * (starter.hydration * 0.01)
+    starter.wet - starter.dry * starter.hydration * 0.01
 
   wet -= starterExcessHydration
 
-  // get final expected hydration of dough
+  // get hydration of dough as an integer
   const hydration: number = Number(((wet / dry) * 100).toFixed(0))
 
   return (
