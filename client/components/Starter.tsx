@@ -68,7 +68,7 @@ export function Starter({ flours, starter, setStarter }: Props) {
               <td>
                 <input
                   type="number"
-                  step={5}
+                  step={2}
                   min={0}
                   className={
                     starter.dry > 0
@@ -86,7 +86,7 @@ export function Starter({ flours, starter, setStarter }: Props) {
               <td>
                 <input
                   type="number"
-                  step={5}
+                  step={2}
                   min={0}
                   id="amount"
                   className={
