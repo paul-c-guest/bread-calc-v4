@@ -27,7 +27,7 @@ const initialData: FlourData = {
 
 export const FloursPage = () => {
   const {
-    isAuthenticated,
+    // isAuthenticated,
     isLoading: authIsLoading,
     getAccessTokenSilently,
   } = useAuth0()
@@ -112,7 +112,7 @@ export const FloursPage = () => {
   if (authIsLoading || floursAreLoading || overridesAreLoading)
     return <p>...please wait...</p>
 
-  if (!isAuthenticated) return <Navigate to={"/"} />
+  // if (!isAuthenticated) return <Navigate to={"/"} />
 
   const mapped = applyOverridesToSortedFlours(flours, overrides)
 

@@ -28,16 +28,24 @@ export function Nav() {
       </div>
       <h1 id="title">Good Leavening</h1>
       <div className="nav-button-block">
-        {isAuthenticated && location.pathname !== "/flours" && (
-          <button className="nav-button" onClick={() => navigate("flours")}>
+        {
+          <button
+            className="nav-button"
+            onClick={() => navigate("flours")}
+            disabled={location.pathname === "/flours"}
+          >
             Flours
           </button>
-        )}
-        {isAuthenticated && location.pathname !== "/" && (
-          <button className="nav-button" onClick={() => navigate("/")}>
+        }
+        {
+          <button
+            className="nav-button"
+            onClick={() => navigate("/")}
+            disabled={location.pathname === "/"}
+          >
             Selections
           </button>
-        )}
+        }
         <div className="login-block">
           <button className="login-button" onClick={handleClick}>
             {isAuthenticated ? "Logout" : "Login"}
