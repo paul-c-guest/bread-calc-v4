@@ -11,10 +11,12 @@ interface Props {
 export function Starter({ flours, starter, setStarter }: Props) {
   const [open, setOpen] = useState(false)
 
-  const updateSelection = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const updateFlourSelection = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
     const id = Number(event.target.value)
     const flour = flours.find((flour) => flour.id === id)!
-    
+
     setStarter({
       ...starter,
       hydration: flour.alteredHydration || flour.defaultHydration,
@@ -22,7 +24,7 @@ export function Starter({ flours, starter, setStarter }: Props) {
     })
   }
 
-  const updateValues = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const updateValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setStarter({
       ...starter,
       [event.target.name]: Number(event.target.value),
@@ -54,7 +56,7 @@ export function Starter({ flours, starter, setStarter }: Props) {
                 <select
                   name="flourId"
                   className="new-selection"
-                  onChange={updateSelection}
+                  onChange={updateFlourSelection}
                   value={starter.flourId}
                   aria-label="choose the starter's flour type"
                 >
@@ -78,7 +80,7 @@ export function Starter({ flours, starter, setStarter }: Props) {
                   defaultValue={starter.dry}
                   name="dry"
                   id="amount"
-                  onChange={updateValues}
+                  onChange={updateValue}
                   aria-label="amount of flour in starter in grams"
                   required
                 />
@@ -96,7 +98,7 @@ export function Starter({ flours, starter, setStarter }: Props) {
                   }
                   defaultValue={starter.wet}
                   name="wet"
-                  onChange={updateValues}
+                  onChange={updateValue}
                   aria-label="amount of liquid in starter in millilitres"
                   required
                 />

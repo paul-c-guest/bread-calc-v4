@@ -9,6 +9,19 @@
   font-size: 130%;
 }
 
+/* for future use */
+.help-popup {
+  position: absolute;
+  margin: -1em;
+  padding: 10%;
+  width: 80%;
+  height: 100%;
+  color: white;
+  /* slightly transparent dark grey  */
+  background-color: #111e;
+  transition: 0.2s;
+}
+
 body {
   margin: 1em;
   text-align: center;

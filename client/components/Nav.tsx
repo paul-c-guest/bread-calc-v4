@@ -16,6 +16,16 @@ export function Nav() {
 
   return (
     <nav>
+      {/* implement state for hidden flag and attach to 'close' button */}
+      <div className="help-popup" hidden={true}>
+        <h2>Help</h2>
+        <h3>Quickstart</h3>
+        <p>How to get up and running</p>
+        <h3>Detailed Files</h3>
+        <p>Longer winded explanations</p>
+        {/* consider implementing a close-on-click-outside type of behavious here */}
+        <button>close</button>
+      </div>
       <h1 id="title">Good Leavening</h1>
       <div className="nav-button-block">
         {isAuthenticated && location.pathname !== "/flours" && (
