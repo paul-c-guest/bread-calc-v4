@@ -9,7 +9,7 @@ interface Props {
 }
 
 export function Starter({ flours, starter, setStarter }: Props) {
-  const [open, setOpen] = useState(false)
+  const [StarterBlockIsOpen, setStarterBlockIsOpen] = useState(false)
 
   const updateFlourSelection = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -34,12 +34,12 @@ export function Starter({ flours, starter, setStarter }: Props) {
   return (
     <>
       <details
-        open={open}
+        open={StarterBlockIsOpen}
         onToggle={(event: React.ChangeEvent<HTMLDetailsElement>) =>
-          setOpen(event.target.open)
+          setStarterBlockIsOpen(event.target.open)
         }
       >
-        <summary className={open ? "details-open" : ""}>
+        <summary className={StarterBlockIsOpen ? "details-open" : ""}>
           <h2>My Starter</h2>
         </summary>
 
