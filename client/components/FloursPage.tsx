@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { Navigate } from "react-router-dom"
 import { useAuth0 } from "@auth0/auth0-react"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
@@ -112,11 +111,7 @@ export const FloursPage = () => {
   if (authIsLoading || floursAreLoading || overridesAreLoading)
     return <p>...please wait...</p>
 
-  // if (!isAuthenticated) return <Navigate to={"/"} />
-
   const mapped = applyOverridesToSortedFlours(flours, overrides)
-
-  // console.log(...mapped)
 
   return (
     <>

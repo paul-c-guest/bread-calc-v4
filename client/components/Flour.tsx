@@ -55,7 +55,15 @@ export const Flour = ({
   }
 
   const handleAccept = async () => {
-    if (!user?.sub) return
+    if (!user?.sub) {
+      // user is anonymous - save an override to localstorage (will be an Override since anon user can not add own flours)
+
+      // make an Override object
+
+      // delete / update / create the local override (same logical check as below) by updating the 'overrides' object in localstorage 
+
+      return
+    }
 
     // handle hydration amount change
     if (flour.owner) {
