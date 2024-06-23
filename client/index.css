@@ -6,7 +6,7 @@
   --big-screen-max-width: 25em;
   --small-screen-max-width: 80vw;
   font-family: sans-serif;
-  font-size: 130%;
+  /* font-size: 130%; */
 }
 
 /* for future use */

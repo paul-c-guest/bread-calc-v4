@@ -51,7 +51,7 @@ export function NewSelection({
             id="flourId"
             onChange={handleSelectionChange}
           >
-            <option value={undefined}>Add flour...</option>
+            <option hidden>Add flour...</option>
             {available.map((flour) => (
               <option key={flour.id} value={flour.id}>
                 {flour.name}
